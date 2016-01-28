@@ -37,3 +37,8 @@ script:
   - ./gradlew build
 #  - ./gradlew crashlyticsUploadDistributionDebug
 #  - ./gradlew connectedDebugAndroidTest
+
+notifications:
+  slack:
+    rooms:
+      - cloud-timer:RqzjC57tsHmHYhUa66B4Hxj4#notifications
