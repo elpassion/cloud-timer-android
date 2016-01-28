@@ -17,4 +17,8 @@ class SimpleTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::
     fun testCheckIfHelloWorldIsPresent() {
         onView(withId(R.id.hello_world_text)).check(matches(withText("Hello World!")))
     }
+
+    fun testWhichShouldNotPass() {
+        onView(withId(R.id.hello_world_text)).check(matches(withText("Hello !")))
+    }
 }
