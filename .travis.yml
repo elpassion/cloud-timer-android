@@ -9,8 +9,7 @@ android:
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-16
 install:
-- true
-- ./gradlew assemble
+- ./gradlew build
 before_script:
 - echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-audio -no-window &
@@ -18,7 +17,6 @@ before_script:
 - sleep 30
 - adb shell input keyevent 82
 script:
-- ./gradlew build
 - ./gradlew connectedDebugAndroidTest
 - ./gradlew connectedCheck
 - mkdir -p app/build/reports/jacoco/test/
