@@ -1,9 +1,7 @@
-*.iml
-.gradle
-/local.properties
-.idea
-.DS_Store
 /build
-/captures
-
-app/fabric.properties
+.gradle
+.idea
+*.iml
+/local.properties
+.DS_Store
+fabric.properties
