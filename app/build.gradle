@@ -30,11 +30,11 @@ android {
         debug{
             testCoverageEnabled true
             ext.betaDistributionReleaseNotes = getCrashlyticsBetaMessage()
+            ext.betaDistributionGroupAliases = 'team'
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ext.betaDistributionGroupAliases = 'team'
         }
     }
     sourceSets {
