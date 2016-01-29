@@ -10,8 +10,7 @@ def getCrashlyticsBetaMessage (){
     def git = Grgit.open(project.file('..'))
     def commit = git.log(maxCommits: 1)[0]
     def messageFormat = "%s@%s\n  -------------------------------\n%s"
-    def branch = new BranchService(git.repository).getCurrent().name
-    return sprintf(messageFormat, [commit.author.name, branch, commit.fullMessage])
+    return sprintf(messageFormat, [commit.author.name, git.branch.getCurrent().name, commit.fullMessage])
 }
 
 android {
@@ -80,3 +79,4 @@ repositories {
 
 
 
+print getCrashlyticsBetaMessage()
