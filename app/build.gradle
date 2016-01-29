@@ -1,5 +1,4 @@
 import org.ajoberstar.grgit.*
-import org.ajoberstar.grgit.service.*
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: "com.github.kt3k.coveralls"
@@ -76,7 +75,3 @@ repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
 }
-
-
-
-print getCrashlyticsBetaMessage()
