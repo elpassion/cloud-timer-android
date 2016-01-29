@@ -1,5 +1,6 @@
 sudo: false
 language: android
+jdk: oraclejdk8
 android:
   components:
   - platform-tools
@@ -9,24 +10,31 @@ android:
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-16
 install:
-- ./gradlew build
+  - ./gradlew build
 before_script:
-- echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-- sleep 30
-- adb shell input keyevent 82
+  - echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - sleep 30
+  - adb shell input keyevent 82
 script:
-- ./gradlew connectedDebugAndroidTest
-- ./gradlew connectedCheck
-- mkdir -p app/build/reports/jacoco/test/
-- cp app/build/reports/coverage/debug/report.xml app/build/reports/jacoco/test/jacocoTestReport.xml
-- ./gradlew coveralls
+  - ./gradlew connectedDebugAndroidTest
+  - mkdir -p app/build/reports/jacoco/test/
+  - cp app/build/reports/coverage/debug/report.xml app/build/reports/jacoco/test/jacocoTestReport.xml
+  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
 notifications:
   slack:
     rooms:
       secure: q5prrOgwBKojl50m/krhUhnJnFAEs/PCo4aO/MSAX8YAAyInlKg3L0oUrXHE8fymKtW4bpFe5LOI7gV9Tmkar2VPO84mAFWg2WEvdaGm4BWy5USrrEEzid4+ZdB6dOdas9GbY79nb6zogfMGHB4LqJSl1jxqgUTVqS2Smx9A9BY7FnbyD2VazsUCnTDISLJ8mJEiCX9vsxj9rsTJ11ceJmNseg3Tuk4C8UsrBspKh62kBFRycY/IVf2ZhhBEoE7kfSnmFGEM8e/TAZsIHX7NFNOI/5mdaE95DKn5Hof9dz2URRgkWC7bVoFddV2J/mQg7bP62uNMhBg6tYM8jWKQovf743WuOSd6eY/cvk5pHLj51HvEHMvA5mUhqiWG3OP277vjDtrovvWG2IFVcfOtK5B0QXqdO5do/IX5SCUKeQJG/O1RLFP8kkYiKRCI/rFmoJpf8DksbdqOUnnXJUM+AlWlDD26DtIuEI44udadezGAGz9gSuBmpE4KjY5bfdS7b92CBdF4USlHopSeOjdiAuA8IgLt2t7fcGxNWce4oj3iXgmUarsoig0FnRSoW2X2OEeBcjgoSe7HBvaIA06RsJx5CkonBWcmh6Z3rcksxd7MJF3LKyPYXxLqwMC24aGpQYz1sCdU5cOnuOl9/yvmz+B04bmgtMHFkKPCGwKOaP0=
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_15a2208c5bb8_key -iv $encrypted_15a2208c5bb8_iv
+  - openssl aes-256-cbc -K $encrypted_15a2208c5bb8_key -iv $encrypted_15a2208c5bb8_iv
   -in fabric.properties.enc -out app/fabric.properties -d
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
