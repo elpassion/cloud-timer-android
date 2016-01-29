@@ -8,8 +8,7 @@ apply plugin: 'jacoco'
 def getCrashlyticsBetaMessage (){
     def git = Grgit.open(project.file('..'))
     def commit = git.log(maxCommits: 1)[0]
-    def branchCommand = "git branch --contains " + commit.id
-    def branch = branchCommand.execute().text.trim().replaceAll("\\*\\s", "")
+    def branch = System.getenv().get("TRAVIS_BRANCH")
     def messageFormat = "%s@%s\n  -------------------------------\n%s"
     return sprintf(messageFormat, [commit.author.name, branch, commit.fullMessage])
 }
