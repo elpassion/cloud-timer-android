@@ -1,4 +1,5 @@
 import org.ajoberstar.grgit.*
+import org.ajoberstar.grgit.service.*
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: "com.github.kt3k.coveralls"
@@ -8,8 +9,9 @@ apply plugin: 'jacoco'
 def getCrashlyticsBetaMessage (){
     def git = Grgit.open(project.file('..'))
     def commit = git.log(maxCommits: 1)[0]
-    def messageFormat = "%s\n  -------------------------------\n%s"
-    return sprintf(messageFormat, [commit.author.name, commit.fullMessage])
+    def messageFormat = "%s@%s\n  -------------------------------\n%s"
+    def branch = new BranchService(git.repository).getCurrent().name
+    return sprintf(messageFormat, [commit.author.name, branch, commit.fullMessage])
 }
 
 android {
