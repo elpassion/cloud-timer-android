@@ -25,7 +25,8 @@ before_script:
 - sh scripts/emulator.sh
 
 script:
-- sh scripts/coveralls.sh
+  - ./gradlew connectedCheck
 
 after_success:
-  - ./gradlew coveralls
+  - sh scripts/coveralls.sh
+  - ./gradlew crashlyticsUploadDistributionDebug
