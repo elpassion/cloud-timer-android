@@ -30,4 +30,5 @@ class TimerTests {
     fun testTimeConversion2Hours30Minutes() {
         Assert.assertTrue(convertTime(2, 30) == 2*3600000L+30*60000L)
     }
+
 }

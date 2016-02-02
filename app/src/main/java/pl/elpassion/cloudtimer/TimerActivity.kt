@@ -21,8 +21,9 @@ class TimerActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
-        setNumberPickerValues(hoursPicker, 0, 24)
-        setNumberPickerValues(minutesPicker, 0, 60)
+        setHoursPickerValues(0, 24)
+        setMinutesPickerValues(0, 60)
+        minutesPicker.value = 15
     }
 
     override fun onStart() {
@@ -34,10 +35,16 @@ class TimerActivity : Activity() {
         }
     }
 
-    private fun setNumberPickerValues(picker: NumberPicker, minVal: Int, maxVal: Int) {
-        picker.minValue = minVal
-        picker.maxValue = maxVal
-        picker.wrapSelectorWheel = true
+    private fun setHoursPickerValues(minVal: Int, maxVal: Int) {
+        hoursPicker.minValue = minVal
+        hoursPicker.maxValue = maxVal
+        hoursPicker.wrapSelectorWheel = true
+    }
+
+    private fun setMinutesPickerValues(minVal: Int, maxVal: Int) {
+        minutesPicker.minValue = minVal
+        minutesPicker.maxValue = maxVal
+        minutesPicker.wrapSelectorWheel = true
     }
 
     public fun scheduleAlarm() {
@@ -45,7 +52,7 @@ class TimerActivity : Activity() {
         val intent = Intent(this, AlarmReceiver::class.java)
         val pIntent = PendingIntent.getBroadcast(this, AlarmReceiver.REQUEST_CODE,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val firstMillis = System.currentTimeMillis()
+        val firstMillis = System.currentTimeMillis()+convertTime(hoursPicker.value,minutesPicker.value)
         val alarm = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
                 AlarmManager.INTERVAL_HALF_HOUR, pIntent)
