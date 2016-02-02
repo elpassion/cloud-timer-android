@@ -33,8 +33,6 @@ class TimerActivity : Activity() {
             scheduleAlarm()
         }
     }
-    fun calculateTime(){
-    }
 
     private fun setNumberPickerValues(picker: NumberPicker, minVal: Int, maxVal: Int) {
         picker.minValue = minVal
