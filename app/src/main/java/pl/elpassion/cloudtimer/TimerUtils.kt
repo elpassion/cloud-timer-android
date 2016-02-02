@@ -1,9 +1,8 @@
 package pl.elpassion.cloudtimer
 
-/**
- * Created by jasiekpor on 02.02.2016.
- */
+import java.util.concurrent.TimeUnit
 
 fun convertTime(hours: Int, minutes: Int): Long {
-    return hours * 3600000L + minutes * 60000L
+    return TimeUnit.MILLISECONDS.convert(hours.toLong(), TimeUnit.HOURS) +
+            TimeUnit.MILLISECONDS.convert(minutes.toLong(), TimeUnit.MINUTES)
 }
