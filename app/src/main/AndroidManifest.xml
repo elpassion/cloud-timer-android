@@ -25,6 +25,10 @@
             android:name="io.fabric.ApiKey"
             android:value="49fd2e0b3dfc9eb4d3b61ea854f0fb49f87f5fb8" />
         <activity android:name=".TimerActivity"/>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:process=":remote" >
+        </receiver>
         <service
             android:name=".AlarmService"
             android:exported="false"/>
