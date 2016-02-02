@@ -13,15 +13,20 @@ class TimerTests {
 
     @Test
     fun testTimeConvertion() {
-        Assert.assertTrue(convertTime(0,0)==0L)
+        Assert.assertTrue(convertTime(0, 0) == 0L)
     }
 
     @Test
-    fun testTimeConversion1Hour(){
-        Assert.assertTrue(convertTime(1,0)== 3600000L)
+    fun testTimeConversion1Hour() {
+        Assert.assertTrue(convertTime(1, 0) == 3600000L)
     }
 
-    fun convertTime(hours : Int,minutes : Int ):Long {
-        return hours*3600000L
+    @Test
+    fun testTimeConversion1Minute() {
+        Assert.assertTrue(convertTime(0, 1) == 60000L)
+    }
+
+    fun convertTime(hours: Int, minutes: Int): Long {
+        return hours * 3600000L + minutes * 60000L
     }
 }
