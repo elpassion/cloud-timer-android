@@ -16,7 +16,12 @@ class TimerTests {
         Assert.assertTrue(convertTime(0,0)==0L)
     }
 
+    @Test
+    fun testTimeConversion1Hour(){
+        Assert.assertTrue(convertTime(1,0)== 3600000L)
+    }
+
     fun convertTime(hours : Int,minutes : Int ):Long {
-        return 0L
+        return hours*3600000L
     }
 }
