@@ -8,19 +8,6 @@ android:
   - android-23
   - extra-android-m2repository
   - sys-img-armeabi-v7a-android-16
-install:
-- ./gradlew build
-before_script:
-- echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-- sleep 30
-- adb shell input keyevent 82
-script:
-- ./gradlew connectedCheck
-- mkdir -p app/build/reports/jacoco/test/
-- cp app/build/reports/coverage/debug/report.xml app/build/reports/jacoco/test/jacocoTestReport.xml
-- ./gradlew crashlyticsUploadDistributionDebug
 
 notifications:
   slack:
@@ -30,6 +17,15 @@ notifications:
 before_install:
 - openssl aes-256-cbc -K $encrypted_15a2208c5bb8_key -iv $encrypted_15a2208c5bb8_iv
   -in fabric.properties.enc -out app/fabric.properties -d
+
+install:
+- ./gradlew build
+
+before_script:
+- sh scripts/emulator.sh
+
+script:
+- sh scripts/coveralls.sh
 
 after_success:
   - ./gradlew coveralls
