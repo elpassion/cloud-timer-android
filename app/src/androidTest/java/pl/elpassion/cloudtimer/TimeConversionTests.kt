@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer
 
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -13,22 +14,27 @@ class TimeConversionTests {
 
     @Test
     fun testTimeConvertion() {
-        Assert.assertTrue(convertTime(0, 0) == 0L)
+        assertTrue(convertTime(0, 0, 0) == 0L)
     }
 
     @Test
     fun testTimeConversion1Hour() {
-        Assert.assertTrue(convertTime(1, 0) == 3600000L)
+        assertTrue(convertTime(1, 0, 0) == 3600000L)
     }
 
     @Test
     fun testTimeConversion1Minute() {
-        Assert.assertTrue(convertTime(0, 1) == 60000L)
+        assertTrue(convertTime(0, 1, 0) == 60000L)
     }
 
     @Test
     fun testTimeConversion2Hours30Minutes() {
-        Assert.assertTrue(convertTime(2, 30) == 2*3600000L+30*60000L)
+        assertTrue(convertTime(2, 30, 0) == 2 * 3600000L + 30 * 60000L)
+    }
+
+    @Test
+    fun testTimeConversion2Hours30Minutes15Seconds() {
+        assertTrue(convertTime(2, 30, 15) == 2 * 3600000L + 30 * 60000L + 15 * 1000L)
     }
 
 }

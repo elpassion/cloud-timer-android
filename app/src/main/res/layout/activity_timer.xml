@@ -2,27 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center|top">
+    android:gravity="center|top"
+    android:orientation="vertical">
+
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="2"
+        android:columnCount="3"
         android:rowCount="2">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hours"
+            android:layout_column="0"
             android:layout_row="0"
-            android:layout_column="0" />
+            android:text="Hours" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Minutes"
+            android:layout_column="1"
             android:layout_row="0"
-            android:layout_column="1" />
+            android:text="Minutes" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="0"
+            android:text="Seconds" />
 
         <NumberPicker
             android:id="@+id/hours_picker"
@@ -30,11 +38,19 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_row="1" />
+
         <NumberPicker
             android:id="@+id/minutes_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
+            android:layout_row="1" />
+
+        <NumberPicker
+            android:id="@+id/seconds_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
             android:layout_row="1" />
 
     </GridLayout>

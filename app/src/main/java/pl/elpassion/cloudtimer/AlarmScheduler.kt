@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import domain.AlarmData
 
 public fun scheduleAlarm(timer : AlarmData, context : Context) {
     val intent = Intent(context, AlarmReceiver::class.java)
