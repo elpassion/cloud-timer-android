@@ -12,8 +12,9 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-        // todo implementation of receiver
         Log.e("ALARM", "broadcast recieved")
+        val i = Intent(context, AlarmService::class.java)
+        context.startService(i)
     }
 
 }

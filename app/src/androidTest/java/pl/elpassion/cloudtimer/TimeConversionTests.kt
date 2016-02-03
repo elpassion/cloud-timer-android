@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
  * Created by jasiekpor on 02.02.2016.
  */
 @RunWith(AndroidJUnit4::class)
-class TimerTests {
+class TimeConversionTests {
 
     @Test
     fun testTimeConvertion() {
