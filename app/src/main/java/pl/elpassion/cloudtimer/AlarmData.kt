@@ -1,4 +1,6 @@
 package pl.elpassion.cloudtimer
 
-// TODO : placeholder
-class AlarmData (val timeInMillis : Long, val name: String)
+class AlarmData (val timeInMillis: Long, val timeLeft: Long?, var uiId: Long?) {
+    constructor(timeInMillis: Long) : this(timeInMillis, null, null) {
+    }
+}
