@@ -12,7 +12,6 @@ public fun scheduleAlarm(timer : AlarmData, context : Context) {
             intent, PendingIntent.FLAG_UPDATE_CURRENT)
     val alarmTime = System.currentTimeMillis() + timer.timeInMillis
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmTime,
-            AlarmManager.INTERVAL_HALF_HOUR, pendingIntent)
+    alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(alarmTime, pendingIntent), pendingIntent)
     Log.e("ALARM", "SYS TIME MILIS: "+ System.currentTimeMillis())
 }

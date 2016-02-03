@@ -5,8 +5,7 @@ import android.support.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.PickerComponentsTestsUtils.checkIfHoursPickerHasValue
-import pl.elpassion.cloudtimer.PickerComponentsTestsUtils.checkIfMinutesPickerHasValue
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
 
 @RunWith(AndroidJUnit4::class)
 class TimerGUITest {
@@ -15,7 +14,7 @@ class TimerGUITest {
 
     @Test
     fun fifteenMinutesOnStart() {
-        checkIfHoursPickerHasValue("0")
-        checkIfMinutesPickerHasValue("15")
+        checkTextMatching(R.id.hours_picker, "0")
+        checkTextMatching(R.id.minutes_picker, "15")
     }
 }
