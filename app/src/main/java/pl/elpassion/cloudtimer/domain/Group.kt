@@ -1,3 +1,5 @@
 package pl.elpassion.cloudtimer.domain
 
-class Group(val name: String, invitationToken: String, val users : Array<User>)
+import java.util.*
+
+class Group(val name: String, val invitationToken: String? = null, val users: MutableList<User> = ArrayList())

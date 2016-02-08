@@ -10,7 +10,7 @@ class TimerActivity : Activity() {
     val minutesPicker by lazy { findViewById(R.id.minutes_picker) as NumberPicker }
     val secondsPicker by lazy { findViewById(R.id.seconds_picker) as NumberPicker }
     val startButton by lazy { findViewById(R.id.start_button) as Button }
-    protected val alarmDao by lazy {  AlarmDAO.getInstance(applicationContext) }
+    protected val alarmDao by lazy {  TimerDAO.getInstance(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +24,9 @@ class TimerActivity : Activity() {
         super.onStart()
         startButton.setOnClickListener {
             // TODO: TMP create timer
-            val newTimer = AlarmData(convertTime(hoursPicker.value, minutesPicker.value))
-            scheduleAlarm(newTimer, this)
-
+            //val newTimer = Timer("",getTime(),System.currentTimeMillis()+getTime())
+            //scheduleAlarm(newTimer, this)
+            //alarmDao.save(newTimer)
         }
     }
 
@@ -35,5 +35,8 @@ class TimerActivity : Activity() {
         maxValue = maxVal
         wrapSelectorWheel = true
         value = defaultValue
+    }
+    private fun getTime():Long{
+        return convertTime(hoursPicker.value,minutesPicker.value,secondsPicker.value)
     }
 }

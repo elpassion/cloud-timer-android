@@ -16,5 +16,6 @@ class TimerGUITest {
     fun fifteenMinutesOnStart() {
         checkTextMatching(R.id.hours_picker, "0")
         checkTextMatching(R.id.minutes_picker, "15")
+        checkTextMatching(R.id.seconds_picker,"0")
     }
 }

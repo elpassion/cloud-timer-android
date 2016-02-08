@@ -2,25 +2,25 @@ package pl.elpassion.cloudtimer
 
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
-import domain.AlarmData
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import pl.elpassion.cloudtimer.domain.Timer
 
 @RunWith(AndroidJUnit4::class)
-class AlarmDAOTest {
-
+class TimerDAOTest {
+    companion object{
+        val timer = Timer("test",2000,System.currentTimeMillis()+2000)
+    }
     @Rule @JvmField
     public val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
 
-    protected val alarmDao by lazy {  AlarmDAO.getInstance(activity.getActivity().applicationContext) }
+    protected val alarmDao by lazy { TimerDAO.getInstance(activity.getActivity().applicationContext) }
 
     @Test
-    fun isAlarmCanByAddedToDB(){
-        activity
-        alarmDao.save(AlarmData(10L, 10L, 666L, null))
+    fun isAlarmCanByAddedToDB() {
+       //alarmDao.save(timer)
         assertTrue(alarmDao.findAll().isNotEmpty())
     }
 }

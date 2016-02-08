@@ -10,6 +10,7 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
+import pl.elpassion.cloudtimer.domain.Timer
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
@@ -67,7 +68,7 @@ class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
         }
         activity
 
-        val newTimer = AlarmData(TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS))
+        val newTimer = Timer("test",TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS),System.currentTimeMillis()+1000)
         scheduleAlarm(newTimer, activity)
         //tod
 
