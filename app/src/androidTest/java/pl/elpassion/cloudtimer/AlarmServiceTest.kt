@@ -10,6 +10,9 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
+import pl.elpassion.cloudtimer.alarm.AlarmReceiver
+import pl.elpassion.cloudtimer.alarm.NotificationReceiver
+import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.concurrent.TimeUnit
 
@@ -63,16 +66,16 @@ class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
     fun alarmReceived()
     {
         var alarmRecived = false
-        soundPlayer = { context: Context ->
+        NotificationReceiver.displayNotification = { context: Context ->
             alarmRecived = true
         }
         activity
 
-        val newTimer = Timer("test",TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS),System.currentTimeMillis()+1000)
+        val newTimer = Timer("test",TimeUnit.MILLISECONDS.convert(1, TimeUnit.MILLISECONDS),System.currentTimeMillis()+1000)
         scheduleAlarm(newTimer, activity)
         //tod
 
-        SystemClock.sleep(2000)
+        SystemClock.sleep(200)
 
         Assert.assertTrue(alarmRecived)
     }
