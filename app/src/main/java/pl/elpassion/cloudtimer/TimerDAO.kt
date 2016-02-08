@@ -100,4 +100,8 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         readableDatabase.delete(TABLE_TIMER, KEY_TIMER_UID + "=?", arrayOf(uid))
     }
 
+    fun deleteAll() {
+        readableDatabase.delete(TABLE_TIMER, null, null)
+    }
+
 }

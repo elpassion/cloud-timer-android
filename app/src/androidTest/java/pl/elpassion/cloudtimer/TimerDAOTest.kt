@@ -13,7 +13,7 @@ import java.util.*
 class TimerDAOTest {
     companion object {
         var timer = Timer("test", 2000, System.currentTimeMillis() + 2000)
-        var uid = ""
+        var timer2 = Timer("test", 3000, System.currentTimeMillis() + 3000)
     }
 
     @Rule @JvmField
@@ -23,14 +23,25 @@ class TimerDAOTest {
 
     @Test
     fun isAlarmCanByAddedToDB() {
-        uid = alarmDao.save(timer)
+        val uid = alarmDao.save(timer)
         timer = Timer(timer.title, timer.duration, timer.endTime, uid)
-        assertTrue(alarmDao.findAll().isNotEmpty())
+        assertTrue(alarmDao.findOne(uid).title.equals(timer.title))
     }
 
     @Test(expected = NoSuchElementException::class)
     fun isTestTimerCanByDeleted(){
+        val uid = alarmDao.save(timer2)
+        timer2 = Timer(timer2.title, timer2.duration, timer2.endTime, uid)
         alarmDao.deleteOne(uid)
-        assertTrue(alarmDao.findOne(uid).title.equals(timer.title))
+        assertTrue(alarmDao.findOne(uid).title.equals(timer2.title))
+    }
+
+    @Test
+    fun deleteAllTimers(){
+        alarmDao.save(timer)
+        alarmDao.save(timer2)
+        assertTrue(alarmDao.findAll().isNotEmpty())
+        alarmDao.deleteAll()
+        assertTrue(alarmDao.findAll().isEmpty())
     }
 }
