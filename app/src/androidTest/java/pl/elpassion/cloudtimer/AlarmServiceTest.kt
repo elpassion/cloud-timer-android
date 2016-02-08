@@ -12,8 +12,11 @@ import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.AlarmReceiver.Companion.REQUEST_CODE
+import pl.elpassion.cloudtimer.alarm.AlarmReceiver.Companion.REQUEST_CODE
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
+import pl.elpassion.cloudtimer.alarm.AlarmReceiver
+import pl.elpassion.cloudtimer.alarm.NotificationReceiver
+import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.domain.Timer
 import java.lang.System.currentTimeMillis
 
@@ -51,12 +54,11 @@ class AlarmServiceTest {
 
     fun alarmReceived() {
         var alarmRecived = false
-        soundPlayer = { context: Context ->
+        NotificationReceiver.displayNotification = { context: Context ->
             alarmRecived = true
         }
         val newTimer = Timer("test", 1, currentTimeMillis() + 1000)
         scheduleAlarm(newTimer, activity)
-        //tod
 
         SystemClock.sleep(100)
 

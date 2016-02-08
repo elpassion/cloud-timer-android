@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.NumberPicker
+import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.domain.Timer
 
 class TimerActivity : Activity() {
@@ -27,7 +28,6 @@ class TimerActivity : Activity() {
             // TODO: TMP create timer
             val newTimer = Timer("", getTime(), System.currentTimeMillis() + getTime())
             scheduleAlarm(newTimer, this)
-            //alarmDao.save(newTimer)
         }
     }
 
@@ -37,6 +37,7 @@ class TimerActivity : Activity() {
         wrapSelectorWheel = true
         value = defaultValue
     }
+
     private fun getTime():Long{
         return convertTime(hoursPicker.value,minutesPicker.value,secondsPicker.value)
     }
