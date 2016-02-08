@@ -46,7 +46,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
     }
 
-    fun save(timer: Timer) {
+    fun save(timer: Timer): String {
         val values = ContentValues()
         values.put(KEY_TIMER_TITLE, timer.title)
         values.put(KEY_DURATION, timer.duration)
@@ -56,9 +56,13 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
             values.put(KEY_GROUP_NAME, timer.group.name)
 
         if (timer.uid == null) {
+            val uuId = UUID.randomUUID().toString()
+            values.put(KEY_TIMER_UID, uuId)
             writableDatabase.insert(TABLE_TIMER, null, values)
+            return uuId
         } else {
             writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid.toString()))
+            return timer.uid
         }
     }
 
@@ -67,17 +71,33 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER", null)
         res.moveToFirst()
         while (res.isAfterLast == false) {
-            val uId = res.getString(res.getColumnIndex(KEY_TIMER_UID))
-            val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
-            val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
-            val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
-            val timeLeft = res.getLong(res.getColumnIndex(KEY_TIME_LEFT))
-            val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
-            val timer = Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
-            alarms.add(timer)
+            alarms.add(getTimerFromCursor(res))
             res.moveToNext()
         }
         return alarms
+    }
+
+    fun findOne(uuId: String): Timer {
+        val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where $KEY_TIMER_UID = '$uuId'", null)
+        res.moveToFirst()
+        if (res.isAfterLast == false) {
+            return getTimerFromCursor(res)
+        }
+        throw NoSuchElementException()
+    }
+
+    private fun getTimerFromCursor(res: Cursor): Timer {
+        val uId = res.getString(res.getColumnIndex(KEY_TIMER_UID))
+        val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
+        val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
+        val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
+        val timeLeft = res.getLong(res.getColumnIndex(KEY_TIME_LEFT))
+        val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
+        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
+    }
+
+    fun deleteOne(uid: String) {
+        readableDatabase.delete(TABLE_TIMER, KEY_TIMER_UID + "=?", arrayOf(uid))
     }
 
 }

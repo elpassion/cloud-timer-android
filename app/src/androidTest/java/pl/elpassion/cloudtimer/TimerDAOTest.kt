@@ -7,12 +7,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.domain.Timer
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class TimerDAOTest {
-    companion object{
-        val timer = Timer("test",2000,System.currentTimeMillis()+2000)
+    companion object {
+        var timer = Timer("test", 2000, System.currentTimeMillis() + 2000)
+        var uid = ""
     }
+
     @Rule @JvmField
     public val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
 
@@ -20,7 +23,14 @@ class TimerDAOTest {
 
     @Test
     fun isAlarmCanByAddedToDB() {
-       //alarmDao.save(timer)
+        uid = alarmDao.save(timer)
+        timer = Timer(timer.title, timer.duration, timer.endTime, uid)
         assertTrue(alarmDao.findAll().isNotEmpty())
+    }
+
+    @Test(expected = NoSuchElementException::class)
+    fun isTestTimerCanByDeleted(){
+        alarmDao.deleteOne(uid)
+        assertTrue(alarmDao.findOne(uid).title.equals(timer.title))
     }
 }
