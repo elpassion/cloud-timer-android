@@ -1,8 +1,10 @@
 package pl.elpassion.cloudtimer.domain
 
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import pl.elpassion.cloudtimer.TimeConverter
+import java.util.*
 
 class DateFormatterTests {
 
@@ -10,10 +12,13 @@ class DateFormatterTests {
     val twoHoursTwentyMinutesAndTwoSeconds: Long = 8402000
 
 
+    @Before
+    fun setUpTimeZone() = TimeZone.setDefault(TimeZone.getTimeZone("Europe/Warsaw"))
+
     @Test
-    fun ifEightPMInMillisecondsIsConvertedCorrectly() {
-        val eightPM = TimeConverter.formatFromMilliToTime(ninePM)
-        assertEquals("21:00", eightPM)
+    fun ifNinePMInMillisecondsIsConvertedCorrectly() {
+        val ninePM = TimeConverter.formatFromMilliToTime(ninePM)
+        assertEquals("21:00", ninePM)
     }
 
     @Test
