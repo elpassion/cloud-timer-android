@@ -3,12 +3,10 @@ package pl.elpassion.cloudtimer
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.support.design.widget.Snackbar
 import android.util.Log
-import android.widget.Toast
 
 
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
     companion object {
         public final val REQUEST_CODE = 424232
     }

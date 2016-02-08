@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.NumberPicker
-import domain.AlarmData
 
 class TimerActivity : Activity() {
     val hoursPicker by lazy { findViewById(R.id.hours_picker)as NumberPicker }
@@ -25,9 +24,9 @@ class TimerActivity : Activity() {
         super.onStart()
         startButton.setOnClickListener {
             // TODO: TMP create timer
-            val newTimer = AlarmData(convertTime(hoursPicker.value, minutesPicker.value, secondsPicker.value))
+            val newTimer = AlarmData(convertTime(hoursPicker.value, minutesPicker.value))
             scheduleAlarm(newTimer, this)
-            //alarmDao.save(newTimer)
+
         }
     }
 
