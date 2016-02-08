@@ -5,4 +5,9 @@ class Timer(val title: String, val duration: Long, val endTime: Long, val uid: S
     fun isShared(): Boolean {
         return group != null
     }
+
+    fun isPaused(): Boolean {
+        return timeLeft != null
+    }
+
 }

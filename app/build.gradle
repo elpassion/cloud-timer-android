@@ -59,6 +59,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
+    testCompile ('junit:junit:4.11')
 }
 buildscript {
     ext.kotlin_version = '1.0.0-rc-1036'
