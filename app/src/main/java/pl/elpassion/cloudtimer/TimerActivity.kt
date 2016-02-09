@@ -31,6 +31,7 @@ class TimerActivity : Activity() {
             val newTimer = Timer(timerTitle.text.toString(), getTime(), System.currentTimeMillis() + getTime())
             scheduleAlarm(newTimer, this)
             alarmDao.save(newTimer)
+            finish()
         }
     }
 
