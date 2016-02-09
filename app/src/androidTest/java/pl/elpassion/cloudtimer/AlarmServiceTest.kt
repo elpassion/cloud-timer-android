@@ -16,6 +16,7 @@ import pl.elpassion.cloudtimer.alarm.AlarmReceiver.Companion.REQUEST_CODE
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.alarm.AlarmReceiver
 import pl.elpassion.cloudtimer.alarm.NotificationReceiver
+import pl.elpassion.cloudtimer.alarm.NotificationTools
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.domain.Timer
 import java.lang.System.currentTimeMillis
@@ -54,7 +55,7 @@ class AlarmServiceTest {
 
     fun alarmReceived() {
         var alarmRecived = false
-        NotificationReceiver.displayNotification = { context: Context ->
+        NotificationTools.createNotification = { s1: String, s2: String, context: Context ->
             alarmRecived = true
         }
         val newTimer = Timer("test", 1, currentTimeMillis() + 1000)

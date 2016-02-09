@@ -12,7 +12,7 @@ import pl.elpassion.cloudtimer.R
 object NotificationTools {
     val ALARM_NOTIFICATION_ID = 329515
 
-    fun createNotification(title : String, text : String, context: Context) {
+    var createNotification = fun(title : String, text : String, context: Context) {
         val builder = createNotificationBuilder(title, text, context)
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(ALARM_NOTIFICATION_ID, builder.build())

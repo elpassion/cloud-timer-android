@@ -22,7 +22,6 @@ class TimerDAOTest {
 
     protected val alarmDao by lazy { TimerDAO.getInstance(activity.getActivity().applicationContext) }
 
-    @Ignore
     @Test
     fun isAlarmCanByAddedToDB() {
         val uid = alarmDao.save(timer)

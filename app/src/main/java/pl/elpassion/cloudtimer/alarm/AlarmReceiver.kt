@@ -13,8 +13,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.e("ALARM", "broadcast recieved")
-       // todo createNotificationManager("Title", "text", context)
-       // NotificationReceiver.displayNotification(context)
+        NotificationTools.createNotification("Placeholder", "wez se z intentu jakies dane", context)
     }
 }
 
