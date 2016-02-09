@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerActivity
-import pl.elpassion.cloudtimer.domain.Group
+import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
@@ -18,17 +18,13 @@ class ListOfTimersActivity : AppCompatActivity() {
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
     private val recyclerView by lazy { findViewById(R.id.user_timers_list) as RecyclerView }
     private val timers: MutableList<Timer> = ArrayList()
-    private val fakeTimers = listOf(getTimer(1), getTimer(2), getTimer(3))
     private val handler: Handler = Handler()
     private val oneSec: Long = 1000
+    private val dao = TimerDAO.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_timers_list_view)
-        timers.addAll(fakeTimers)
-        if (timers.isEmpty()) {
-            startTimerActivity()
-        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         createNewTimerButton.setOnClickListener {
             startTimerActivity()
@@ -36,22 +32,26 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        getTimers()
+        startTimerActivityIfThereIsNoTimers()
+        recyclerView.adapter = TimersListAdapter(timers)
         handler.postDelayed(TimeRefresher(), oneSec)
         super.onResume()
+    }
+
+    private fun startTimerActivityIfThereIsNoTimers() {
+        if (timers.isEmpty())
+            startTimerActivity()
+    }
+
+    private fun getTimers() {
+        timers.clear()
+        timers.addAll(dao.findAll())
     }
 
     override fun onPause() {
         handler.removeCallbacks(TimeRefresher())
         super.onPause()
-    }
-
-    private fun getTimer(i: Int): Timer {
-        return Timer(
-                title = "title" + i,
-                endTime = 1454961600000 + 86400000,
-                duration = 1000 * 60 * 20,
-                group = Group("GRUPA" + i)
-        )
     }
 
     private fun startTimerActivity() {
@@ -61,10 +61,9 @@ class ListOfTimersActivity : AppCompatActivity() {
 
     inner class TimeRefresher : Runnable {
         override fun run() {
-            recyclerView.adapter = TimersListAdapter(timers)
+            recyclerView.adapter.notifyDataSetChanged()
             handler.postDelayed(this, oneSec)
         }
     }
-
 
 }
