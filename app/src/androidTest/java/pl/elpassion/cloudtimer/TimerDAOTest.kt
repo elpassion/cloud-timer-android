@@ -3,6 +3,7 @@ package pl.elpassion.cloudtimer
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertTrue
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,6 +19,7 @@ class TimerDAOTest {
 
     protected val alarmDao by lazy { TimerDAO.getInstance(activity.getActivity().applicationContext) }
 
+    @Ignore
     @Test
     fun isAlarmCanByAddedToDB() {
        //alarmDao.save(timer)

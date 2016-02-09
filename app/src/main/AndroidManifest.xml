@@ -27,12 +27,10 @@
             android:value="49fd2e0b3dfc9eb4d3b61ea854f0fb49f87f5fb8" />
         <activity android:name=".TimerActivity"/>
         <receiver
-            android:name=".alarm.AlarmReceiver"
-            android:process=":remote" >
+            android:name=".alarm.AlarmReceiver">
         </receiver>
         <receiver
-            android:name=".alarm.NotificationReceiver"
-            android:process=":remote" >
+            android:name=".alarm.NotificationReceiver">
         </receiver>
     </application>
 

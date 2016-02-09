@@ -19,14 +19,14 @@ import java.util.concurrent.TimeUnit
 @RunWith(AndroidJUnit4::class)
 class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::class.java) {
 
+
+
     @Test
     fun alarmSchedulerNoPendingIntentsAtStart()
     {
         activity
         clearIntent()
-        val alarmUp = (PendingIntent.getBroadcast
-        (activity, AlarmReceiver.REQUEST_CODE,
-                Intent(activity, AlarmReceiver::class.java), PendingIntent.FLAG_NO_CREATE))
+        val alarmUp = getPendingIntent()
         Assert.assertTrue(alarmUp == null)
     }
 
@@ -36,9 +36,7 @@ class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
         activity
         clearIntent()
         pressButton(R.id.start_button)
-        val alarmUp = (PendingIntent.getBroadcast
-                (activity, AlarmReceiver.REQUEST_CODE,
-                        Intent(activity, AlarmReceiver::class.java), PendingIntent.FLAG_NO_CREATE))
+        val alarmUp = getPendingIntent()
         Assert.assertTrue(alarmUp != null)
     }
 
@@ -49,13 +47,22 @@ class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
         clearIntent()
         val requestCodeToTry = 123
         pressButton(R.id.start_button)
-        val alarmUp = (PendingIntent.getBroadcast
-        (activity, requestCodeToTry,
-                Intent(activity, AlarmReceiver::class.java), PendingIntent.FLAG_NO_CREATE))
+        val alarmUp = getPendingIntent(requestCodeToTry)
         Assert.assertTrue(alarmUp == null)
     }
 
-    fun clearIntent()
+
+    private fun getPendingIntent() : PendingIntent? {
+        return getPendingIntent(AlarmReceiver.REQUEST_CODE)
+    }
+
+    private fun getPendingIntent(requestCode : Int) : PendingIntent? {
+        return (PendingIntent.getBroadcast
+        (activity, requestCode,
+                Intent(activity, AlarmReceiver::class.java), PendingIntent.FLAG_NO_CREATE))
+    }
+
+    private fun clearIntent()
     {
         val intent = PendingIntent.getBroadcast(activity, AlarmReceiver.REQUEST_CODE,
                 Intent(activity, AlarmReceiver::class.java), PendingIntent.FLAG_CANCEL_CURRENT)
@@ -73,9 +80,8 @@ class AlarmServiceTest : ActivityInstrumentationTestCase2<MainActivity>(MainActi
 
         val newTimer = Timer("test",TimeUnit.MILLISECONDS.convert(1, TimeUnit.MILLISECONDS),System.currentTimeMillis()+1000)
         scheduleAlarm(newTimer, activity)
-        //tod
 
-        SystemClock.sleep(200)
+        SystemClock.sleep(100)
 
         Assert.assertTrue(alarmRecived)
     }

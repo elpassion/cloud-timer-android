@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.NumberPicker
-import pl.elpassion.cloudtimer.alarm.createNotificationManager
+import pl.elpassion.cloudtimer.alarm.NotificationTools
 
 class TimerActivity : Activity() {
     val hoursPicker by lazy { findViewById(R.id.hours_picker)as NumberPicker }
@@ -28,7 +28,7 @@ class TimerActivity : Activity() {
             //scheduleAlarm(Timer("", getTime(), System.currentTimeMillis() + getTime()), this)
             //alarmDao.save(newTimer)
 
-            createNotificationManager("Title", "text", this)
+            NotificationTools.createNotification("Title", "text", this)
         }
     }
 
