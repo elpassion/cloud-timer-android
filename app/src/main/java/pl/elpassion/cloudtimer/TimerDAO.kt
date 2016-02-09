@@ -61,7 +61,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
             writableDatabase.insert(TABLE_TIMER, null, values)
             return uuId
         } else {
-            writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid.toString()))
+            writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid))
             return timer.uid
         }
     }
