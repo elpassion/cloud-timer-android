@@ -6,12 +6,12 @@ import pl.elpassion.cloudtimer.domain.Timer
 class TimersListAdapter(val timers: List<Timer>) : BaseAdapter() {
 
     init {
-        timers.forEach {
+        timers.sortedBy { it.endTime }.forEach {
             if (it is Timer){
                 if (it.isShared())
                     adapters.add(SharedTimerItemAdapter(it))
                 else
-                    adapters.add(SharedTimerItemAdapter(it))
+                    adapters.add(TimerItemAdapter(it))
             }
         }
     }
