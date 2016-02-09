@@ -39,24 +39,24 @@ class ListOfTimersActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    private fun startTimerActivityIfThereIsNoTimers() {
-        if (timers.isEmpty())
-            startTimerActivity()
-    }
-
     private fun getTimers() {
         timers.clear()
         timers.addAll(dao.findAll())
     }
 
-    override fun onPause() {
-        handler.removeCallbacks(TimeRefresher())
-        super.onPause()
+    private fun startTimerActivityIfThereIsNoTimers() {
+        if (timers.isEmpty())
+            startTimerActivity()
     }
 
     private fun startTimerActivity() {
         val intent = Intent(this, TimerActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onPause() {
+        handler.removeCallbacks(TimeRefresher())
+        super.onPause()
     }
 
     inner class TimeRefresher : Runnable {
