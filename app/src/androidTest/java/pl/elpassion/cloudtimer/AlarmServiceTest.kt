@@ -12,10 +12,11 @@ import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.AlarmReceiver.Companion.REQUEST_CODE
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
+import pl.elpassion.cloudtimer.alarm.AlarmReceiver
+import pl.elpassion.cloudtimer.alarm.AlarmReceiver.Companion.REQUEST_CODE
+import pl.elpassion.cloudtimer.alarm.NotificationTools
 import pl.elpassion.cloudtimer.domain.Timer
-import java.lang.System.currentTimeMillis
 
 @RunWith(AndroidJUnit4::class)
 class AlarmServiceTest {
@@ -25,10 +26,12 @@ class AlarmServiceTest {
     val activity by lazy { activityRule.activity }
     private val alarmReceiverClass = AlarmReceiver::class.java
 
+
+
     @Test
     fun alarmSchedulerNoPendingIntentsAtStart() {
         clearIntent()
-        val alarmUp = getBroadcast(activity, REQUEST_CODE, getIntent(), FLAG_NO_CREATE)
+        val alarmUp = getPendingIntent()
         assertNull(alarmUp)
     }
 
@@ -36,7 +39,7 @@ class AlarmServiceTest {
     fun alarmSchedulerCreatesPendingIntent() {
         clearIntent()
         pressButton(R.id.start_button)
-        val alarmUp = getBroadcast(activity, REQUEST_CODE, getIntent(), FLAG_NO_CREATE)
+        val alarmUp = getPendingIntent()
         assertNotNull(alarmUp)
     }
 
@@ -45,24 +48,23 @@ class AlarmServiceTest {
         clearIntent()
         val requestCodeToTry = 123
         pressButton(R.id.start_button)
-        val alarmUp = getBroadcast(activity, requestCodeToTry, getIntent(), FLAG_NO_CREATE)
+        val alarmUp = getPendingIntent(requestCodeToTry)
         assertNull(alarmUp)
     }
 
     fun alarmReceived() {
         var alarmRecived = false
-        soundPlayer = { context: Context ->
+        NotificationTools.createNotification = { s1: String, s2: String, context: Context ->
             alarmRecived = true
         }
-        val newTimer = Timer("test", 1, currentTimeMillis() + 1000)
-        scheduleAlarm(newTimer, activity)
-        //tod
+        val newTimer = Timer("test", 1, System.currentTimeMillis() + 1000)
 
         SystemClock.sleep(100)
 
         Assert.assertTrue(alarmRecived)
     }
 
-    private fun clearIntent() = getBroadcast(activity, REQUEST_CODE, getIntent(), FLAG_CANCEL_CURRENT).cancel()
-    private fun getIntent() = Intent(activity, alarmReceiverClass)
+    private fun clearIntent() = getBroadcast(activity, REQUEST_CODE, Intent(activity, alarmReceiverClass), FLAG_CANCEL_CURRENT).cancel()
+    private fun getPendingIntent() = getPendingIntent(REQUEST_CODE)
+    private fun getPendingIntent(reqCode : Int) = getBroadcast(activity, reqCode, Intent(activity, alarmReceiverClass), FLAG_NO_CREATE)
 }
