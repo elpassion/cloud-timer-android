@@ -26,6 +26,7 @@
             android:name="io.fabric.ApiKey"
             android:value="49fd2e0b3dfc9eb4d3b61ea854f0fb49f87f5fb8" />
         <activity android:name=".TimerActivity"/>
+        <activity android:name=".LoginActivity"/>
         <receiver
             android:name=".alarm.AlarmReceiver"
             android:process=":remote">
