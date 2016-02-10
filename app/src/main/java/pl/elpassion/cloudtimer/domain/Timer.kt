@@ -10,8 +10,8 @@ class Timer(val title: String, val duration: Long, val endTime: Long, val uid: S
         }
     }
 
-    constructor(title: String, duration: Long, uid: String? = null, group: Group? = null, timeLeft: Long? = null)
-    : this(title, duration, currentTimeMillis() + duration, uid ?: randomUUID(), group, timeLeft) {
+    constructor(title: String, duration: Long, uid: String? = null, group: Group? = null, timeLeft: Long? = null) :
+    this(title, duration, currentTimeMillis() + duration, uid ?: randomUUID(), group, timeLeft) {
     }
 
     fun isShared(): Boolean {
@@ -21,5 +21,4 @@ class Timer(val title: String, val duration: Long, val endTime: Long, val uid: S
     fun isPaused(): Boolean {
         return timeLeft != null
     }
-
 }

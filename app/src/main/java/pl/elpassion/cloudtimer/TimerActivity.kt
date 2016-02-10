@@ -28,7 +28,7 @@ class TimerActivity : Activity() {
         super.onStart()
         startButton.setOnClickListener {
             // TODO: TMP create timer
-            val newTimer = Timer(timerTitle.text.toString(), getTime(), System.currentTimeMillis() + getTime())
+            val newTimer = Timer(timerTitle.text.toString(), getTime())
             scheduleAlarm(newTimer, this)
             alarmDao.save(newTimer)
             finish()
