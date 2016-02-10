@@ -1,12 +1,13 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import pl.elpassion.cloudtimer.LoginActivity
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
@@ -28,10 +29,14 @@ class TimerItemAdapter(private val timer: Timer) : ItemAdapter {
         sharedTimerHolder.counter.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
-        sharedTimerHolder.shareButton.setOnClickListener {
-            Log.e("CLICK"," ON Share Button")
+        sharedTimerHolder.shareButton.setOnClickListener { view ->
+            //todo
+            login(view)
         }
     }
+
+    private fun login(view: View) =
+        view.context.startActivity(Intent(view.context, LoginActivity::class.java))
 
     private inner class TimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val counter = itemView.findViewById(R.id.timer_counter) as TextView

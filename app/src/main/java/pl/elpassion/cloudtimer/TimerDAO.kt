@@ -1,6 +1,6 @@
 package pl.elpassion.cloudtimer
 
-import android.content.ContentValues
+import  android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -25,6 +25,10 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         fun getInstance(context: Context): TimerDAO {
             if (dao == null) dao = TimerDAO(context = context, factory = null)
             return dao!!
+        }
+
+        fun getInstance(): TimerDAO {
+            return getInstance(CloudTimerApp.context)
         }
     }
 

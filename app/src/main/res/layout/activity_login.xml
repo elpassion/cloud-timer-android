@@ -18,6 +18,7 @@
     <Button
         android:text="@string/login_send"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/login_via_email_button"/>
 
 </LinearLayout>
