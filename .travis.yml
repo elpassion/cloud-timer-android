@@ -30,3 +30,7 @@ script:
 after_success:
   - sh scripts/coveralls.sh
   - ./gradlew crashlyticsUploadDistributionDebug
+
+notifications:
+  slack:
+    on_success: never
