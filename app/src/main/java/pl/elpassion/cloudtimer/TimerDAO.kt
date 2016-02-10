@@ -48,22 +48,18 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
 
     fun save(timer: Timer): String {
         val values = ContentValues()
+        values.put(KEY_TIMER_UID, timer.uid)
         values.put(KEY_TIMER_TITLE, timer.title)
         values.put(KEY_DURATION, timer.duration)
         values.put(KEY_END_TIME, timer.endTime)
         values.put(KEY_TIME_LEFT, timer.timeLeft)
+
         if (timer.group != null)
             values.put(KEY_GROUP_NAME, timer.group.name)
 
-        if (timer.uid == null) {
-            val uuId = UUID.randomUUID().toString()
-            values.put(KEY_TIMER_UID, uuId)
+        if (writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid)) == 0)
             writableDatabase.insert(TABLE_TIMER, null, values)
-            return uuId
-        } else {
-            writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid))
-            return timer.uid
-        }
+        return timer.uid
     }
 
     fun findAll(): List<Timer> {
@@ -102,6 +98,17 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
 
     fun deleteAll() {
         readableDatabase.delete(TABLE_TIMER, null, null)
+    }
+
+    fun findLocalTimers(): List<Timer> {
+        val alarms: MutableList<Timer> = ArrayList()
+        val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where $KEY_GROUP_NAME is null", null)
+        res.moveToFirst()
+        while (res.isAfterLast == false) {
+            alarms.add(getTimerFromCursor(res))
+            res.moveToNext()
+        }
+        return alarms
     }
 
 }
