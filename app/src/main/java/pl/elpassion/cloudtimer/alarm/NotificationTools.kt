@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.alarm
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -8,14 +9,18 @@ import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import pl.elpassion.cloudtimer.R
 
-// todo placeholder
 object NotificationTools {
-    val ALARM_NOTIFICATION_ID = 329515
+    val ALARM_NOTIFICATION_ID = 329515 // todo placeholder
 
-    var createNotification = fun(title : String, text : String, context: Context) {
+    fun createNotification(title : String, text : String, context: Context) {
         val builder = createNotificationBuilder(title, text, context)
+        val notification = builder.build()
+        fireNotification(context, notification)
+    }
+
+    var fireNotification = fun (context: Context, notification: Notification) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(ALARM_NOTIFICATION_ID, builder.build())
+        notificationManager.notify(ALARM_NOTIFICATION_ID, notification)
     }
 
     //todo arg for ID and multiple ids?
