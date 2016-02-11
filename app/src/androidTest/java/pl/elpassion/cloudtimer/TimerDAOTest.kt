@@ -4,7 +4,6 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -58,7 +57,10 @@ class TimerDAOTest {
         val uuIds = arrayOf(
                 alarmDao.save(Timer("local1", oneSecond)),
                 alarmDao.save(Timer("local2", twoSeconds)),
-                alarmDao.save(Timer("notLocal", threeSeconds, null, Group("elParafia"))))
+                alarmDao.save(Timer(
+                        title = "notLocal",
+                        duration = threeSeconds,
+                        group = Group("elParafia"))))
         assertEquals(2, alarmDao.findLocalTimers().size)
         uuIds.forEach { alarmDao.deleteOne(it) }
     }
@@ -66,7 +68,7 @@ class TimerDAOTest {
     @Test
     fun insertTimerWithUUID() {
         val uuid = "testUuId"
-        alarmDao.save(Timer("test", oneSecond, uuid))
+        alarmDao.save(Timer(title = "test", duration = oneSecond, uid = uuid))
         assertEquals(alarmDao.findOne(uuid).title, "test")
         alarmDao.deleteOne(uuid)
     }
@@ -74,7 +76,7 @@ class TimerDAOTest {
     @Test
     fun editTimerInDB() {
         val uid = alarmDao.save(Timer("elParafia", oneSecond))
-        alarmDao.save(Timer("pralka", twoSeconds, uid))
+        alarmDao.save(Timer(title = "pralka", duration = twoSeconds, uid = uid))
         assertEquals("pralka", alarmDao.findOne(uid).title)
     }
 }
