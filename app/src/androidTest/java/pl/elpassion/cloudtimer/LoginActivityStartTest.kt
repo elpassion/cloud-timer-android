@@ -12,7 +12,7 @@ import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityTest {
+class LoginActivityStartTest {
     @Rule @JvmField
     val rule = ActivityTestRule<ListOfTimersActivity>(ListOfTimersActivity::class.java)
 
