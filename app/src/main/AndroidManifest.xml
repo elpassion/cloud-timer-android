@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="pl.elpassion.cloudtimer">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,6 +8,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
+        tools:replace="android:icon"
         android:name=".CloudTimerApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,6 +29,7 @@
             android:name="io.fabric.ApiKey"
             android:value="49fd2e0b3dfc9eb4d3b61ea854f0fb49f87f5fb8" />
         <activity android:name=".TimerActivity"/>
+        <activity android:name=".NewTimerActivityV1"/>
         <receiver
             android:name=".alarm.AlarmReceiver"
             android:process=":remote">
