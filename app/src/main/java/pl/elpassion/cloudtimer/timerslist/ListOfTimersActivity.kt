@@ -7,8 +7,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import pl.elpassion.cloudtimer.NewTimerActivityV1
 import pl.elpassion.cloudtimer.R
+import pl.elpassion.cloudtimer.TimerActivity
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
@@ -50,8 +50,7 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     private fun startTimerActivity() {
-//        val intent = Intent(this, TimerActivity::class.java)
-        val intent = Intent(this, NewTimerActivityV1::class.java)
+        val intent = Intent(this, TimerActivity::class.java)
         startActivity(intent)
     }
 
