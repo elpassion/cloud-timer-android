@@ -5,5 +5,5 @@
     <color name="colorSecondaryElements">#3C77D3</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#dd4547</color>
-    <item name="colorTimerBackgroundElements">#953034</item>
+    <color name="colorTimerBackgroundElements">#953034</color>
 </resources>
