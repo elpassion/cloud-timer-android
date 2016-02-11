@@ -23,7 +23,7 @@ class TimerViewsBackButtonActionWithTimersTests {
         private val oneSec: Long = 1000
         private val timerTitle = "test"
         private fun getTimer(): Timer = Timer(title = timerTitle, duration = oneSec)
-        @BeforeClass
+        @BeforeClass @JvmStatic
         fun clearDBAndAddOneTimer() {
             timerDao.deleteAll()
             timerDao.save(getTimer())

@@ -17,7 +17,7 @@ class TimerViewsBackButtonActionWithNoTimersTests {
 
     companion object {
         private val timerDao by lazy { TimerDAO.getInstance() }
-        @BeforeClass
+        @BeforeClass @JvmStatic
         fun clearDB() {
             timerDao.deleteAll()
         }
