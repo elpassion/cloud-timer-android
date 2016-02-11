@@ -15,31 +15,40 @@ import java.util.*
 
 class ListOfTimersActivity : AppCompatActivity() {
 
+    companion object {
+        private const val timerActivityResultCode = 1
+        private const val oneSec: Long = 1000
+        private val handler: Handler = Handler()
+    }
+
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
     private val recyclerView by lazy { findViewById(R.id.user_timers_list) as RecyclerView }
     private val timers: MutableList<Timer> = ArrayList()
-    private val handler: Handler = Handler()
-    private val oneSec: Long = 1000
-    private val dao = TimerDAO.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_timers_list_view)
+        setUpRecyclerView()
         recyclerView.layoutManager = LinearLayoutManager(this)
         createNewTimerButton.setOnClickListener {
             startTimerActivity()
         }
     }
 
-    override fun onResume() {
+    private fun setUpRecyclerView() {
         getTimers()
         startTimerActivityIfThereIsNoTimers()
         recyclerView.adapter = TimersListAdapter(timers)
+    }
+
+    override fun onResume() {
+        getTimers()
         handler.postDelayed(TimeRefresher(), oneSec)
         super.onResume()
     }
 
     private fun getTimers() {
+        val dao = TimerDAO.getInstance()
         timers.clear()
         timers.addAll(dao.findAll())
     }
@@ -50,13 +59,23 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     private fun startTimerActivity() {
-        val intent = Intent(this, TimerActivity::class.java)
-        startActivity(intent)
+        TimerActivity.start(this, timerActivityResultCode)
     }
 
     override fun onPause() {
         handler.removeCallbacks(TimeRefresher())
         super.onPause()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode, resultCode))
+            finish()
+        else
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode: Int, resultCode: Int): Boolean {
+        return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
     }
 
     inner class TimeRefresher : Runnable {

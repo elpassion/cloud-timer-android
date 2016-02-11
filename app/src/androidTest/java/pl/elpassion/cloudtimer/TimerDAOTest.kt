@@ -24,7 +24,7 @@ class TimerDAOTest {
     @Rule @JvmField
     val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
 
-    protected val alarmDao by lazy { TimerDAO.getInstance(activity.getActivity().applicationContext) }
+    protected val alarmDao by lazy { TimerDAO.getInstance() }
 
     @Test
     fun isAlarmCanByAddedToDB() {

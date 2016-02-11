@@ -19,7 +19,7 @@ class CreateNewTimerTest {
 
     @Before
     fun setUpTimer() {
-        val timerDao = TimerDAO.getInstance(listOfTimersActivity.activity)
+        val timerDao = TimerDAO.getInstance()
         timerDao.deleteAll()
         timerDao.save(Timer(
                 title = "TestTimer",

@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
@@ -19,13 +20,14 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         private val KEY_TIME_LEFT = "timeLeft"
         private val KEY_END_TIME = "endTime"
         private val KEY_GROUP_NAME = "groupName"
-
-
         private var dao: TimerDAO? = null
-        fun getInstance(context: Context): TimerDAO {
+        private fun getInstance(context: Context): TimerDAO {
             if (dao == null) dao = TimerDAO(context = context, factory = null)
             return dao!!
         }
+
+        fun getInstance(): TimerDAO = getInstance(applicationContext)
+
     }
 
     override fun onConfigure(db: SQLiteDatabase) {

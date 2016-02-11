@@ -10,11 +10,10 @@ import pl.elpassion.cloudtimer.domain.Timer
 
 class BootCompleteReceiver : BroadcastReceiver() {
 
-
     override fun onReceive(context: Context, intent: Intent?) {
         Log.e("BOOT COMPLETED", "Device is started")
         val currentTime = System.currentTimeMillis()
-        val timerDao = TimerDAO.getInstance(context)
+        val timerDao = TimerDAO.getInstance()
         val timers = timerDao.findAll()
         scheduleAlarmForActiveTimers(context, currentTime, timers)
     }
