@@ -2,9 +2,11 @@ package pl.elpassion.cloudtimer
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import pl.elpassion.cloudtimer.network.SignInService
 
 class LoginActivity : AppCompatActivity() {
     private val input by lazy { findViewById(R.id.email_input) as EditText }
@@ -21,10 +23,18 @@ class LoginActivity : AppCompatActivity() {
     private fun validateInput(input: String) {
         if (!regex.matches(input))
             displayError()
+        else
+            myPointlessService.singIn(input)
     }
 
     private fun displayError() {
         val label = findViewById(R.id.incorrect_login_address)
         label.visibility = View.VISIBLE
+    }
+}
+
+var myPointlessService = object: SignInService {
+    override fun singIn(email: String) {
+        Log.e("Log","e!")
     }
 }
