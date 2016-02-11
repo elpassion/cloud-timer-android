@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import pl.elpassion.cloudtimer.network.SignInService
+import pl.elpassion.cloudtimer.network.myPointlessService
 
 class LoginActivity : AppCompatActivity() {
     private val input by lazy { findViewById(R.id.email_input) as EditText }
@@ -33,8 +34,3 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-var myPointlessService = object: SignInService {
-    override fun singIn(email: String) {
-        Log.e("Log","e!")
-    }
-}

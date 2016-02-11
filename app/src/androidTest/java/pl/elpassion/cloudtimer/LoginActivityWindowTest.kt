@@ -11,6 +11,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.network.SignInService
+import pl.elpassion.cloudtimer.network.myPointlessService
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityWindowTest {
