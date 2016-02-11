@@ -7,12 +7,7 @@ class TimersListAdapter(val timers: List<Timer>) : BaseAdapter() {
 
     init {
         timers.sortedBy { it.endTime }.forEach {
-            if (it is Timer){
-                if (it.isShared())
-                    adapters.add(SharedTimerItemAdapter(it))
-                else
-                    adapters.add(TimerItemAdapter(it))
-            }
+            adapters.add(TimerItemAdapter(it))
         }
     }
 
