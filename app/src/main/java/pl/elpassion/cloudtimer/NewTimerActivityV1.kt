@@ -9,7 +9,8 @@ import com.triggertrap.seekarc.SeekArc
 class NewTimerActivityV1 : Activity(){
 
     val seekArcMinutes by lazy { findViewById(R.id.timer_seekArc_minutes) as SeekArc }
-    val timerDuration by lazy { findViewById(R.id.timer_duration_minutes) as TextView }
+    val timerDurationMinutes by lazy { findViewById(R.id.timer_duration_minutes) as TextView }
+    val timerDurationSeconds by lazy { findViewById(R.id.timer_duration_seconds) as TextView }
     val timerTimeToEnd by lazy { findViewById(R.id.timer_time_to_end) as TextView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +21,13 @@ class NewTimerActivityV1 : Activity(){
 
     inner class SeekArcMinutesChangeListener : SeekArc.OnSeekArcChangeListener {
 
-        override fun onProgressChanged(p0: SeekArc?, p1: Int, p2: Boolean) {
-            timerDuration.text = p1.toString() + ":00"
-            val timerDurationInMilis = p1 * 60 * 1000
+        override fun onProgressChanged(p0: SeekArc?, currentValue: Int, p2: Boolean) {
+
+            val currentTimerValue = Math.round(currentValue/360f*59)
+            timerDurationMinutes.text = currentTimerValue.toString()
+            val timerDurationInMilis = currentTimerValue * 60 * 1000
             val currentTime = System.currentTimeMillis()
+            timerDurationSeconds.text = ":00"
             timerTimeToEnd.text = TimeConverter.formatFromMilliToTime(currentTime + timerDurationInMilis)
         }
 
