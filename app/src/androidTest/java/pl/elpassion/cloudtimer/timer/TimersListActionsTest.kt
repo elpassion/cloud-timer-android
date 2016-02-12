@@ -10,16 +10,13 @@ import java.util.*
 class TimersListActionsTest {
 
     val adapter = NewAdapter()
-    val insertions = ArrayList<Pair<Int, Int>>()
-    val changes = ArrayList<Pair<Int, Int>>()
     val operations = ArrayList<Any>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            insertions.add(Pair(positionStart, itemCount))
+            operations.add(InsertedOp(positionStart, itemCount))
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-            changes.add(Pair(positionStart, itemCount))
             operations.add(ChangeOp(positionStart, itemCount))
         }
 
@@ -36,14 +33,14 @@ class TimersListActionsTest {
     fun whenSingleItemIsAddedNotifyItemOnPositionZeroInserted() {
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
-        assertEquals(listOf(Pair(0, 1)), insertions)
+        assertEquals(listOf(InsertedOp(0, 1)), operations)
     }
 
     @Test
     fun whenTwoItemsAreAddedNotifyItemsOnPositionZeroAndOneInserted() {
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
-        assertEquals(listOf(Pair(0, 2)), insertions)
+        assertEquals(listOf(InsertedOp(0, 2)), operations)
     }
 
     @Test
@@ -51,7 +48,7 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000)))
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
-        assertEquals(listOf(Pair(0, 1)), changes)
+        assertEquals(listOf(ChangeOp(0, 1)), operations)
     }
 
     @Test
@@ -59,7 +56,7 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
-        assertEquals(listOf(Pair(0, 2)), changes)
+        assertEquals(listOf(ChangeOp(0, 2)), operations)
     }
 
     @Test
@@ -67,8 +64,7 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000)))
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
-        assertEquals(listOf(Pair(1, 1)), changes)
-        assertEquals(listOf(Pair(0, 1)), insertions)
+        assertEquals(listOf(InsertedOp(0, 1), ChangeOp(1, 1)), operations)
     }
 
     @Test
@@ -79,7 +75,7 @@ class TimersListActionsTest {
     }
 
     @Test
-    fun whenTimerIsRemovedShouldNofityAboutIt() {
+    fun whenTimerIsRemovedShouldNotifyAboutIt() {
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
@@ -90,3 +86,5 @@ class TimersListActionsTest {
 data class RemoveOp(val first: Int, val count: Int)
 
 data class ChangeOp(val first: Int, val count: Int)
+
+data class InsertedOp(val first: Int, val count: Int)
