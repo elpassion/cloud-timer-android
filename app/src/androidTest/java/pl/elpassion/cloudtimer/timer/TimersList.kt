@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timer
 
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -20,6 +21,7 @@ class TimersList {
     @Test
     fun addedTimerShouldBeOnTimersList() {
         typeTextInView(R.id.timer_title, "test")
+        closeSoftKeyboard()
         pressButton(R.id.start_button)
         isComponentDisplayed(R.id.timer_share_button)
     }
