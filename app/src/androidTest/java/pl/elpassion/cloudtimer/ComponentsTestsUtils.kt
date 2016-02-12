@@ -20,4 +20,8 @@ object ComponentsTestsUtils {
     fun isComponentDisplayed(id : Int) {
         onView(withId(id)).check(matches(isDisplayed()))
     }
+
+    fun typeTextInView(id: Int, text: String){
+        onView(withId(id)).perform(ViewActions.typeText(text))
+    }
 }

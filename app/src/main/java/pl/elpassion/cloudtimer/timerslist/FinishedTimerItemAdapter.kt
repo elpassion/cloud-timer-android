@@ -12,32 +12,31 @@ import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
-class TimerItemAdapter(val timer: Timer) : ItemAdapter {
+class FinishedTimerItemAdapter (val timer: Timer) : ItemAdapter {
 
-    override val itemViewType: Int = R.layout.user_timers_list_timer_item
+    override val itemViewType: Int = R.layout.user_timers_list_finished_timer_item
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(itemViewType, parent, false)
-        return TimerHolder(view)
+        return FinishedTimerHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
-        val sharedTimerHolder = holder as TimerHolder
-        val timeLeftInMilliSec = timer.endTime - System.currentTimeMillis()
-        sharedTimerHolder.counter.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
+        val sharedTimerHolder = holder as FinishedTimerHolder
+        sharedTimerHolder.duration.text = TimeConverter.formatFromMilliToMinutes(timer.duration)
         sharedTimerHolder.title.text = timer.title
-        sharedTimerHolder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
         sharedTimerHolder.shareButton.setOnClickListener {
             Log.e("CLICK"," ON Share Button")
         }
+        sharedTimerHolder.duration.setOnClickListener {
+            Log.e("Click","On duration")
+        }
     }
 
-    private inner class TimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val counter = itemView.findViewById(R.id.timer_counter) as TextView
-        val title = itemView.findViewById(R.id.timer_title) as TextView
-        val endTime = itemView.findViewById(R.id.timer_end_time) as TextView
-        val shareButton = itemView.findViewById(R.id.timer_share_button) as Button
+    private inner class FinishedTimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val duration = itemView.findViewById(R.id.finished_timer_counter) as TextView
+        val title = itemView.findViewById(R.id.finished_timer_title) as TextView
+        val shareButton = itemView.findViewById(R.id.finished_timer_share_button) as Button
     }
-
 }

@@ -32,7 +32,7 @@ object TimeConverter {
         val minutesWithZeros = twoNumbersWithZeros.format(minutes)
         if (hours > 0)
             return "$hours:$minutesWithZeros:$secondsWithZeros"
-         else
+        else
             return "$minutes:$secondsWithZeros"
     }
 

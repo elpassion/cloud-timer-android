@@ -9,6 +9,6 @@ class Timer(val title: String, val duration: Long, val endTime: Long = currentTi
         fun randomUUID(): String = UUID.randomUUID().toString()
     }
 
-    fun isShared(): Boolean = this.group != null
-    fun isPaused(): Boolean = this.timeLeft != null
+    val finished: Boolean
+        get() = endTime < currentTimeMillis()
 }
