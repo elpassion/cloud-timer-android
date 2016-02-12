@@ -12,6 +12,7 @@ class TimersListActionsTest {
     val adapter = NewAdapter()
     val insertions = ArrayList<Pair<Int, Int>>()
     val changes = ArrayList<Pair<Int, Int>>()
+    val operations = ArrayList<Any>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
             insertions.add(Pair(positionStart, itemCount))
@@ -19,6 +20,11 @@ class TimersListActionsTest {
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
             changes.add(Pair(positionStart, itemCount))
+            operations.add(ChangeOp(positionStart, itemCount))
+        }
+
+        override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+            operations.add(RemoveOp(positionStart, itemCount))
         }
     }
 
@@ -71,4 +77,16 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
         assertEquals(2, adapter.itemCount)
     }
+
+    @Test
+    fun whenTimerIsRemovedShouldNofityAboutIt() {
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+        registerObserver()
+        adapter.updateTimers(listOf(Timer("test", 1000)))
+        assertEquals(listOf(RemoveOp(0, 1), ChangeOp(0, 1)), operations)
+    }
 }
+
+data class RemoveOp(val first: Int, val count: Int)
+
+data class ChangeOp(val first: Int, val count: Int)

@@ -5,9 +5,14 @@ import pl.elpassion.cloudtimer.domain.Timer
 
 class NewAdapter : BaseAdapter() {
     fun updateTimers(timers: List<Timer>) {
-        notifyItemRangeInserted(0, timers.size - adapters.size)
-        notifyItemRangeChanged(timers.size - adapters.size, adapters.size)
-        adapters.clear()
-        adapters.addAll(createAdaptersForCloudTimerItems(timers))
+        if (timers.size >= adapters.size){
+            notifyItemRangeInserted(0, timers.size - adapters.size)
+            notifyItemRangeChanged(timers.size - adapters.size, adapters.size)
+            adapters.clear()
+            adapters.addAll(createAdaptersForCloudTimerItems(timers))
+        } else {
+            notifyItemRangeRemoved(0, adapters.size - timers.size )
+            notifyItemRangeChanged(0, timers.size)
+        }
     }
 }
