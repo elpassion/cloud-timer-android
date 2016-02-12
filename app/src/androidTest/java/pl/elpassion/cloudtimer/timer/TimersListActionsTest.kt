@@ -10,11 +10,11 @@ import java.util.*
 class TimersListActionsTest {
 
     val adapter = NewAdapter()
-    val operations = ArrayList<Pair<Int, Int>>()
+    val insertions = ArrayList<Pair<Int, Int>>()
     val changes = ArrayList<Pair<Int, Int>>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            operations.add(Pair(positionStart, itemCount))
+            insertions.add(Pair(positionStart, itemCount))
         }
 
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
@@ -30,14 +30,14 @@ class TimersListActionsTest {
     fun whenSingleItemIsAddedNotifyItemOnPositionZeroInserted() {
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
-        assertEquals(listOf(Pair(0, 1)), operations)
+        assertEquals(listOf(Pair(0, 1)), insertions)
     }
 
     @Test
     fun whenTwoItemsAreAddedNotifyItemsOnPositionZeroAndOneInserted() {
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
-        assertEquals(listOf(Pair(0, 2)), operations)
+        assertEquals(listOf(Pair(0, 2)), insertions)
     }
 
     @Test
@@ -55,4 +55,15 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
         assertEquals(listOf(Pair(0, 2)), changes)
     }
+
+    @Test
+    fun whenOneTimerIsReplaceByTwoTimersNotifyAboutOneUpdateAndOneInsert() {
+        adapter.updateTimers(listOf(Timer("test", 1000)))
+        registerObserver()
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+        assertEquals(listOf(Pair(1, 1)), changes)
+        assertEquals(listOf(Pair(0, 1)), insertions)
+    }
+
+
 }
