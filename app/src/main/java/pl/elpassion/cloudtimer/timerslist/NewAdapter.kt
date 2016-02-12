@@ -9,6 +9,8 @@ class NewAdapter : BaseAdapter() {
             if (adapters.size < timers.size) {
                 notifyItemRangeInserted(0, timers.size - adapters.size)
                 notifyItemRangeChanged(timers.size - adapters.size, adapters.size)
+                adapters.clear()
+                adapters.addAll(createAdaptersForCloudTimerItems(timers))
                 return
             } else {
                 notifyItemRangeChanged(0, timers.size)

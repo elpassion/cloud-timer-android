@@ -65,5 +65,10 @@ class TimersListActionsTest {
         assertEquals(listOf(Pair(0, 1)), insertions)
     }
 
-
+    @Test
+    fun shouldContainCorrectNumberOfItems() {
+        adapter.updateTimers(listOf(Timer("test", 1000)))
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+        assertEquals(2, adapter.itemCount)
+    }
 }
