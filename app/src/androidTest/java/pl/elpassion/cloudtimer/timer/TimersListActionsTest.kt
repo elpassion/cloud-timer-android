@@ -23,19 +23,20 @@ class TimersListActionsTest {
         }
     }
 
-    @Before
     fun registerObserver() {
         adapter.registerAdapterDataObserver(observer)
     }
 
     @Test
     fun whenSingleItemIsAddedNotifyItemOnPositionZeroInserted() {
+        registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
         assertEquals(listOf(Pair(0, 1)), operations)
     }
 
     @Test
     fun whenTwoItemsAreAddedNotifyItemsOnPositionZeroAndOneInserted() {
+        registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
         assertEquals(listOf(Pair(0, 2)), operations)
     }
@@ -43,6 +44,7 @@ class TimersListActionsTest {
     @Test
     fun whenTimersWereUpdatedNotifyItemsWereUpdated(){
         adapter.updateTimers(listOf(Timer("test", 1000)))
+        registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
         assertEquals(listOf(Pair(0,1)), changes)
     }
