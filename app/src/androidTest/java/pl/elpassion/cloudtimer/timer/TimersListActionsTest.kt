@@ -12,9 +12,14 @@ class TimersListActionsTest {
 
     val adapter = NewAdapter()
     val operations = ArrayList<Pair<Int, Int>>()
+    val changes = ArrayList<Pair<Int, Int>>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
             operations.add(Pair(positionStart, itemCount))
+        }
+
+        override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+            changes.add(Pair(positionStart, itemCount))
         }
     }
 
@@ -34,4 +39,12 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
         assertEquals(listOf(Pair(0, 2)), operations)
     }
+
+    @Test
+    fun whenTimersWereUpdatedNotifyItemsWereUpdated(){
+        adapter.updateTimers(listOf(Timer("test", 1000)))
+        adapter.updateTimers(listOf(Timer("test", 1000)))
+        assertEquals(listOf(Pair(0,1)), changes)
+    }
+
 }
