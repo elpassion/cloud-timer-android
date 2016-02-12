@@ -2,7 +2,6 @@ package pl.elpassion.cloudtimer.timerslist
 
 import android.support.v7.widget.RecyclerView
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
@@ -42,11 +41,18 @@ class TimersListActionsTest {
     }
 
     @Test
-    fun whenTimersWereUpdatedNotifyItemsWereUpdated(){
+    fun whenTimersWereUpdatedNotifyItemsWereUpdated() {
         adapter.updateTimers(listOf(Timer("test", 1000)))
         registerObserver()
         adapter.updateTimers(listOf(Timer("test", 1000)))
-        assertEquals(listOf(Pair(0,1)), changes)
+        assertEquals(listOf(Pair(0, 1)), changes)
     }
 
+    @Test
+    fun whenTwoTimersAreUpdatedNotifyItemsTwoItemsWereUpdated() {
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
+        registerObserver()
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test2", 2000)))
+        assertEquals(listOf(Pair(0, 2)), changes)
+    }
 }
