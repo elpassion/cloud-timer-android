@@ -6,6 +6,6 @@ import pl.elpassion.cloudtimer.domain.Timer
 class NewAdapter :BaseAdapter(){
     fun updateTimers(timers: List<Timer>) {
         adapters.addAll(createAdaptersForCloudTimerItems(timers))
-        notifyItemInserted(0)
+        notifyItemRangeInserted(0,timers.size )
     }
 }
