@@ -27,10 +27,10 @@ class NewAdapter : BaseAdapter() {
         if (countOfFinished > 0) {
             if (countOfFinished == adapters.size) {
                 notifyItemRangeChanged(0, adapters.size)
-            } else if (adapters.filter { it is TimerItemAdapter }.size > 1) {
+            } else if (adapters.filter { it is TimerItemAdapter }.size > countOfFinished) {
                 notifyItemMoved(0, 1)
             } else {
-                notifyItemRangeChanged(0, 1)
+                notifyItemRangeChanged(0, countOfFinished)
             }
         }
     }

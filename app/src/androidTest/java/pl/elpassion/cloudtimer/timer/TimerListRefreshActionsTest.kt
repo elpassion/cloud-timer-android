@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer.timer
 
 import android.support.v7.widget.RecyclerView
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import pl.elpassion.cloudtimer.domain.Timer
@@ -31,6 +32,11 @@ class TimerListRefreshActionsTest {
         override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
             operations.add(MoveOp(fromPosition, toPosition, itemCount))
         }
+    }
+
+    @Before
+    fun resetCurrentTimeMillis() {
+        currentTimeInMillis = { System.currentTimeMillis() }
     }
 
     @Test
@@ -70,11 +76,20 @@ class TimerListRefreshActionsTest {
 
     @Test
     fun shouldNotifyOnlyWhenTimersHasJustFinished() {
-        adapter.updateTimers(listOf(Timer("timer", -100000), Timer("tiemr not finished", 100000)))
+        adapter.updateTimers(listOf(Timer("timer", -100000), Timer("timer not finished", 100000)))
         adapter.registerAdapterDataObserver(observer)
         currentTimeInMillis = { System.currentTimeMillis() + 200000 }
         adapter.handleTimersStateChange()
         assertEquals(listOf(ChangeOp(0, 1)), operations)
+    }
+
+    @Test
+    fun shouldNotifyAboutTwoChangedTimersWhenTimersHasJustFinished() {
+        adapter.updateTimers(listOf(Timer("timer", -100000), Timer("timer not finished", 100000), Timer("timer not finished", 100000)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 200000 }
+        adapter.handleTimersStateChange()
+        assertEquals(listOf(ChangeOp(0, 2)), operations)
     }
 }
 
