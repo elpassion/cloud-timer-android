@@ -105,6 +105,15 @@ class TimerListRefreshActionsTest {
         adapter.handleTimersStateChange()
         assertTrue(adapter.adapters.last() is FinishedTimerItemAdapter)
     }
+
+    @Test
+    fun shouldHaveFinishedTimersOnPositionZeroAndOne(){
+        adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 1000000), Timer("timer", 3000000)))
+        currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
+        adapter.handleTimersStateChange()
+        assertTrue(adapter.adapters[1] is FinishedTimerItemAdapter)
+        assertTrue(adapter.adapters[2] is FinishedTimerItemAdapter)
+    }
 }
 
 data class MoveOp(val from: Int, val to: Int, val count: Int)
