@@ -19,7 +19,7 @@ class TimerActivity : Activity() {
     val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
     val timerTitle by lazy { findViewById(R.id.new_timer_title) as EditText }
     protected val alarmDao by lazy { TimerDAO.getInstance(applicationContext) }
-    var timerDurationInMilis: Long = 15 * 60 * 1000
+    var timerDurationInMilis: Long = 0
     private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class TimerActivity : Activity() {
 
     override fun onResume() {
         handler.postDelayed(TimerEndTimeRefresher(), 1000)
+        timerDuration.text = "15:00"
         super.onResume()
     }
 
@@ -47,6 +48,8 @@ class TimerActivity : Activity() {
     }
 
     private fun setDefaultTimerEndTime() {
+        timerDurationInMilis = 15 * 60 * 1000
+        timerDuration.text = TimeConverter.formatFromMilliToMinutes(timerDurationInMilis)
         val endTime = System.currentTimeMillis() + timerDurationInMilis
         timerEndTime.text = TimeConverter.formatFromMilliToTime(endTime)
     }

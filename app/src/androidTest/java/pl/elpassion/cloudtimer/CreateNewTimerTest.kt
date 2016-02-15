@@ -29,6 +29,6 @@ class CreateNewTimerTest {
     @Test
     fun isTimerActivityStartsWhenAddNewTimerButtonIsPushed() {
         pressButton(R.id.create_new_timer)
-        isComponentDisplayed(R.id.start_button)
+        isComponentDisplayed(R.id.start_timer_button)
     }
 }

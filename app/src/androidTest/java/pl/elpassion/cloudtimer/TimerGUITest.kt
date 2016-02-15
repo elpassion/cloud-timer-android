@@ -1,21 +1,16 @@
 package pl.elpassion.cloudtimer
 
 import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 
-@RunWith(AndroidJUnit4::class)
 class TimerGUITest {
     @Rule @JvmField
-    public val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
+    val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
 
     @Test
     fun fifteenMinutesOnStart() {
-        checkTextMatching(R.id.hours_picker, "0")
-        checkTextMatching(R.id.minutes_picker, "15")
-        checkTextMatching(R.id.seconds_picker,"0")
+        isComponentDisplayed(R.id.timer_duration)
     }
 }

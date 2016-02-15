@@ -31,7 +31,7 @@ class AlarmServiceTest {
     @Test
     fun alarmSchedulerCreatesPendingIntent() {
         clearIntent()
-        pressButton(R.id.start_button)
+        pressButton(R.id.start_timer_button)
         val alarmUp = getPendingIntent()
         assertNotNull(alarmUp)
     }
@@ -40,7 +40,7 @@ class AlarmServiceTest {
     fun alarmSchedulerNoRandomIntentType() {
         clearIntent()
         val requestCodeToTry = 123
-        pressButton(R.id.start_button)
+        pressButton(R.id.start_timer_button)
         val alarmUp = getPendingIntent(requestCodeToTry)
         assertNull(alarmUp)
     }

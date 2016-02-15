@@ -54,7 +54,7 @@
             seekarc:max="360"
             seekarc:progress="90"
             seekarc:progressWidth="4dp"
-            seekarc:progressColor="@color/colorSecondaryElements"
+            seekarc:progressColor="@color/colorPrimaryElements"
             seekarc:roundEdges="true"
             seekarc:startAngle="0"
             seekarc:sweepAngle="359"
@@ -66,9 +66,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="15:00"
+            tools:text="15:00"
             android:textSize="50dp"
-            android:textColor="@color/colorSecondaryElements"/>
+            android:textColor="@color/colorPrimaryElements"/>
 
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="20dp"
+            android:padding="10dp"
             android:textSize="25dp"
             tools:text="12:30"
             android:textColor="@color/colorPrimaryDark"/>
@@ -85,7 +85,7 @@
             android:id="@+id/start_timer_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="START"
+            tools:text="START"
             android:textSize="20dp"
             android:textColor="@android:color/white"
             android:background="@color/colorAccent"/>
