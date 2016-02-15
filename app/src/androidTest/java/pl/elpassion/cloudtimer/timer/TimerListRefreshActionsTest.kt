@@ -59,6 +59,15 @@ class TimerListRefreshActionsTest {
         assertEquals(listOf(MoveOp(0, 1, 1)), operations)
     }
 
+    @Test
+    fun shouldNotNotifyWhenTimersHasNotChangeState(){
+        adapter.updateTimers(listOf(Timer("timer", -1000)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 2000 }
+        adapter.handleTimersStateChange()
+        assertEquals(emptyList<Any>(), operations)
+    }
+
 
 }
 
