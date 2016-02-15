@@ -8,7 +8,7 @@ import pl.elpassion.cloudtimer.timerslist.NewAdapter
 class TimersListAdapterTest {
 
     @Test
-    fun ifRangeOfNotFinishedTimersAreCorrect() {
+    fun ifRangeOfNotFinishedTimersIsCorrect() {
         val adapter = NewAdapter()
         adapter.updateTimers(listOf(Timer("timer", 100000)))
         val range = adapter.getNotFinishedTimersRange()
@@ -16,10 +16,18 @@ class TimersListAdapterTest {
     }
 
     @Test
-    fun ifRangeOfTwoNotFinishedTimersAreCorrect(){
+    fun ifRangeOfTwoNotFinishedTimersIsCorrect(){
         val adapter = NewAdapter()
         adapter.updateTimers(listOf(Timer("timer", 100000),Timer("timer", 100000)))
         val range = adapter.getNotFinishedTimersRange()
         Assert.assertEquals(0..1, range)
+    }
+
+    @Test
+    fun ifRangeOfOneFinishedTimerIsCorrect(){
+        val adapter = NewAdapter()
+        adapter.updateTimers(listOf(Timer("timer", -100000)))
+        val range = adapter.getNotFinishedTimersRange()
+        Assert.assertEquals(0..-1, range)
     }
 }

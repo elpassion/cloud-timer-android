@@ -19,6 +19,8 @@ class NewAdapter : BaseAdapter() {
     }
 
     fun getNotFinishedTimersRange() : IntRange {
+        if(adapters.none { it is TimerItemAdapter })
+            return 0..-1
         return  0..adapters.lastIndex
     }
 
