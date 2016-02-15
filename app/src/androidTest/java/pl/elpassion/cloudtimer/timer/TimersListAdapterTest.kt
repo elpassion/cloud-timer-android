@@ -30,4 +30,12 @@ class TimersListAdapterTest {
         val range = adapter.getNotFinishedTimersRange()
         Assert.assertEquals(0..-1, range)
     }
+
+    @Test
+    fun ifRangeOfOneFinishedAndOneNotFinishedTimerIsCorrect(){
+        val adapter = NewAdapter()
+        adapter.updateTimers(listOf(Timer("timer", -100000),Timer("timer", 100000)))
+        val range = adapter.getNotFinishedTimersRange()
+        Assert.assertEquals(0..0, range)
+    }
 }
