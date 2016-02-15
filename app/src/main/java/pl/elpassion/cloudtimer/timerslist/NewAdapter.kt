@@ -29,22 +29,18 @@ class NewAdapter : BaseAdapter() {
     }
 
     fun handleTimersStateChange() {
-        val timerAdapters = adapters.filter { it is TimerItemAdapter }
-        val mappedTimerAdapters = timerAdapters.map { it as TimerItemAdapter }
-        val countOfFinished = mappedTimerAdapters.count { it.timer.finished }
-        if (countOfFinished > 0) {
-            for (i in countOfFinished - 1 downTo 0) {
-                val notFinishedAdapter = adapters[i] as TimerItemAdapter
-                val finishedTimerItemAdapter = FinishedTimerItemAdapter(notFinishedAdapter.timer)
-                val countOfTimerItemAdapters = adapters.filter { it is TimerItemAdapter }.size
-                adapters.add(countOfTimerItemAdapters, finishedTimerItemAdapter)
-                adapters.removeAt(i)
-            }
-            if (timerAdapters.size > countOfFinished) {
-                for (i in 0..countOfFinished - 1)
-                    notifyItemMoved(0, countOfFinished )
+        val currentTimerAdapters = adapters.filter { it is TimerItemAdapter }.map { it as TimerItemAdapter }
+        val (finished, notFinished) = currentTimerAdapters.partition { it.timer.finished }
+        if (finished.size > 0) {
+            val asFinished = finished.map { FinishedTimerItemAdapter(it.timer) }
+            val newAdapters = notFinished + asFinished + adapters.filter { it is FinishedTimerItemAdapter }
+            adapters.clear()
+            adapters.addAll(newAdapters)
+            if (notFinished.size > 0) {
+                for (i in 0..finished.lastIndex)
+                    notifyItemMoved(0, finished.size)
             } else {
-                notifyItemRangeChanged(0, countOfFinished)
+                notifyItemRangeChanged(0, finished.size)
             }
         }
     }
