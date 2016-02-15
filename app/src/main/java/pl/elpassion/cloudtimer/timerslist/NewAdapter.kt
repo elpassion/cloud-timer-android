@@ -18,17 +18,19 @@ class NewAdapter : BaseAdapter() {
         addNewTimers(timers)
     }
 
-    fun getNotFinishedTimersRange() : IntRange {
-        return  0..adapters.indexOfLast { it is TimerItemAdapter }
+    fun getNotFinishedTimersRange(): IntRange {
+        return 0..adapters.indexOfLast { it is TimerItemAdapter }
     }
 
-    fun handleTimersStateChange(){
+    fun handleTimersStateChange() {
         val countOfFinished = adapters.filter { it is TimerItemAdapter }.map { it as TimerItemAdapter }.count { it.timer.finished }
         if (countOfFinished > 0) {
             if (countOfFinished == adapters.size) {
                 notifyItemRangeChanged(0, adapters.size)
-            } else {
+            } else if (adapters.filter { it is TimerItemAdapter }.size > 1) {
                 notifyItemMoved(0, 1)
+            } else {
+                notifyItemRangeChanged(0, 1)
             }
         }
     }

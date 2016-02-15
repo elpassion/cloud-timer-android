@@ -60,7 +60,7 @@ class TimerListRefreshActionsTest {
     }
 
     @Test
-    fun shouldNotNotifyWhenTimersHasNotChangeState(){
+    fun shouldNotNotifyWhenTimersHasNotChangeState() {
         adapter.updateTimers(listOf(Timer("timer", -1000)))
         adapter.registerAdapterDataObserver(observer)
         currentTimeInMillis = { System.currentTimeMillis() + 2000 }
@@ -68,7 +68,14 @@ class TimerListRefreshActionsTest {
         assertEquals(emptyList<Any>(), operations)
     }
 
-
+    @Test
+    fun shouldNotifyOnlyWhenTimersHasJustFinished() {
+        adapter.updateTimers(listOf(Timer("timer", -100000), Timer("tiemr not finished", 100000)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 200000 }
+        adapter.handleTimersStateChange()
+        assertEquals(listOf(ChangeOp(0, 1)), operations)
+    }
 }
 
 data class MoveOp(val from: Int, val to: Int, val count: Int)
