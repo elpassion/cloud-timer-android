@@ -4,6 +4,7 @@ import pl.elpassion.cloudtimer.adapter.BaseAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
 class NewAdapter : BaseAdapter() {
+
     fun updateTimers(timers: List<Timer>) {
         if (timers.size > adapters.size) {
             notifyItemRangeInserted(0, timers.size - adapters.size)
@@ -18,23 +19,30 @@ class NewAdapter : BaseAdapter() {
         addNewTimers(timers)
     }
 
+    private fun addNewTimers(timers: List<Timer>) {
+        adapters.clear()
+        adapters.addAll(createAdaptersForCloudTimerItems(timers))
+    }
+
     fun getNotFinishedTimersRange(): IntRange {
         return 0..adapters.indexOfLast { it is TimerItemAdapter }
     }
 
     fun handleTimersStateChange() {
-        val countOfFinished = adapters.filter { it is TimerItemAdapter }.map { it as TimerItemAdapter }.count { it.timer.finished }
+        val timerAdapters = adapters.filter { it is TimerItemAdapter }
+        val mappedTimerAdapters = timerAdapters.map { it as TimerItemAdapter }
+        val countOfFinished = mappedTimerAdapters.count { it.timer.finished }
         if (countOfFinished > 0) {
-            if (adapters.filter { it is TimerItemAdapter }.size > countOfFinished) {
+            if (timerAdapters.size > countOfFinished) {
                 notifyItemMoved(0, 1)
             } else {
                 notifyItemRangeChanged(0, countOfFinished)
             }
+            for (i in 0..countOfFinished - 1) {
+                val notFinishedAdapter = adapters[i] as TimerItemAdapter
+                adapters[i] = FinishedTimerItemAdapter(notFinishedAdapter.timer)
+            }
         }
     }
 
-    private fun addNewTimers(timers: List<Timer>) {
-        adapters.clear()
-        adapters.addAll(createAdaptersForCloudTimerItems(timers))
-    }
 }

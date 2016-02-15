@@ -3,13 +3,11 @@ package pl.elpassion.cloudtimer.timer
 import android.support.v7.widget.RecyclerView
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.timerslist.ChangeOp
-import pl.elpassion.cloudtimer.timerslist.InsertedOp
-import pl.elpassion.cloudtimer.timerslist.NewAdapter
-import pl.elpassion.cloudtimer.timerslist.RemoveOp
+import pl.elpassion.cloudtimer.timerslist.*
 import java.util.*
 
 class TimerListRefreshActionsTest {
@@ -90,6 +88,14 @@ class TimerListRefreshActionsTest {
         currentTimeInMillis = { System.currentTimeMillis() + 200000 }
         adapter.handleTimersStateChange()
         assertEquals(listOf(ChangeOp(0, 2)), operations)
+    }
+    
+    @Test
+    fun shouldHaveFinishedTimerOnPositionZero() {
+        adapter.updateTimers(listOf(Timer("timer", 1000000)))
+        currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
+        adapter.handleTimersStateChange()
+        assertTrue(adapter.adapters.first() is FinishedTimerItemAdapter)
     }
 }
 
