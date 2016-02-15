@@ -28,7 +28,7 @@ class TimerListRefreshActionsTest {
         }
 
         override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-            operations.add(MoveOp(fromPosition, toPosition, itemCount))
+            operations.add(MoveOp(fromPosition, toPosition))
         }
     }
 
@@ -55,12 +55,12 @@ class TimerListRefreshActionsTest {
     }
 
     @Test
-    fun shouldNotifyAboutOneChangeWhenOnlyOneTimerHasFinished() {
+    fun shouldNotifyAboutOneItemMoveWhenOnlyOneTimerHasFinished() {
         adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 500)))
         adapter.registerAdapterDataObserver(observer)
         currentTimeInMillis = { System.currentTimeMillis() + 700 }
         adapter.handleTimersStateChange()
-        assertEquals(listOf(MoveOp(0, 1, 1)), operations)
+        assertEquals(listOf(MoveOp(0, 1)), operations)
     }
 
     @Test
@@ -107,13 +107,23 @@ class TimerListRefreshActionsTest {
     }
 
     @Test
-    fun shouldHaveFinishedTimersOnPositionZeroAndOne(){
+    fun shouldHaveFinishedTimersOnPositionZeroAndOne() {
         adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 1000000), Timer("timer", 3000000)))
         currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
         adapter.handleTimersStateChange()
         assertTrue(adapter.adapters[1] is FinishedTimerItemAdapter)
         assertTrue(adapter.adapters[2] is FinishedTimerItemAdapter)
     }
+
+    @Test
+    fun shouldNotifyAboutTwoItemsMoveWhenTwoTimersHaveFinished() {
+        adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 1000000), Timer("timer", 3000000)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
+        adapter.handleTimersStateChange()
+        assertEquals(listOf(MoveOp(0, 2), MoveOp(0, 2)), operations)
+    }
+
 }
 
-data class MoveOp(val from: Int, val to: Int, val count: Int)
+data class MoveOp(val from: Int, val to: Int)

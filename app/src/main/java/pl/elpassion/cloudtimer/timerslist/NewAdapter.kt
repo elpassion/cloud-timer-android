@@ -41,7 +41,8 @@ class NewAdapter : BaseAdapter() {
                 adapters.removeAt(i)
             }
             if (timerAdapters.size > countOfFinished) {
-                notifyItemMoved(0, 1)
+                for (i in 0..countOfFinished - 1)
+                    notifyItemMoved(0, countOfFinished )
             } else {
                 notifyItemRangeChanged(0, countOfFinished)
             }
