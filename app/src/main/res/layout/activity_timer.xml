@@ -23,7 +23,8 @@
                 android:id="@+id/new_timer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter timer title" />
+                android:hint="Enter timer title"
+                android:textColorHint="@color/colorPrimaryDark"/>
 
         </android.support.v7.widget.Toolbar>
 
