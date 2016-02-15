@@ -1,8 +1,8 @@
 package pl.elpassion.cloudtimer.timer
 
 import android.support.v7.widget.RecyclerView
+import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import pl.elpassion.cloudtimer.domain.Timer
@@ -34,7 +34,7 @@ class TimerListRefreshActionsTest {
         }
     }
 
-    @Before
+    @After
     fun resetCurrentTimeMillis() {
         currentTimeInMillis = { System.currentTimeMillis() }
     }
