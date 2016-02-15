@@ -89,13 +89,21 @@ class TimerListRefreshActionsTest {
         adapter.handleTimersStateChange()
         assertEquals(listOf(ChangeOp(0, 2)), operations)
     }
-    
+
     @Test
     fun shouldHaveFinishedTimerOnPositionZero() {
         adapter.updateTimers(listOf(Timer("timer", 1000000)))
         currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
         adapter.handleTimersStateChange()
         assertTrue(adapter.adapters.first() is FinishedTimerItemAdapter)
+    }
+
+    @Test
+    fun shouldHaveFinishedTimerOnPositionOne() {
+        adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 3000000)))
+        currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
+        adapter.handleTimersStateChange()
+        assertTrue(adapter.adapters.last() is FinishedTimerItemAdapter)
     }
 }
 

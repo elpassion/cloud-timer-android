@@ -33,14 +33,14 @@ class NewAdapter : BaseAdapter() {
         val mappedTimerAdapters = timerAdapters.map { it as TimerItemAdapter }
         val countOfFinished = mappedTimerAdapters.count { it.timer.finished }
         if (countOfFinished > 0) {
+            val notFinishedAdapter = adapters[0] as TimerItemAdapter
+            val finishedTimerItemAdapter = FinishedTimerItemAdapter(notFinishedAdapter.timer)
+            adapters.add(timerAdapters.size, finishedTimerItemAdapter)
+            adapters.removeAt(0)
             if (timerAdapters.size > countOfFinished) {
                 notifyItemMoved(0, 1)
             } else {
                 notifyItemRangeChanged(0, countOfFinished)
-            }
-            for (i in 0..countOfFinished - 1) {
-                val notFinishedAdapter = adapters[i] as TimerItemAdapter
-                adapters[i] = FinishedTimerItemAdapter(notFinishedAdapter.timer)
             }
         }
     }
