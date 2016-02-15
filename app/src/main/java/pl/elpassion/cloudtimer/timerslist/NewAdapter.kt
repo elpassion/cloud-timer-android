@@ -18,8 +18,8 @@ class NewAdapter : BaseAdapter() {
         addNewTimers(timers)
     }
 
-    fun getNotFinishedTimersRange() : IntRange{
-        return  0..1
+    fun getNotFinishedTimersRange() : IntRange {
+        return  0..adapters.lastIndex
     }
 
     private fun addNewTimers(timers: List<Timer>) {
