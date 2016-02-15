@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.domain
 
+import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
 
@@ -10,5 +11,5 @@ data class Timer(val title: String, val duration: Long, val endTime: Long = curr
     }
 
     val finished: Boolean
-        get() = endTime < currentTimeMillis()
+        get() = endTime < currentTimeInMillis()
 }
