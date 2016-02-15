@@ -81,6 +81,23 @@ class TimersListActionsTest {
         adapter.updateTimers(listOf(Timer("test", 1000)))
         assertEquals(listOf(RemoveOp(0, 1), ChangeOp(0, 1)), operations)
     }
+
+    @Test
+    fun whenEmptyListIsSendAdapterShouldHaveZeroElements() {
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+        adapter.updateTimers(listOf())
+        assertEquals(0, adapter.itemCount)
+    }
+
+    @Test
+    fun whenListOfNewTimersWithTheSameSizeIsBeingSendListOfAdaptersShouldBeUpdated() {
+        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+        val timers = listOf(Timer("test", 500000), Timer("test", 200000))
+        adapter.updateTimers(timers)
+        val timersFromAdapter = adapter.adapters.map { (it as  TimerItemAdapter).timer }
+        val sortedTimers = timers.sortedBy { it.duration }
+        assertEquals(sortedTimers, timersFromAdapter)
+    }
 }
 
 data class RemoveOp(val first: Int, val count: Int)
