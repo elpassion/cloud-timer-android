@@ -91,6 +91,7 @@ class ListOfTimersActivity : AppCompatActivity() {
 
     inner class TimeRefresher : Runnable {
         override fun run() {
+            adapter.handleTimersStateChange()
             val notFinishedTimersRange = adapter.getNotFinishedTimersRange()
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
             val visibleRange = layoutManager.findFirstVisibleItemPosition()..layoutManager.findLastVisibleItemPosition()
