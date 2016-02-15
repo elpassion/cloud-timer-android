@@ -18,6 +18,10 @@ class NewAdapter : BaseAdapter() {
         addNewTimers(timers)
     }
 
+    fun getNotFinishedTimersRange() : IntRange{
+        return  0..1
+    }
+
     private fun addNewTimers(timers: List<Timer>) {
         adapters.clear()
         adapters.addAll(createAdaptersForCloudTimerItems(timers))
