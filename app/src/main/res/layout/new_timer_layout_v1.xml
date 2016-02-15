@@ -24,7 +24,8 @@
         seekarc:startAngle="0"
         seekarc:sweepAngle="359"
         seekarc:thumb="@drawable/scrubber_control_focused_holo"
-        seekarc:touchInside="true" />
+        seekarc:touchInside="true"
+        seekarc:progress="90"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,18 +34,12 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/timer_duration_minutes"
+            android:id="@+id/timer_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="50dp"
-            tools:text="00:" />
+            android:text="15:00"/>
 
-        <TextView
-            android:id="@+id/timer_duration_seconds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="00"
-            android:textSize="50dp"/>
     </LinearLayout>
 
 
@@ -58,6 +53,7 @@
         tools:text="12:30" />
 
     <Button
+        android:id="@+id/start_timer_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="START" />
