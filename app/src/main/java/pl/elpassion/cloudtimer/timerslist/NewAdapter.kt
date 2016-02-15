@@ -25,7 +25,11 @@ class NewAdapter : BaseAdapter() {
     fun handleTimersStateChange(){
         val countOfFinished = adapters.map { it as TimerItemAdapter }.count { it.timer.finished }
         if (countOfFinished > 0) {
-            notifyItemRangeChanged(0, adapters.size)
+            if (countOfFinished == adapters.size) {
+                notifyItemRangeChanged(0, adapters.size)
+            } else {
+                notifyItemMoved(0, 1)
+            }
         }
     }
 

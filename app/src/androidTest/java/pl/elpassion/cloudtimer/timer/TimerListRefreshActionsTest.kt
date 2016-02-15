@@ -27,6 +27,10 @@ class TimerListRefreshActionsTest {
         override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
             operations.add(RemoveOp(positionStart, itemCount))
         }
+
+        override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+            operations.add(MoveOp(fromPosition, toPosition, itemCount))
+        }
     }
 
     @Test
@@ -45,4 +49,17 @@ class TimerListRefreshActionsTest {
         adapter.handleTimersStateChange()
         assertEquals(emptyList<Any>(), operations)
     }
+
+    @Test
+    fun shouldNotifyAboutOneChangeWhenOnlyOneTimerHasFinished() {
+        adapter.updateTimers(listOf(Timer("timer", 1000000), Timer("timer", 500)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 700 }
+        adapter.handleTimersStateChange()
+        assertEquals(listOf(MoveOp(0, 1, 1)), operations)
+    }
+
+
 }
+
+data class MoveOp(val from: Int, val to: Int, val count: Int)
