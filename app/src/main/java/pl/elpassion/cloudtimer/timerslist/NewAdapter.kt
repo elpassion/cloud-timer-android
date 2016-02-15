@@ -22,6 +22,10 @@ class NewAdapter : BaseAdapter() {
         return  0..adapters.indexOfLast { it is TimerItemAdapter }
     }
 
+    fun handleTimersStateChange(){
+        updateTimers(adapters.map { it as TimerItemAdapter }.map { it.timer })
+    }
+
     private fun addNewTimers(timers: List<Timer>) {
         adapters.clear()
         adapters.addAll(createAdaptersForCloudTimerItems(timers))
