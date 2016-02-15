@@ -9,15 +9,13 @@ class NewAdapter : BaseAdapter() {
             notifyItemRangeInserted(0, timers.size - adapters.size)
             if (adapters.size > 0)
                 notifyItemRangeChanged(timers.size - adapters.size, adapters.size)
-            addNewTimers(timers)
         } else if (timers.size < adapters.size) {
             notifyItemRangeRemoved(0, adapters.size - timers.size)
             notifyItemRangeChanged(0, timers.size)
-            addNewTimers(timers)
         } else {
             notifyItemRangeChanged(0, adapters.size)
-            addNewTimers(timers)
         }
+        addNewTimers(timers)
     }
 
     private fun addNewTimers(timers: List<Timer>) {

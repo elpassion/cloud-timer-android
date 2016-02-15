@@ -90,14 +90,14 @@ class TimersListActionsTest {
     }
 
     @Test
-    fun whenListOfNewTimersWithTheSameSizeIsBeingSendListOfAdaptersShouldBeUpdated() {
-        adapter.updateTimers(listOf(Timer("test", 1000), Timer("test", 1000)))
+    fun notFinishedTimersShouldBeSorted() {
         val timers = listOf(Timer("test", 500000), Timer("test", 200000))
         adapter.updateTimers(timers)
-        val timersFromAdapter = adapter.adapters.map { (it as  TimerItemAdapter).timer }
+        val timersFromAdapter = adapter.adapters.map { (it as TimerItemAdapter).timer }
         val sortedTimers = timers.sortedBy { it.duration }
         assertEquals(sortedTimers, timersFromAdapter)
     }
+
 }
 
 data class RemoveOp(val first: Int, val count: Int)
