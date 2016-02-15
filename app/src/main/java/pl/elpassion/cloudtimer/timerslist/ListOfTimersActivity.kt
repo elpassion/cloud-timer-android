@@ -7,10 +7,11 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import pl.elpassion.cloudtimer.R
+import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.TimerActivity
 import pl.elpassion.cloudtimer.TimerDAO
-import pl.elpassion.cloudtimer.adapter.BaseAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
@@ -30,12 +31,16 @@ class ListOfTimersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_timers_list_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        loadTimersFromDB()
+        loadTimersAndSetUpRecycleView()
         startTimerActivityIfThereIsNoTimers()
-        setUpRecyclerView()
         createNewTimerButton.setOnClickListener {
             startTimerActivity()
         }
+    }
+
+    private fun loadTimersAndSetUpRecycleView() {
+        loadTimersFromDB()
+        setUpRecyclerView()
     }
 
     private fun loadTimersFromDB() {
@@ -50,7 +55,9 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        recyclerView.adapter = TimersListAdapter(timers)
+        val newAdapter = NewAdapter()
+        newAdapter.updateTimers(timers)
+        recyclerView.adapter = newAdapter
     }
 
     private fun startTimerActivity() {
@@ -68,7 +75,7 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        loadTimersFromDB()
+        loadTimersAndSetUpRecycleView()
         if (isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode, resultCode))
             finish()
         else
@@ -79,13 +86,21 @@ class ListOfTimersActivity : AppCompatActivity() {
         return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
     }
 
+    private val adapter : NewAdapter
+            get(){return recyclerView.adapter as NewAdapter}
+
     inner class TimeRefresher : Runnable {
         override fun run() {
-            val adapter = recyclerView.adapter as BaseAdapter
-            val adapters = adapter.adapters
-            adapters.clear()
-            adapters.addAll(createAdaptersForCloudTimerItems(timers))
-            recyclerView.adapter.notifyDataSetChanged()
+            val notFinishedTimersRange = adapter.getNotFinishedTimersRange()
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val visibleRange = layoutManager.findFirstVisibleItemPosition()..layoutManager.findLastVisibleItemPosition()
+            val visibleNotFinishedTimers = notFinishedTimersRange.intersect(visibleRange)
+            visibleNotFinishedTimers.forEach {
+                val view = layoutManager.findViewByPosition(it)
+                val counter = view.findViewById(R.id.timer_counter) as TextView
+                val timeLeftInMilliSec = (adapter.adapters[it] as TimerItemAdapter).timer.endTime - System.currentTimeMillis()
+                counter.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
+            }
             handler.postDelayed(this, oneSec)
         }
     }
