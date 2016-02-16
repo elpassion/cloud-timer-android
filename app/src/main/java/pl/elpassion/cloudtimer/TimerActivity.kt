@@ -81,10 +81,10 @@ class TimerActivity : Activity() {
             previousTimerValue = currentTimerValue
         }
 
-        override fun onStartTrackingTouch(p0: SeekArc?) {
+        override fun onStartTrackingTouch(seekArc: SeekArc?) {
         }
 
-        override fun onStopTrackingTouch(p0: SeekArc?) {
+        override fun onStopTrackingTouch(seekArc: SeekArc?) {
         }
 
     }
