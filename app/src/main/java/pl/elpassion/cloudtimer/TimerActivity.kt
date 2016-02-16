@@ -25,8 +25,10 @@ class TimerActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
+        startTimerButton.text = "START"
+        timerDurationInMilis = 15 * 60 * 1000
         seekArcMinutes.setOnSeekArcChangeListener(SeekArcMinutesChangeListener())
-        setDefaultTimerEndTime()
+        refreshTimerEndTime()
 
         startTimerButton.setOnClickListener {
             val newTimer = Timer(timerTitle.text.toString(), timerDurationInMilis)
@@ -47,9 +49,7 @@ class TimerActivity : Activity() {
         super.onStop()
     }
 
-    private fun setDefaultTimerEndTime() {
-        timerDurationInMilis = 15 * 60 * 1000
-        timerDuration.text = TimeConverter.formatFromMilliToMinutes(timerDurationInMilis)
+    private fun refreshTimerEndTime() {
         val endTime = System.currentTimeMillis() + timerDurationInMilis
         timerEndTime.text = TimeConverter.formatFromMilliToTime(endTime)
     }
@@ -88,7 +88,7 @@ class TimerActivity : Activity() {
 
     inner class TimerEndTimeRefresher : Runnable {
         override fun run() {
-            setDefaultTimerEndTime()
+            refreshTimerEndTime()
             handler.postDelayed(this, 1000)
         }
     }

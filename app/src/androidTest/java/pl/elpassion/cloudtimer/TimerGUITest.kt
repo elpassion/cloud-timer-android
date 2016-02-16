@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer
 
+import android.support.test.espresso.Espresso
 import android.support.test.rule.ActivityTestRule
 import org.junit.Rule
 import org.junit.Test
@@ -11,6 +12,7 @@ class TimerGUITest {
 
     @Test
     fun fifteenMinutesOnStart() {
+        Espresso.closeSoftKeyboard()
         isComponentDisplayed(R.id.timer_duration)
     }
 }
