@@ -49,7 +49,7 @@
             android:layout_height="300dp"
             android:layout_gravity="center|top"
             android:padding="30dp"
-            seekarc:arcColor="@android:color/white"
+            seekarc:arcColor="@color/colorPrimary"
             seekarc:clockwise="true"
             seekarc:max="360"
             seekarc:progress="90"
@@ -58,7 +58,7 @@
             seekarc:roundEdges="true"
             seekarc:startAngle="0"
             seekarc:sweepAngle="359"
-            seekarc:thumb="@drawable/scrubber_control_focused_holo"
+            seekarc:thumb="@drawable/seekbar_pointer"
             seekarc:touchInside="true"
             android:layout_weight="1"/>
 
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="START"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textColor="@android:color/white"
             android:background="@color/colorAccent"
             android:layout_weight="1"/>

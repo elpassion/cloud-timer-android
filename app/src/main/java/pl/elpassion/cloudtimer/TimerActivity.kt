@@ -3,6 +3,7 @@ package pl.elpassion.cloudtimer
 import android.app.Activity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -18,6 +19,7 @@ class TimerActivity : Activity() {
     val timerEndTime by lazy { findViewById(R.id.timer_time_to_end) as TextView }
     val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
     val timerTitle by lazy { findViewById(R.id.new_timer_title) as EditText }
+    val timerToolbar by lazy { findViewById(R.id.new_timer_toolbar) as Toolbar }
     protected val alarmDao by lazy { TimerDAO.getInstance(applicationContext) }
     var timerDurationInMilis: Long = 0
     private val handler = Handler()
@@ -29,6 +31,7 @@ class TimerActivity : Activity() {
         timerDurationInMilis = 15 * 60 * 1000
         seekArcMinutes.setOnSeekArcChangeListener(SeekArcMinutesChangeListener())
         refreshTimerEndTime()
+        timerToolbar.inflateMenu(R.menu.timer_menu)
 
         startTimerButton.setOnClickListener {
             val newTimer = Timer(timerTitle.text.toString(), timerDurationInMilis)
