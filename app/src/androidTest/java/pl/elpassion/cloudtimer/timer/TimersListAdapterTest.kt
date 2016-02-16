@@ -3,11 +3,11 @@ package pl.elpassion.cloudtimer.timer
 import org.junit.Assert
 import org.junit.Test
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.timerslist.NewAdapter
+import pl.elpassion.cloudtimer.timerslist.ListOfTimersAdapter
 
 class TimersListAdapterTest {
 
-    val adapter = NewAdapter()
+    val adapter = ListOfTimersAdapter()
 
     @Test
     fun ifRangeOfNotFinishedTimersIsCorrect() {

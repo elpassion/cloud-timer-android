@@ -12,7 +12,7 @@ import java.util.*
 
 class TimerListRefreshActionsTest {
 
-    val adapter = NewAdapter()
+    val adapter = ListOfTimersAdapter()
     val operations = ArrayList<Any>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
@@ -121,7 +121,16 @@ class TimerListRefreshActionsTest {
         adapter.registerAdapterDataObserver(observer)
         currentTimeInMillis = { System.currentTimeMillis() + 2000000 }
         adapter.handleTimersStateChange()
-        assertEquals(listOf(MoveOp(0, 2), MoveOp(0, 2)), operations)
+        assertEquals(listOf(MoveOp(0, 1 + 1), MoveOp(0, 1 + 1)), operations)
+    }
+
+    @Test
+    fun shouldNotifyAboutJustFinishedTimerToMoveTwoPositionBelow(){
+        adapter.updateTimers(listOf(Timer("timer", 2000), Timer("timer", 1000000), Timer("timer", 3000000)))
+        adapter.registerAdapterDataObserver(observer)
+        currentTimeInMillis = { System.currentTimeMillis() + 3000 }
+        adapter.handleTimersStateChange()
+        assertEquals(listOf(MoveOp(0, 2 + 0)), operations)
     }
 
 }

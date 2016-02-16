@@ -9,7 +9,7 @@ import java.util.*
 
 class TimersListActionsTest {
 
-    val adapter = NewAdapter()
+    val adapter = ListOfTimersAdapter()
     val operations = ArrayList<Any>()
     val observer = object : RecyclerView.AdapterDataObserver() {
         override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {

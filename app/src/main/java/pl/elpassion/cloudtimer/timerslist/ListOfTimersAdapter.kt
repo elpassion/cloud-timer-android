@@ -1,9 +1,19 @@
 package pl.elpassion.cloudtimer.timerslist
 
 import pl.elpassion.cloudtimer.adapter.BaseAdapter
+import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
+import java.util.*
 
-class NewAdapter : BaseAdapter() {
+internal fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<ItemAdapter> {
+    val itemsAdapters = ArrayList<ItemAdapter>()
+    val (finished, notFinished) = timers.partition { it.finished }
+    notFinished.sortedBy { it.endTime }.forEach { itemsAdapters.add(TimerItemAdapter(it)) }
+    finished.sortedByDescending { it.endTime }.forEach { itemsAdapters.add(FinishedTimerItemAdapter(it)) }
+    return itemsAdapters
+}
+
+class ListOfTimersAdapter : BaseAdapter() {
 
     fun updateTimers(timers: List<Timer>) {
         if (timers.size > adapters.size) {
@@ -38,7 +48,7 @@ class NewAdapter : BaseAdapter() {
             adapters.addAll(newAdapters)
             if (notFinished.size > 0) {
                 for (i in 0..finished.lastIndex)
-                    notifyItemMoved(0, finished.size)
+                    notifyItemMoved(0, notFinished.size + finished.lastIndex )
             } else {
                 notifyItemRangeChanged(0, finished.size)
             }
