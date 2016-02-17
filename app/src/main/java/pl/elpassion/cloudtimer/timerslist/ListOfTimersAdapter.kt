@@ -48,7 +48,7 @@ class ListOfTimersAdapter : BaseAdapter() {
             adapters.addAll(newAdapters)
             if (notFinished.size > 0) {
                 for (i in 0..finished.lastIndex)
-                    notifyItemMoved(0, notFinished.size + finished.lastIndex )
+                    notifyItemMoved(0, currentTimerAdapters.lastIndex)
             } else {
                 notifyItemRangeChanged(0, finished.size)
             }
