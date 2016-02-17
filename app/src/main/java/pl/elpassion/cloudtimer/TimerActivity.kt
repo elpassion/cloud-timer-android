@@ -46,11 +46,15 @@ class TimerActivity : AppCompatActivity() {
         timerToolbar.inflateMenu(R.menu.timer_menu)
 
         startTimerButton.setOnClickListener {
-            val newTimer = Timer(timerTitle.text.toString(), timerDurationInMilis)
-            scheduleAlarm(newTimer, this)
-            alarmDao.save(newTimer)
-            finish()
+            startNewTimer()
         }
+    }
+
+    private fun startNewTimer() {
+        val newTimer = Timer(timerTitle.text.toString(), timerDurationInMilis)
+        scheduleAlarm(newTimer, this)
+        alarmDao.save(newTimer)
+        finish()
     }
 
     override fun onResume() {
@@ -70,6 +74,18 @@ class TimerActivity : AppCompatActivity() {
         timerEndTime.text = TimeConverter.formatFromMilliToTime(endTime)
     }
 
+    private fun onSeekBarTimeChange(currentValue: Int) {
+        val currentTime = System.currentTimeMillis()
+        val currentTimerValue = Math.round(currentValue / 360f * 59)
+        val currentTimerValueInMilis = currentTimerValue * 60L * 1000L
+        setTimerHourValue(currentTimerValue)
+        timerDurationInMilis = (hoursValue * 60 * 60 * 1000) + currentTimerValueInMilis
+        val timerEndTimeInMilis = currentTime + timerDurationInMilis
+        timerEndTime.text = TimeConverter.formatFromMilliToTime(timerEndTimeInMilis)
+        timerDuration.text = TimeConverter.formatFromMilliToMinutes(timerDurationInMilis.toLong())
+        previousTimerValue = currentTimerValue
+    }
+
     private fun setTimerHourValue(currentTimerValue: Int) {
         if (currentTimerValue in beginRange && previousTimerValue.toInt() in endRange) {
             hoursValue++
@@ -79,20 +95,6 @@ class TimerActivity : AppCompatActivity() {
                 hoursValue = 0
             }
         }
-    }
-
-    private fun onSeekBarTimeChange(currentValue: Int) {
-        val currentTime = System.currentTimeMillis()
-        val currentTimerValue = Math.round(currentValue / 360f * 59)
-        val currentTimerValueInMilis = currentTimerValue * 60L * 1000L
-
-        setTimerHourValue(currentTimerValue)
-
-        timerDurationInMilis = (hoursValue * 60 * 60 * 1000) + currentTimerValueInMilis
-        val timerEndTimeInMilis = currentTime + timerDurationInMilis
-        timerEndTime.text = TimeConverter.formatFromMilliToTime(timerEndTimeInMilis)
-        timerDuration.text = TimeConverter.formatFromMilliToMinutes(timerDurationInMilis.toLong())
-        previousTimerValue = currentTimerValue
     }
 
 
