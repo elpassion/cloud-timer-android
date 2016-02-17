@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer
 
+import android.support.test.espresso.Espresso
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Before
@@ -29,6 +30,7 @@ class CreateNewTimerTest {
     @Test
     fun isTimerActivityStartsWhenAddNewTimerButtonIsPushed() {
         pressButton(R.id.create_new_timer)
+        Espresso.closeSoftKeyboard()
         isComponentDisplayed(R.id.start_timer_button)
     }
 }
