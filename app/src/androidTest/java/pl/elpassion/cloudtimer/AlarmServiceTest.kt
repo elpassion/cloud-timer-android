@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer
 
 import android.app.PendingIntent.*
 import android.content.Intent
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertNotNull
@@ -31,6 +32,7 @@ class AlarmServiceTest {
     @Test
     fun alarmSchedulerCreatesPendingIntent() {
         clearIntent()
+        closeSoftKeyboard()
         pressButton(R.id.start_timer_button)
         val alarmUp = getPendingIntent()
         assertNotNull(alarmUp)
@@ -40,6 +42,7 @@ class AlarmServiceTest {
     fun alarmSchedulerNoRandomIntentType() {
         clearIntent()
         val requestCodeToTry = 123
+        closeSoftKeyboard()
         pressButton(R.id.start_timer_button)
         val alarmUp = getPendingIntent(requestCodeToTry)
         assertNull(alarmUp)
