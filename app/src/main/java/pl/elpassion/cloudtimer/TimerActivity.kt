@@ -21,7 +21,7 @@ class TimerActivity : Activity() {
         }
     }
 
-    val seekArcMinutes by lazy { findViewById(R.id.timer_seekArc_minutes) as SeekArc }
+    val timerSeekArc by lazy { findViewById(R.id.timer_seekArc) as SeekArc }
     val timerDuration by lazy { findViewById(R.id.timer_duration) as TextView }
     val timerEndTime by lazy { findViewById(R.id.timer_time_to_end) as TextView }
     val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
@@ -36,7 +36,7 @@ class TimerActivity : Activity() {
         setContentView(R.layout.activity_timer)
         startTimerButton.text = "START"
         timerDurationInMilis = 15 * 60 * 1000
-        seekArcMinutes.setOnSeekArcChangeListener(SeekArcMinutesChangeListener())
+        timerSeekArc.setOnSeekArcChangeListener(SeekArcMinutesChangeListener())
         refreshTimerEndTime()
         timerToolbar.inflateMenu(R.menu.timer_menu)
 

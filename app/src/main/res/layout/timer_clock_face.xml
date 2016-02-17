@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"/>
 
     <com.triggertrap.seekarc.SeekArc
-        android:id="@+id/timer_seekArc_minutes"
+        android:id="@+id/timer_seekArc"
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:padding="30dp"
