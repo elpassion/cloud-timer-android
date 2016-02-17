@@ -11,9 +11,11 @@ object NotificationIdGenerator {
 
     fun incrementAndGet(): Int {
         val id = getIncremented()
+        save(id)
         return id
     }
 
+    private fun save(id: Int) = sharedPreferences.edit().putInt(idKey, id).commit()
     private fun getIncremented(): Int = sharedPreferences.getInt(idKey, 0) + 1
 
 }

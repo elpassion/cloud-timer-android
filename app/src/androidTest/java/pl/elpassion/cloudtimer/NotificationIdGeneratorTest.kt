@@ -17,4 +17,11 @@ class NotificationIdGeneratorTest {
     fun ifAtStartIdHasValueOne(){
         assertEquals(1, NotificationIdGenerator.incrementAndGet())
     }
+
+    @Test
+    fun ifNextValueIsIncrementedByOne(){
+        var id = NotificationIdGenerator.incrementAndGet()
+        assertEquals(++id, NotificationIdGenerator.incrementAndGet())
+    }
+
 }
