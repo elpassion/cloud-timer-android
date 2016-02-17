@@ -24,7 +24,7 @@ class NotificationServiceTest : ApplicationTestCase<CloudTimerApp>(CloudTimerApp
     @Test
     fun alarmReceived() {
         var alarmRecived = false
-        NotificationTools.fireNotification = { context: Context, notification: Notification ->
+        NotificationTools.fireNotification = { context: Context, notification: Notification,id : Int ->
             alarmRecived = true
         }
         scheduleAlarm(sampleTimer, application)
@@ -36,7 +36,7 @@ class NotificationServiceTest : ApplicationTestCase<CloudTimerApp>(CloudTimerApp
     @Test
     fun notificationsExists() {
         var myNotificaton : Notification? = null
-        NotificationTools.fireNotification = { context: Context, notification: Notification ->
+        NotificationTools.fireNotification = { context: Context, notification: Notification,id : Int  ->
             myNotificaton = notification
         }
         scheduleAlarm(sampleTimer, application)

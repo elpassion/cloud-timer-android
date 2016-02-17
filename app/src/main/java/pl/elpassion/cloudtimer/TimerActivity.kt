@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.NumberPicker
-import pl.elpassion.cloudtimer.alarm.scheduleAlarm
+import pl.elpassion.cloudtimer.alarm.startNextTimerSchedule
 import pl.elpassion.cloudtimer.domain.Timer
 
 class TimerActivity : Activity() {
@@ -42,8 +42,8 @@ class TimerActivity : Activity() {
         startButton.setOnClickListener {
             // TODO: TMP create timer
             val newTimer = Timer(timerTitle.text.toString(), getTime())
-            scheduleAlarm(newTimer, this)
             alarmDao.save(newTimer)
+            startNextTimerSchedule()
             finish()
         }
     }
