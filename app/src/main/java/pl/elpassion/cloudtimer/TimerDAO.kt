@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
@@ -19,13 +20,14 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         private val KEY_TIME_LEFT = "timeLeft"
         private val KEY_END_TIME = "endTime"
         private val KEY_GROUP_NAME = "groupName"
-
-
         private var dao: TimerDAO? = null
-        fun getInstance(context: Context): TimerDAO {
+        private fun getInstance(context: Context): TimerDAO {
             if (dao == null) dao = TimerDAO(context = context, factory = null)
             return dao!!
         }
+
+        fun getInstance(): TimerDAO = getInstance(applicationContext)
+
     }
 
     override fun onConfigure(db: SQLiteDatabase) {
@@ -82,22 +84,21 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         throw NoSuchElementException()
     }
 
-    private fun getTimerFromCursor(res: Cursor): Timer {
-        val uId = res.getString(res.getColumnIndex(KEY_TIMER_UID))
-        val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
-        val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
-        val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
-        val timeLeft = res.getLong(res.getColumnIndex(KEY_TIME_LEFT))
-        val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
-        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
-    }
-
     fun deleteOne(uid: String) {
         readableDatabase.delete(TABLE_TIMER, KEY_TIMER_UID + "=?", arrayOf(uid))
     }
 
     fun deleteAll() {
         readableDatabase.delete(TABLE_TIMER, null, null)
+    }
+
+    fun findNextTimerToSchedule() : Timer?{
+        val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where datetime($KEY_END_TIME / 1000 , 'unixepoch') >= datetime('now') order by $KEY_END_TIME limit 1", null)
+        res.moveToFirst()
+        if (res.isLast) {
+            return getTimerFromCursor(res)
+        }
+        return null
     }
 
     fun findLocalTimers(): List<Timer> {
@@ -109,6 +110,16 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
             res.moveToNext()
         }
         return alarms
+    }
+
+    private fun getTimerFromCursor(res: Cursor): Timer {
+        val uId = res.getString(res.getColumnIndex(KEY_TIMER_UID))
+        val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
+        val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
+        val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
+        val timeLeft = res.getLong(res.getColumnIndex(KEY_TIME_LEFT))
+        val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
+        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
     }
 
 }

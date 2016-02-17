@@ -1,6 +1,7 @@
 package pl.elpassion.cloudtimer
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.Toolbar
@@ -11,8 +12,14 @@ import com.triggertrap.seekarc.SeekArc
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.domain.Timer
 
-
 class TimerActivity : Activity() {
+
+    companion object {
+        fun start(activity: Activity, timerActivityResultCode: Int) {
+            val intent = Intent(activity, TimerActivity::class.java)
+            activity.startActivityForResult(intent, timerActivityResultCode)
+        }
+    }
 
     val seekArcMinutes by lazy { findViewById(R.id.timer_seekArc_minutes) as SeekArc }
     val timerDuration by lazy { findViewById(R.id.timer_duration) as TextView }
@@ -20,7 +27,7 @@ class TimerActivity : Activity() {
     val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
     val timerTitle by lazy { findViewById(R.id.new_timer_title) as EditText }
     val timerToolbar by lazy { findViewById(R.id.new_timer_toolbar) as Toolbar }
-    protected val alarmDao by lazy { TimerDAO.getInstance(applicationContext) }
+    protected val alarmDao by lazy { TimerDAO.getInstance() }
     var timerDurationInMilis: Long = 0
     private val handler = Handler()
 

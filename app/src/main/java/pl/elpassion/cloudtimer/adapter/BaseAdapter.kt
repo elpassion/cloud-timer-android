@@ -2,12 +2,11 @@ package pl.elpassion.cloudtimer.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import java.util.*
 
 open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected val adapters = ArrayList<ItemAdapter>()
+    val adapters: MutableList<ItemAdapter> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
         return adapters.first { it.itemViewType == viewType }
