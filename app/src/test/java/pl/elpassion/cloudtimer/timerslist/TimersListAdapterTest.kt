@@ -71,7 +71,7 @@ class TimersListAdapterTest {
 
     @Test
     fun ifFinishedTimerAdaptersAreSortedCorrectly() {
-        val sortedFinishedTimers = finishedTimersList.sortedBy { it.endTime }
+        val sortedFinishedTimers = finishedTimersList.sortedByDescending { it.endTime }
         val adapters = createAdaptersForCloudTimerItems(finishedTimersList)
         val finishedTimersFromAdapters = adapters.map { (it as FinishedTimerItemAdapter).timer }
         assertEquals(finishedTimersFromAdapters, sortedFinishedTimers)
