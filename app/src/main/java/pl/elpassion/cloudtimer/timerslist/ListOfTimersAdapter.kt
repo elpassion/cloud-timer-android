@@ -16,17 +16,8 @@ internal fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<It
 class ListOfTimersAdapter : BaseAdapter() {
 
     fun updateTimers(timers: List<Timer>) {
-        if (timers.size > adapters.size) {
-            notifyItemRangeInserted(0, timers.size - adapters.size)
-            if (adapters.size > 0)
-                notifyItemRangeChanged(timers.size - adapters.size, adapters.size)
-        } else if (timers.size < adapters.size) {
-            notifyItemRangeRemoved(0, adapters.size - timers.size)
-            notifyItemRangeChanged(0, timers.size)
-        } else {
-            notifyItemRangeChanged(0, adapters.size)
-        }
         addNewTimers(timers)
+        notifyDataSetChanged()
     }
 
     private fun addNewTimers(timers: List<Timer>) {

@@ -7,7 +7,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.timerslist.*
+import pl.elpassion.cloudtimer.timerslist.FinishedTimerItemAdapter
+import pl.elpassion.cloudtimer.timerslist.ListOfTimersAdapter
 import java.util.*
 
 class TimerListRefreshActionsTest {
@@ -15,10 +16,6 @@ class TimerListRefreshActionsTest {
     val adapter = ListOfTimersAdapter()
     val operations = ArrayList<Any>()
     val observer = object : RecyclerView.AdapterDataObserver() {
-        override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-            operations.add(InsertedOp(positionStart, itemCount))
-        }
-
         override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
             operations.add(ChangeOp(positionStart, itemCount))
         }
@@ -136,3 +133,7 @@ class TimerListRefreshActionsTest {
 }
 
 data class MoveOp(val from: Int, val to: Int)
+
+data class RemoveOp(val first: Int, val count: Int)
+
+data class ChangeOp(val first: Int, val count: Int)
