@@ -1,32 +1,23 @@
 package pl.elpassion.cloudtimer.domain
 
 import org.junit.Assert.assertFalse
-import org.junit.Before
+import org.junit.Assert.assertTrue
 import org.junit.Test
-
 
 class TimerTests {
 
-    private lateinit var timer: Timer
-
-    @Before
-    fun before() {
-        timer = Timer(
-                title = "",
-                endTime = 0,
-                duration = 0
-        )
+    @Test
+    fun isNotFinishedWhenEndTimeIsAfterCurrentTime() {
+        val oneSec: Long = 1000
+        val timer = Timer("test", oneSec)
+        assertFalse(timer.finished)
     }
 
     @Test
-    fun isNotSharedWhenHasNoGroup() {
-        assertFalse(timer.isShared())
+    fun isFinishedWhenEndTimeIsBeforeCurrentTime() {
+        val minusOneSec: Long = -1000
+        val timer = Timer("test", minusOneSec)
+        assertTrue(timer.finished)
     }
-
-    @Test
-    fun isPausedWhenTimeLeftIsNull() {
-        assertFalse(timer.isPaused())
-    }
-
 
 }

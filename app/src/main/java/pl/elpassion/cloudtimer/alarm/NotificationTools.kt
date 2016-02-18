@@ -10,44 +10,38 @@ import android.support.v4.app.NotificationCompat
 import pl.elpassion.cloudtimer.R
 
 object NotificationTools {
-    val ALARM_NOTIFICATION_ID = 329515 // todo placeholder
 
-    fun createNotification(title : String, text : String, context: Context) {
-        val builder = createNotificationBuilder(title, text, context)
-        val notification = builder.build()
-        fireNotification(context, notification)
-    }
+    val idKey = "notificationId"
 
-    var fireNotification = fun (context: Context, notification: Notification) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(ALARM_NOTIFICATION_ID, notification)
-    }
-
-    //todo arg for ID and multiple ids?
-    fun dismissNotification(context: Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(ALARM_NOTIFICATION_ID)
-    }
-
-    private fun createNotificationBuilder(title : String, text : String, context : Context) : NotificationCompat.Builder {
-        val mBuilder = NotificationCompat.Builder(context)
-        mBuilder.mContentTitle = title
-        mBuilder.mContentText = text
-        mBuilder.addAction(R.drawable.notification_template_icon_bg, "Dismiss", getDismissIntent(context))
-        addSound(mBuilder)
-        mBuilder.setSmallIcon(R.drawable.notification_template_icon_bg) //todo placeholder
-        return mBuilder
-    }
-
-    private fun addSound(builder : NotificationCompat.Builder) {
-        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        builder.setSound(uri)
-    }
-
-    private fun getDismissIntent(context : Context) : PendingIntent {
+    fun createAndFireNotification(title: String, text: String, context: Context) {
         val intent = Intent(context, NotificationReceiver::class.java)
-        val pi = PendingIntent.getBroadcast(context, 0, intent, 0)
-        return pi
+        val generatedID = NotificationIdGenerator.incrementAndGet()
+        intent.putExtra(idKey, generatedID)
+        val pi = PendingIntent.getBroadcast(context, generatedID, intent, 0)
+        val notification = createNotification(title, text, context, pi)
+        fireNotification(context, notification, generatedID)
+    }
+
+    private fun createNotification(title: String, text: String, context: Context, pendingIntent: PendingIntent): Notification {
+        val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        return NotificationCompat.Builder(context)
+                .setContentTitle(title)
+                .setContentText(text)
+                .addAction(R.drawable.notification_template_icon_bg, "Dismiss", pendingIntent)
+                .setSound(soundUri)
+                .setSmallIcon(R.drawable.notification_template_icon_bg) //todo placeholder
+                .build()
+    }
+
+    var fireNotification = fun(context: Context, notification: Notification, id: Int) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(id, notification)
+    }
+
+    fun dismissNotification(context: Context, intent: Intent) {
+        val id = intent.getIntExtra(idKey, -1)
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(id)
     }
 }
 

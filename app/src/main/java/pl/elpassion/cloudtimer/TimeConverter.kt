@@ -28,11 +28,12 @@ object TimeConverter {
     }
 
     private fun createStringTime(hours: Long, minutes: Long, seconds: Long): String {
-        val secondsString = twoNumbersWithZeros.format(seconds)
+        val secondsWithZeros = twoNumbersWithZeros.format(seconds)
+        val minutesWithZeros = twoNumbersWithZeros.format(minutes)
         if (hours > 0)
-            return "$hours:" + twoNumbersWithZeros.format(minutes) + ":" + secondsString
+            return "$hours:$minutesWithZeros:$secondsWithZeros"
         else
-            return "$minutes:" + secondsString
+            return "$minutes:$secondsWithZeros"
     }
 
 

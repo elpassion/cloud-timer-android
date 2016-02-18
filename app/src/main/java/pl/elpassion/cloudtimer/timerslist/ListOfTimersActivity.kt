@@ -7,39 +7,41 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerActivity
-import pl.elpassion.cloudtimer.TimerDAO
+import android.widget.TextView
+import pl.elpassion.cloudtimer.*
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
 class ListOfTimersActivity : AppCompatActivity() {
 
+    companion object {
+        private const val timerActivityResultCode = 1
+        private const val oneSec: Long = 1000
+        private val handler: Handler = Handler()
+    }
+
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
     private val recyclerView by lazy { findViewById(R.id.user_timers_list) as RecyclerView }
     private val timers: MutableList<Timer> = ArrayList()
-    private val handler: Handler = Handler()
-    private val oneSec: Long = 1000
-    private val dao = TimerDAO.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_timers_list_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        loadTimersAndSetUpRecycleView()
+        startTimerActivityIfThereIsNoTimers()
         createNewTimerButton.setOnClickListener {
             startTimerActivity()
         }
     }
 
-    override fun onResume() {
-        getTimers()
-        startTimerActivityIfThereIsNoTimers()
-        recyclerView.adapter = TimersListAdapter(timers)
-        handler.postDelayed(TimeRefresher(), oneSec)
-        super.onResume()
+    private fun loadTimersAndSetUpRecycleView() {
+        loadTimersFromDB()
+        setUpRecyclerView()
     }
 
-    private fun getTimers() {
+    private fun loadTimersFromDB() {
+        val dao = TimerDAO.getInstance()
         timers.clear()
         timers.addAll(dao.findAll())
     }
@@ -49,9 +51,19 @@ class ListOfTimersActivity : AppCompatActivity() {
             startTimerActivity()
     }
 
+    private fun setUpRecyclerView() {
+        val newAdapter = ListOfTimersAdapter()
+        newAdapter.updateTimers(timers)
+        recyclerView.adapter = newAdapter
+    }
+
     private fun startTimerActivity() {
-        val intent = Intent(this, TimerActivity::class.java)
-        startActivity(intent)
+        TimerActivity.start(this, timerActivityResultCode)
+    }
+
+    override fun onResume() {
+        handler.postDelayed(TimeRefresher(), oneSec)
+        super.onResume()
     }
 
     override fun onPause() {
@@ -59,11 +71,45 @@ class ListOfTimersActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        loadTimersAndSetUpRecycleView()
+        if (isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode, resultCode))
+            finish()
+        else
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode: Int, resultCode: Int): Boolean {
+        return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
+    }
+
     inner class TimeRefresher : Runnable {
         override fun run() {
-            recyclerView.adapter.notifyDataSetChanged()
+            handleCounterRefresh()
+            adapter.handleTimersStateChange()
             handler.postDelayed(this, oneSec)
         }
+
+        private fun handleCounterRefresh() {
+            val notFinishedTimersRange = adapter.getNotFinishedTimersRange()
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val visibleRange = layoutManager.findFirstVisibleItemPosition()..layoutManager.findLastVisibleItemPosition()
+            val visibleNotFinishedTimers = notFinishedTimersRange.intersect(visibleRange)
+            foreachNotFinishedTimerRefreshCounter(layoutManager, visibleNotFinishedTimers)
+        }
+
+        private fun foreachNotFinishedTimerRefreshCounter(layoutManager: LinearLayoutManager, visibleNotFinishedTimers: Set<Int>) {
+            visibleNotFinishedTimers.forEach {
+                val view = layoutManager.findViewByPosition(it)
+                val counter = view.findViewById(R.id.timer_counter) as TextView
+                val timerAdapter = adapter.adapters[it] as TimerItemAdapter
+                val timeLeftInMilliSec = timerAdapter.timer.endTime - currentTimeInMillis()
+                counter.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
+            }
+        }
+
+        val adapter: ListOfTimersAdapter
+            get() = recyclerView.adapter as ListOfTimersAdapter
     }
 
 }

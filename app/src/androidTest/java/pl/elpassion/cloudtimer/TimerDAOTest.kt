@@ -1,18 +1,11 @@
 package pl.elpassion.cloudtimer
 
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Ignore
-import org.junit.Rule
+import org.junit.Assert.*
 import org.junit.Test
-import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
 class TimerDAOTest {
     companion object {
         val oneSecond = 1000L
@@ -22,10 +15,7 @@ class TimerDAOTest {
         var timer2 = Timer("test", threeSeconds)
     }
 
-    @Rule @JvmField
-    val activity = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
-
-    protected val alarmDao by lazy { TimerDAO.getInstance(activity.getActivity().applicationContext) }
+    protected val alarmDao by lazy { TimerDAO.getInstance() }
 
     @Test
     fun isAlarmCanByAddedToDB() {
@@ -58,7 +48,10 @@ class TimerDAOTest {
         val uuIds = arrayOf(
                 alarmDao.save(Timer("local1", oneSecond)),
                 alarmDao.save(Timer("local2", twoSeconds)),
-                alarmDao.save(Timer("notLocal", threeSeconds, null, Group("elParafia"))))
+                alarmDao.save(Timer(
+                        title = "notLocal",
+                        duration = threeSeconds,
+                        group = Group("elParafia"))))
         assertEquals(2, alarmDao.findLocalTimers().size)
         uuIds.forEach { alarmDao.deleteOne(it) }
     }
@@ -66,7 +59,7 @@ class TimerDAOTest {
     @Test
     fun insertTimerWithUUID() {
         val uuid = "testUuId"
-        alarmDao.save(Timer("test", oneSecond, uuid))
+        alarmDao.save(Timer(title = "test", duration = oneSecond, uid = uuid))
         assertEquals(alarmDao.findOne(uuid).title, "test")
         alarmDao.deleteOne(uuid)
     }
@@ -74,7 +67,27 @@ class TimerDAOTest {
     @Test
     fun editTimerInDB() {
         val uid = alarmDao.save(Timer("elParafia", oneSecond))
-        alarmDao.save(Timer("pralka", twoSeconds, uid))
+        alarmDao.save(Timer(title = "pralka", duration = twoSeconds, uid = uid))
         assertEquals("pralka", alarmDao.findOne(uid).title)
+    }
+
+    @Test
+    fun findNextToSchedule() {
+        val firstTimerToScheduleUuid = setUpDBAndReturnFirstToScheduleTimerUuid()
+        val foundNextTimerToSchedule = alarmDao.findNextTimerToSchedule()
+        assertEquals(firstTimerToScheduleUuid, foundNextTimerToSchedule!!.uid)
+    }
+
+    private fun setUpDBAndReturnFirstToScheduleTimerUuid(): String {
+        alarmDao.deleteAll()
+        alarmDao.save(Timer("", 1000 * 60))
+        alarmDao.save(Timer("", -1000 * 60))
+        return alarmDao.save(Timer("", 1000 * 49))
+    }
+
+    @Test
+    fun ifThereAreNoTimersToScheduleMethodShouldReturnNull(){
+        alarmDao.deleteAll()
+        assertNull(alarmDao.findNextTimerToSchedule())
     }
 }

@@ -13,7 +13,7 @@ import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
-class TimerItemAdapter(private val timer: Timer) : ItemAdapter {
+class TimerItemAdapter(val timer: Timer) : ItemAdapter {
 
     override val itemViewType: Int = R.layout.user_timers_list_timer_item
 
@@ -44,4 +44,5 @@ class TimerItemAdapter(private val timer: Timer) : ItemAdapter {
         val endTime = itemView.findViewById(R.id.timer_end_time) as TextView
         val shareButton = itemView.findViewById(R.id.timer_share_button) as Button
     }
+
 }
