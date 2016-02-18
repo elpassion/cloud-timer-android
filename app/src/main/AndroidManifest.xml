@@ -17,14 +17,16 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".timerslist.ListOfTimersActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TimerActivity"/>
+        <activity android:name=".TimerActivity"
+            android:screenOrientation="portrait"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="49fd2e0b3dfc9eb4d3b61ea854f0fb49f87f5fb8" />

@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             tools:text="15:00"
-            android:textSize="50dp"
+            android:textSize="40dp"
             android:textColor="@color/colorPrimaryElements"/>
 
         <TextView
@@ -55,8 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
-            android:textSize="25dp"
+            android:textSize="20dp"
             tools:text="12:30"
             android:textColor="@color/colorPrimaryDark"/>
 
@@ -65,9 +64,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="START"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:textColor="@android:color/white"
-            android:background="@color/colorAccent"/>
+            android:background="@color/colorAccent"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 
