@@ -10,7 +10,7 @@ class TimerGUITest {
     val rule = rule<TimerActivity> { }
 
     @Test
-    fun fifteenMinutesOnStart() {
+    fun isTimerDurationDisplayed() {
         closeSoftKeyboard()
         isComponentDisplayed(R.id.timer_duration)
     }
