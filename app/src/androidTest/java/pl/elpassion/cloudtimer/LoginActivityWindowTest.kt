@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer
 
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertTrue
@@ -26,6 +27,7 @@ class LoginActivityWindowTest {
     @Test
     fun regexNegativeTest() {
         typeText(R.id.email_input, "potato")
+        closeSoftKeyboard()
         pressButton(R.id.login_via_email_button)
         isComponentDisplayed(R.id.incorrect_login_address)
     }
@@ -33,6 +35,7 @@ class LoginActivityWindowTest {
     @Test
     fun regexPositiveTest() {
         typeText(R.id.email_input, "potato@gmail.com")
+        closeSoftKeyboard()
         pressButton(R.id.login_via_email_button)
         isComponentNotDisplayed(R.id.incorrect_login_address)
     }
@@ -46,8 +49,8 @@ class LoginActivityWindowTest {
             }
         }
         typeText(R.id.email_input, "potato@gmail.com")
+        closeSoftKeyboard()
         pressButton(R.id.login_via_email_button)
-
         assertTrue(isFired)
     }
 }
