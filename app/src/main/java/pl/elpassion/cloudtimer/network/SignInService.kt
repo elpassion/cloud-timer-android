@@ -1,14 +1,14 @@
 package pl.elpassion.cloudtimer.network
 
-import android.util.Log
+import rx.Observable
 
 
 interface SignInService {
-    fun singIn(email : String)
+    fun singIn(email: String): Observable<Any>
 }
 
-var myPointlessService = object: SignInService {
-    override fun singIn(email: String) {
-        Log.e("Log","e!")
+var myService = object : SignInService {
+    override fun singIn(email: String): Observable<Any> {
+        return Observable.just(Any())
     }
 }

@@ -18,7 +18,7 @@ class LoginActivityStartTest {
     val rule = rule<ListOfTimersActivity>() {
         val alarmDao = TimerDAO.getInstance()
         alarmDao.deleteAll()
-        alarmDao.save(Timer("placeholder", 100L))
+        alarmDao.save(Timer("placeholder", 1000L))
     }
 
     @Test

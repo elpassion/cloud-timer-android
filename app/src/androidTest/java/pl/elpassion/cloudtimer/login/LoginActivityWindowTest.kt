@@ -12,8 +12,9 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.network.SignInService
-import pl.elpassion.cloudtimer.network.myPointlessService
+import pl.elpassion.cloudtimer.network.myService
 import pl.elpassion.cloudtimer.rule
+import rx.Observable
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityWindowTest {
@@ -23,7 +24,7 @@ class LoginActivityWindowTest {
 
     @Test
     fun initTest() {
-        isComponentNotDisplayed(R.id.incorrect_login_address)
+        isComponentNotDisplayed(R.id.error_message)
     }
 
     @Test
@@ -31,7 +32,7 @@ class LoginActivityWindowTest {
         typeText(R.id.email_input, "potato")
         closeSoftKeyboard()
         pressButton(R.id.login_via_email_button)
-        isComponentDisplayed(R.id.incorrect_login_address)
+        isComponentDisplayed(R.id.error_message)
     }
 
     @Test
@@ -39,15 +40,16 @@ class LoginActivityWindowTest {
         typeText(R.id.email_input, "potato@gmail.com")
         closeSoftKeyboard()
         pressButton(R.id.login_via_email_button)
-        isComponentNotDisplayed(R.id.incorrect_login_address)
+        isComponentNotDisplayed(R.id.error_message)
     }
 
     @Test
     fun signInPositiveCaseServiceFired() {
         var isFired = false
-        myPointlessService = object : SignInService {
-            override fun singIn(email: String) {
+        myService = object : SignInService {
+            override fun singIn(email: String) : Observable<Any> {
                 isFired = true
+                return Observable.just(Any())
             }
         }
         typeText(R.id.email_input, "potato@gmail.com")
