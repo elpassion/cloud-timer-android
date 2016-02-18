@@ -39,12 +39,10 @@ class TimerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
-        startTimerButton.text = "START"
         timerDurationInMilis = 15 * 60 * 1000
         timerSeekArc.setOnSeekArcChangeListener(SeekArcMinutesChangeListener())
         refreshTimerEndTime()
         timerToolbar.inflateMenu(R.menu.timer_menu)
-
         startTimerButton.setOnClickListener {
             startNewTimer()
         }
