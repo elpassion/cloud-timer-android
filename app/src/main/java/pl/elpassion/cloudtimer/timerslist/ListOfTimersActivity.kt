@@ -7,9 +7,12 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.TextView
+import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.*
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.login.LoginActivity
 import java.util.*
 
 class ListOfTimersActivity : AppCompatActivity() {
@@ -62,11 +65,13 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        EventBus.getDefault().register(this)
         handler.postDelayed(TimeRefresher(), oneSec)
         super.onResume()
     }
 
     override fun onPause() {
+        EventBus.getDefault().unregister(this)
         handler.removeCallbacks(TimeRefresher())
         super.onPause()
     }
@@ -81,6 +86,13 @@ class ListOfTimersActivity : AppCompatActivity() {
 
     private fun isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode: Int, resultCode: Int): Boolean {
         return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
+    }
+
+    fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick){
+        var isLoggedIn = false
+        Log.e("ON SHARE BUTTON CLICK", onShareTimerButtonClick.timer.toString())
+        if(!isLoggedIn)
+            LoginActivity.start(this)
     }
 
     inner class TimeRefresher : Runnable {
@@ -111,5 +123,4 @@ class ListOfTimersActivity : AppCompatActivity() {
         val adapter: ListOfTimersAdapter
             get() = recyclerView.adapter as ListOfTimersAdapter
     }
-
 }

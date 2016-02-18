@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
@@ -27,7 +28,7 @@ class FinishedTimerItemAdapter (val timer: Timer) : ItemAdapter {
         sharedTimerHolder.duration.text = TimeConverter.formatFromMilliToMinutes(timer.duration)
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.shareButton.setOnClickListener {
-            Log.e("CLICK"," ON Share Button")
+            EventBus.getDefault().post(OnShareTimerButtonClick(timer))
         }
         sharedTimerHolder.duration.setOnClickListener {
             Log.e("Click","On duration")
