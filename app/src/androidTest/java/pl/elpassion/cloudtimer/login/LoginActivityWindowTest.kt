@@ -1,7 +1,6 @@
-package pl.elpassion.cloudtimer
+package pl.elpassion.cloudtimer.login
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -11,13 +10,16 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
+import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.network.SignInService
 import pl.elpassion.cloudtimer.network.myPointlessService
+import pl.elpassion.cloudtimer.rule
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityWindowTest {
+
     @Rule @JvmField
-    val rule = ActivityTestRule<LoginActivity>(LoginActivity::class.java)
+    val rule = rule<LoginActivity>(){}
 
     @Test
     fun initTest() {
