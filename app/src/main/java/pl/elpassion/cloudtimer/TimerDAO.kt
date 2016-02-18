@@ -93,7 +93,8 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
     }
 
     fun findNextTimerToSchedule() : Timer?{
-        val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where datetime($KEY_END_TIME / 1000 , 'unixepoch') >= datetime('now') order by $KEY_END_TIME limit 1", null)
+        val now = currentTimeInMillis()
+        val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where $KEY_END_TIME  > $now order by $KEY_END_TIME limit 1", null)
         res.moveToFirst()
         if (res.isLast) {
             return getTimerFromCursor(res)
@@ -117,7 +118,11 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
         val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
         val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
-        val timeLeft = res.getLong(res.getColumnIndex(KEY_TIME_LEFT))
+        val columnTimeLeftIndex = res.getColumnIndex(KEY_TIME_LEFT)
+        var timeLeft: Long? = null
+        if (!res.isNull(columnTimeLeftIndex)) {
+            timeLeft = res.getLong(columnTimeLeftIndex)
+        }
         val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
         return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
     }

@@ -22,9 +22,10 @@ class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.e("ALARM", "broadcast recieved")
-        val notifTitle = context.resources.getString(R.string.app_name)
-        val notifText = intent.getStringExtra(keyTimerTitle)
-        NotificationTools.createNotification(notifTitle, notifText, context)
+        startNextTimerSchedule()
+        val notifyTitle = context.resources.getString(R.string.app_name)
+        val notifyText = intent.getStringExtra(keyTimerTitle)
+        NotificationTools.createAndFireNotification(notifyTitle, notifyText, context)
     }
 }
 
