@@ -7,15 +7,13 @@
     android:background="@color/colorPrimary"
     android:layout_weight="1">
 
-    <AnalogClock
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:dial="@drawable/timer_face"
-        android:hand_minute="@drawable/hand_minute"
-        android:hand_hour="@drawable/hand_hour"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="20dp"/>
+        android:padding="20dp"
+        android:src="@drawable/timer_face"/>
 
     <com.triggertrap.seekarc.SeekArc
         android:id="@+id/timer_seekArc"
