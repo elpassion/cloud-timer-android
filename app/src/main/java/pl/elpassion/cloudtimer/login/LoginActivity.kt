@@ -1,6 +1,6 @@
 package pl.elpassion.cloudtimer.login
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -14,9 +14,9 @@ import pl.elpassion.cloudtimer.network.myService
 class LoginActivity : AppCompatActivity() {
 
     companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, LoginActivity::class.java)
-            context.startActivity(intent)
+        fun start(resultCode : Int, activity: Activity) {
+            val intent = Intent(activity, LoginActivity::class.java)
+            activity.startActivityForResult(intent, resultCode)
         }
     }
 
@@ -35,18 +35,27 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateEmail(input: String) {
         if (regex.matches(input))
-            myService.singIn(input).subscribe({},{displayError(connectionError)})
-        else
+            myService.singIn(input).subscribe(onLoginSuccess, onLoginFailure)
+         else
             displayError(incorrectEmail)
     }
 
-    private val connectionError :String
-            get() = this.getString(R.string.connection_error)
+    private val onLoginSuccess = { any: Any ->
+        setResult(RESULT_OK)
+        finish()
+    }
 
-    private val incorrectEmail :String
-            get() = this.getString(R.string.incorrect_email)
+    private val onLoginFailure = { ex: Throwable ->
+        displayError(connectionError)
+    }
 
-    private fun displayError(errorMessage : String) {
+    private val connectionError: String
+        get() = this.getString(R.string.connection_error)
+
+    private val incorrectEmail: String
+        get() = this.getString(R.string.incorrect_email)
+
+    private fun displayError(errorMessage: String) {
         errorMessageTextView.visibility = View.VISIBLE
         errorMessageTextView.text = errorMessage
     }

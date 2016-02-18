@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
+import android.support.design.widget.Snackbar.LENGTH_INDEFINITE
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.widget.TextView
 import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.*
@@ -19,6 +20,7 @@ class ListOfTimersActivity : AppCompatActivity() {
 
     companion object {
         private const val timerActivityResultCode = 1
+        private const val loginActivityResultCode = 2
         private const val oneSec: Long = 1000
         private val handler: Handler = Handler()
     }
@@ -26,6 +28,9 @@ class ListOfTimersActivity : AppCompatActivity() {
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
     private val recyclerView by lazy { findViewById(R.id.user_timers_list) as RecyclerView }
     private val timers: MutableList<Timer> = ArrayList()
+
+    private val emailWasSentMessage : String
+        get() = getString(R.string.email_was_sent_message)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +85,8 @@ class ListOfTimersActivity : AppCompatActivity() {
         loadTimersAndSetUpRecycleView()
         if (isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode, resultCode))
             finish()
+        else if(isBackedFromLoginActivityAndEmailWasSent(requestCode, resultCode))
+            Snackbar.make(recyclerView, emailWasSentMessage, LENGTH_INDEFINITE).show()
         else
             super.onActivityResult(requestCode, resultCode, data)
     }
@@ -88,11 +95,14 @@ class ListOfTimersActivity : AppCompatActivity() {
         return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
     }
 
-    fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick){
+    private fun isBackedFromLoginActivityAndEmailWasSent(requestCode: Int, resultCode: Int): Boolean {
+        return requestCode == loginActivityResultCode && resultCode == RESULT_OK
+    }
+
+    fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick) {
         var isLoggedIn = false
-        Log.e("ON SHARE BUTTON CLICK", onShareTimerButtonClick.timer.toString())
-        if(!isLoggedIn)
-            LoginActivity.start(this)
+        if (!isLoggedIn)
+            LoginActivity.start(loginActivityResultCode, this)
     }
 
     inner class TimeRefresher : Runnable {

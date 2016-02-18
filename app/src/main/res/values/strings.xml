@@ -5,4 +5,5 @@
     <string name="login_email_hint">example@mail.com</string>
     <string name="incorrect_email">Incorrect email address</string>
     <string name="connection_error">Connection error, please try again.</string>
+    <string name="email_was_sent_message">Activation link was sent to given email address, please check your email inbox.</string>
 </resources>

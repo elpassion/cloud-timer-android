@@ -3,10 +3,8 @@ package pl.elpassion.cloudtimer
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.*
 import org.hamcrest.Matchers.not
-import pl.elpassion.cloudtimer.NumberPickerMatcher.Companion.withText
 
 object ComponentsTestsUtils {
 
@@ -28,5 +26,10 @@ object ComponentsTestsUtils {
 
     fun isComponentNotDisplayed(id: Int) {
         onView(withId(id)).check(matches(not(isDisplayed())))
+    }
+
+    fun isSnackbarWithTextDisplayed(text: String) {
+        onView(withId(android.support.design.R.id.snackbar_text))
+                .check(matches(withText(text)));
     }
 }
