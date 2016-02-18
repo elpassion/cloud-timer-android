@@ -95,6 +95,10 @@ class ListOfTimersActivity : AppCompatActivity() {
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
             val visibleRange = layoutManager.findFirstVisibleItemPosition()..layoutManager.findLastVisibleItemPosition()
             val visibleNotFinishedTimers = notFinishedTimersRange.intersect(visibleRange)
+            foreachNotFinishedTimerRefreshCounter(layoutManager, visibleNotFinishedTimers)
+        }
+
+        private fun foreachNotFinishedTimerRefreshCounter(layoutManager: LinearLayoutManager, visibleNotFinishedTimers: Set<Int>) {
             visibleNotFinishedTimers.forEach {
                 val view = layoutManager.findViewByPosition(it)
                 val counter = view.findViewById(R.id.timer_counter) as TextView
