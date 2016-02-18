@@ -45,23 +45,6 @@ android {
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
-        exclude group: 'com.android.support'
-    }
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1') {
-        exclude group: 'com.android.support'
-    }
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile "org.jetbrains.kotlin:kotlin-project:$kotlin_version"
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
-    testCompile ('junit:junit:4.11')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
 buildscript {
     ext.kotlin_version = '1.0.0'
     repositories {
@@ -78,4 +61,22 @@ buildscript {
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
+        exclude group: 'com.android.support'
+    }
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'de.greenrobot:eventbus:2.4.1'
+    testCompile ('junit:junit:4.11')
 }
