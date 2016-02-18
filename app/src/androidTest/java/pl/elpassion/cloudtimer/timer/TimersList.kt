@@ -5,7 +5,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
-import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.rule
@@ -20,7 +20,7 @@ class TimersList {
 
     @Test
     fun addedTimerShouldBeOnTimersList() {
-        typeTextInView(R.id.timer_title, "test")
+        typeText(R.id.timer_title, "test")
         closeSoftKeyboard()
         pressButton(R.id.start_button)
         isComponentDisplayed(R.id.timer_share_button)

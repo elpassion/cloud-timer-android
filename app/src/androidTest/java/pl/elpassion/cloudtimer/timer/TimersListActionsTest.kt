@@ -1,8 +1,10 @@
-package pl.elpassion.cloudtimer.timerslist
+package pl.elpassion.cloudtimer.timer
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.timerslist.ListOfTimersAdapter
+import pl.elpassion.cloudtimer.timerslist.TimerItemAdapter
 
 
 class TimersListActionsTest {
