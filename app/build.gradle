@@ -40,8 +40,14 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     dataBinding{
         enabled = true
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
@@ -84,6 +90,5 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
-
     testCompile ('junit:junit:4.11')
 }
