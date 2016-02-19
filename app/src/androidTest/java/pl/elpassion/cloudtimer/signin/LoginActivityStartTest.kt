@@ -1,4 +1,4 @@
-package pl.elpassion.cloudtimer.login
+package pl.elpassion.cloudtimer.signin
 
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Rule

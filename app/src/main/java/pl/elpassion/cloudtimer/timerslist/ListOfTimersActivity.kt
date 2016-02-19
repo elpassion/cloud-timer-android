@@ -13,7 +13,7 @@ import android.widget.TextView
 import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.*
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.login.LoginActivity
+import pl.elpassion.cloudtimer.signin.SignInActivity
 import java.util.*
 
 class ListOfTimersActivity : AppCompatActivity() {
@@ -102,7 +102,7 @@ class ListOfTimersActivity : AppCompatActivity() {
     fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick) {
         var isLoggedIn = false
         if (!isLoggedIn)
-            LoginActivity.start(loginActivityResultCode, this)
+            SignInActivity.start(loginActivityResultCode, this)
     }
 
     inner class TimeRefresher : Runnable {

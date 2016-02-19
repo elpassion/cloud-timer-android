@@ -1,4 +1,4 @@
-package pl.elpassion.cloudtimer.login
+package pl.elpassion.cloudtimer.signin
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import org.junit.Rule
@@ -11,8 +11,6 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.network.SignInService
-import pl.elpassion.cloudtimer.network.myService
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 import rx.Observable
@@ -26,21 +24,21 @@ class LoginApiTests {
         alarmDao.save(Timer("timer", 1000))
     }
 
-    val errorService: SignInService = object : SignInService {
-        override fun singIn(email: String): Observable<Any> {
+    val errorLoginViaEmailService: SignInViaEmailService = object : SignInViaEmailService {
+        override fun singIn(email: SignInViaEmail): Observable<Any> {
             return Observable.error(Throwable())
         }
     }
 
-    val successService: SignInService = object : SignInService {
-        override fun singIn(email: String): Observable<Any> {
+    val successLoginViaEmailService: SignInViaEmailService = object : SignInViaEmailService {
+        override fun singIn(email: SignInViaEmail): Observable<Any> {
             return Observable.just(Any())
         }
     }
 
     @Test
     fun whenApiReturnErrorCodeViewShouldHaveErrorMessage() {
-        myService = errorService
+        signInViaEmailService = errorLoginViaEmailService
         sendActivationLink()
         val connectionErrorMessage = applicationContext.getString(R.string.connection_error)
         checkTextMatching(R.id.error_message, connectionErrorMessage)
@@ -48,7 +46,7 @@ class LoginApiTests {
 
     @Test
     fun whenApiReturnSuccessCodeAppShouldReturnToListOfTimersActivityAndShowToastWithMessage() {
-        myService = successService
+        signInViaEmailService = successLoginViaEmailService
         sendActivationLink()
         val emailWasSentMessage = applicationContext.getString(R.string.email_was_sent_message)
         isSnackbarWithTextDisplayed(emailWasSentMessage)

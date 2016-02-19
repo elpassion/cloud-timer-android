@@ -1,4 +1,4 @@
-package pl.elpassion.cloudtimer.login
+package pl.elpassion.cloudtimer.signin
 
 import android.app.Activity
 import android.content.Intent
@@ -9,13 +9,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.network.myService
+import pl.elpassion.cloudtimer.common.applySchedulers
 
-class LoginActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
     companion object {
-        fun start(resultCode : Int, activity: Activity) {
-            val intent = Intent(activity, LoginActivity::class.java)
+        fun start(resultCode: Int, activity: Activity) {
+            val intent = Intent(activity, SignInActivity::class.java)
             activity.startActivityForResult(intent, resultCode)
         }
     }
@@ -29,14 +29,14 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         loginButton.setOnClickListener {
-            validateEmail(emailInput.text.toString())
+            handleInsertedEmail(emailInput.text.toString())
         }
     }
 
-    private fun validateEmail(input: String) {
-        if (regex.matches(input))
-            myService.singIn(input).subscribe(onLoginSuccess, onLoginFailure)
-         else
+    private fun handleInsertedEmail(email: String) {
+        if (regex.matches(email))
+            signInViaEmailService.singIn(SignInViaEmail(email)).applySchedulers().subscribe(onLoginSuccess, onLoginFailure)
+        else
             displayError(incorrectEmail)
     }
 

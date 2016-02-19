@@ -1,7 +1,8 @@
-package pl.elpassion.cloudtimer.login
+package pl.elpassion.cloudtimer.signin
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.runner.AndroidJUnit4
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,6 +15,7 @@ import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
+import rx.Observable
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityWindowTest {
@@ -24,7 +26,7 @@ class LoginActivityWindowTest {
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
     }
-
+    
     @Test
     fun initTest() {
         pressButton(R.id.timer_share_button)
@@ -39,8 +41,15 @@ class LoginActivityWindowTest {
 
     @Test
     fun regexPositiveTest() {
+        var isCorrectMail = false
+        signInViaEmailService = object : SignInViaEmailService {
+            override fun singIn(email: SignInViaEmail): Observable<Any> {
+                isCorrectMail = true    
+                return Observable.error(Throwable())
+            }
+        }
         sentActivationEmail("potato@gmail.com")
-        isComponentDisplayed(R.id.create_new_timer)
+        Assert.assertTrue(isCorrectMail)
     }
 
     private fun sentActivationEmail(email: String) {
