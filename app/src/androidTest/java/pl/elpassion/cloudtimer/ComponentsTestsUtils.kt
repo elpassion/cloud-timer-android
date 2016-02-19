@@ -1,7 +1,8 @@
 package pl.elpassion.cloudtimer
 
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions
+import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
 import org.hamcrest.core.AllOf.allOf
@@ -13,7 +14,7 @@ object ComponentsTestsUtils {
     }
 
     fun pressButton(id: Int) {
-        onView(withId(id)).perform(ViewActions.click());
+        onView(withId(id)).perform(click());
     }
     
     fun isComponentDisplayed(id : Int) {
@@ -21,10 +22,10 @@ object ComponentsTestsUtils {
     }
 
     fun typeTextInView(id: Int, text: String){
-        onView(withId(id)).perform(ViewActions.typeText(text))
+        onView(withId(id)).perform(typeText(text))
     }
 
-    fun checkTextInRecyclerViewElement(listId: Int, text: String) {
+    fun checkTimerTitleMatchingOnUserTimers(listId: Int, text: String) {
         onView(withId(listId)).check(matches(hasDescendant(allOf(withId(R.id.timer_title), withText(text)))))
     }
 }
