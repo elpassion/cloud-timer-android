@@ -21,7 +21,7 @@ class LoginApiTests {
     val rule = rule<ListOfTimersActivity>() {
         val alarmDao = TimerDAO.getInstance()
         alarmDao.deleteAll()
-        alarmDao.save(Timer("timer", 1000))
+        alarmDao.save(Timer("timer", 100000))
     }
 
     val errorLoginViaEmailService: SignInViaEmailService = object : SignInViaEmailService {

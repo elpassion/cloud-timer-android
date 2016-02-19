@@ -6,7 +6,7 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkIfComponentHasString
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
@@ -26,7 +26,7 @@ class LoginActivityWindowTest {
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
     }
-    
+
     @Test
     fun initTest() {
         pressButton(R.id.timer_share_button)
@@ -36,7 +36,7 @@ class LoginActivityWindowTest {
     @Test
     fun regexNegativeTest() {
         sentActivationEmail("potato")
-        isComponentDisplayed(R.id.error_message)
+        checkIfComponentHasString(R.id.error_message, R.string.incorrect_email)
     }
 
     @Test
@@ -44,7 +44,7 @@ class LoginActivityWindowTest {
         var isCorrectMail = false
         signInViaEmailService = object : SignInViaEmailService {
             override fun singIn(email: SignInViaEmail): Observable<Any> {
-                isCorrectMail = true    
+                isCorrectMail = true
                 return Observable.error(Throwable())
             }
         }

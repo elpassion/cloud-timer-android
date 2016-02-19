@@ -32,4 +32,8 @@ object ComponentsTestsUtils {
         onView(withId(android.support.design.R.id.snackbar_text))
                 .check(matches(withText(text)));
     }
+
+    fun checkIfComponentHasString(componentId: Int, stringId: Int) {
+        onView(withId(componentId)).check(matches(withText(stringId)))
+    }
 }
