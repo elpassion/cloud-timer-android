@@ -9,7 +9,7 @@ import rx.Observable
 interface LoginService {
 
     @Headers("Content-Type: application/json")
-    @POST("v1/sessions.json")
+    @POST("v1/sessions")
     fun login(@Body email: Login): Observable<User>
 }
 

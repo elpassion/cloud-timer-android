@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer.login
 
 import android.content.Intent
 import pl.elpassion.cloudtimer.common.applySchedulers
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 
 class LoginHandler(val intent: Intent) {
 
@@ -12,11 +13,10 @@ class LoginHandler(val intent: Intent) {
     }
 
     val onLoginSuccess = { user: User ->
-
+        AuthTokenSharedPreferences.saveAuthToken(user.authToken); Unit
     }
 
     val onLoginFailure = { ex: Throwable ->
-
     }
 
 }
