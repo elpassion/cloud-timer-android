@@ -22,7 +22,8 @@
                 android:hint="Enter timer title"
                 android:textColorHint="@color/colorPrimaryDark"
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:textColor="@color/colorPrimaryDark" />
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"/>
 
         </android.support.v7.widget.Toolbar>
 
