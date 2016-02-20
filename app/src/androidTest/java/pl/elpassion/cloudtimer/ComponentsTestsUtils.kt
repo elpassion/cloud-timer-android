@@ -17,7 +17,8 @@ object ComponentsTestsUtils {
     }
 
     fun checkTextStartsAndEndsWith(id: Int, startText: String, endText : String) {
-        onView(withId(id)).check(matches(allOf(withText(startsWith(startText)), withText(endsWith(endText)))))
+        onView(withId(id)).check(matches(allOf(withText(startsWith(startText)),
+                withText(endsWith(endText)))))
     }
 
     fun pressButton(id: Int) {

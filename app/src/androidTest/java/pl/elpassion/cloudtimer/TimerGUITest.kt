@@ -1,12 +1,9 @@
 package pl.elpassion.cloudtimer
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.*
-import android.support.test.espresso.matcher.ViewMatchers
 import android.util.DisplayMetrics
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
@@ -19,6 +16,9 @@ class TimerGUITest {
     val rule = rule<TimerActivity> {
         TimerDAO.getInstance().deleteAll()
     }
+
+    val defaultWidth by lazy { getDefaultDisplayMetrics().first / 40 }
+    val heightOnRanges by lazy { getDefaultDisplayMetrics().second * (3 / 4) }
 
     private fun onSeekArcClickWithLocation(location: CoordinatesProvider): ViewAction {
         return GeneralClickAction(Tap.SINGLE, location, Press.FINGER)
@@ -47,24 +47,31 @@ class TimerGUITest {
     }
 
     private fun clickOnStartRange() {
-        val width = (getDefaultDisplayMetrics().first / 20) * 12
-        val height = getDefaultDisplayMetrics().second * (3 / 4)
-        onView(ViewMatchers.withId(R.id.timer_seekArc)).perform(onSeekArcClickWithCoordinates(Pair(width, height)))
+        val width = defaultWidth * 24
+        clickOnTimerWithCoordinates(Pair(width, heightOnRanges))
     }
 
     private fun clickOnEndRange() {
-        val width = (getDefaultDisplayMetrics().first / 40) * 10
-        val height = getDefaultDisplayMetrics().second * (3 / 4)
-        onView(ViewMatchers.withId(R.id.timer_seekArc)).perform(onSeekArcClickWithCoordinates(Pair(width, height)))
+        val width = defaultWidth * 10
+        clickOnTimerWithCoordinates(Pair(width, heightOnRanges))
     }
 
-    private fun clickTimerCenterLeft() {
+    private fun clickOnTimerCenterLeft() {
         performAction(R.id.timer_seekArc, onSeekArcClickWithLocation(GeneralLocation.CENTER_LEFT))
+    }
+
+    private fun clickOnTimerWithCoordinates(coordinates: Pair<Int, Int>) {
+        performAction(R.id.timer_seekArc, onSeekArcClickWithCoordinates(coordinates))
+    }
+
+    private fun getExpectedTimerEndTime(): String {
+        val timerDuration = rule.activity.timerDuration.text.substring(0, 2).toInt() * 60 * 1000
+        val timerEndTime = TimeConverter.formatFromMilliToTime(currentTimeInMillis() + timerDuration)
+        return timerEndTime
     }
 
 
     @Test
-    @Ignore
     fun isTimerComponentsDisplayed() {
         closeSoftKeyboard()
         isComponentDisplayed(R.id.timer_seekArc)
@@ -75,15 +82,12 @@ class TimerGUITest {
 
     @Test
     fun shouldTimerEndTimeSetProperlyAfterPickTimerDuration() {
-        clickTimerCenterLeft()
-        val timerDuration = rule.activity.timerDuration.text.substring(0,2).toInt() * 60 * 1000
-        val timerEndTime = TimeConverter.formatFromMilliToTime(currentTimeInMillis() + timerDuration)
-        checkTextMatching(R.id.timer_time_to_end, timerEndTime)
+        clickOnTimerCenterLeft()
+        checkTextMatching(R.id.timer_time_to_end, getExpectedTimerEndTime())
     }
 
     @Test
-    @Ignore
-    fun shouldAddOneAfterCrossHourRange() {
+    fun shouldAddOneHourAfterCrossHourRange() {
         closeSoftKeyboard()
         clickOnEndRange()
         clickOnStartRange()
