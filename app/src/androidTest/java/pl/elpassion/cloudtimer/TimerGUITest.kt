@@ -1,6 +1,5 @@
 package pl.elpassion.cloudtimer
 
-import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.ViewAction
 import android.support.test.espresso.action.*
 import android.util.DisplayMetrics
@@ -73,11 +72,11 @@ class TimerGUITest {
 
     @Test
     fun isTimerComponentsDisplayed() {
-        closeSoftKeyboard()
         isComponentDisplayed(R.id.timer_seekArc)
         isComponentDisplayed(R.id.timer_duration)
         isComponentDisplayed(R.id.timer_time_to_end)
         isComponentDisplayed(R.id.start_timer_button)
+        isComponentDisplayed(R.id.action_settings)
     }
 
     @Test
@@ -88,7 +87,6 @@ class TimerGUITest {
 
     @Test
     fun shouldAddOneHourAfterCrossHourRange() {
-        closeSoftKeyboard()
         clickOnEndRange()
         clickOnStartRange()
         checkTextStartsAndEndsWith(R.id.timer_duration, "1:", ":00")
