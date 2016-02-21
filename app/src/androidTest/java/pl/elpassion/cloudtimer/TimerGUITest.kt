@@ -5,10 +5,12 @@ import android.support.test.espresso.action.*
 import android.util.DisplayMetrics
 import org.junit.Rule
 import org.junit.Test
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextContainsNoNewLine
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextStartsAndEndsWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.performAction
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
 
 class TimerGUITest {
     @Rule @JvmField
@@ -55,8 +57,8 @@ class TimerGUITest {
         clickOnTimerWithCoordinates(Pair(width, heightOnRanges))
     }
 
-    private fun clickOnTimerCenterLeft() {
-        performAction(R.id.timer_seekArc, onSeekArcClickWithLocation(GeneralLocation.CENTER_LEFT))
+    private fun clickOnTimerLocation(location : GeneralLocation) {
+        performAction(R.id.timer_seekArc, onSeekArcClickWithLocation(location))
     }
 
     private fun clickOnTimerWithCoordinates(coordinates: Pair<Int, Int>) {
@@ -64,9 +66,9 @@ class TimerGUITest {
     }
 
     private fun getExpectedTimerEndTime(): String {
-        val timerDuration = rule.activity.timerDuration.text.substring(0, 2).toInt() * 60 * 1000
-        val timerEndTime = TimeConverter.formatFromMilliToTime(currentTimeInMillis() + timerDuration)
-        return timerEndTime
+        val duration = rule.activity.timerDuration.text.substring(0, 2).toInt() * 60 * 1000
+        val endTime = TimeConverter.formatFromMilliToTime(currentTimeInMillis() + duration)
+        return endTime
     }
 
 
@@ -81,7 +83,7 @@ class TimerGUITest {
 
     @Test
     fun shouldTimerEndTimeSetProperlyAfterPickTimerDuration() {
-        clickOnTimerCenterLeft()
+        clickOnTimerLocation(GeneralLocation.CENTER_LEFT)
         checkTextMatching(R.id.timer_time_to_end, getExpectedTimerEndTime())
     }
 
@@ -90,5 +92,11 @@ class TimerGUITest {
         clickOnEndRange()
         clickOnStartRange()
         checkTextStartsAndEndsWith(R.id.timer_duration, "1:", ":00")
+    }
+
+    @Test
+    fun isTimerTitleOneLine() {
+        typeTextInView(R.id.new_timer_title, "first line \n second line")
+        checkTextContainsNoNewLine(R.id.new_timer_title)
     }
 }

@@ -6,8 +6,7 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.*
-import org.hamcrest.Matchers.endsWith
-import org.hamcrest.Matchers.startsWith
+import org.hamcrest.Matchers.*
 import org.hamcrest.core.AllOf.allOf
 
 object ComponentsTestsUtils {
@@ -19,6 +18,10 @@ object ComponentsTestsUtils {
     fun checkTextStartsAndEndsWith(id: Int, startText: String, endText : String) {
         onView(withId(id)).check(matches(allOf(withText(startsWith(startText)),
                 withText(endsWith(endText)))))
+    }
+
+    fun checkTextContainsNoNewLine(id : Int) {
+        onView(withId(id)).check(matches(not(withText(containsString("\n")))))
     }
 
     fun pressButton(id: Int) {

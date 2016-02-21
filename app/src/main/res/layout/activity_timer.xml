@@ -24,7 +24,8 @@
                 android:textColorHint="@color/colorPrimaryDark"
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:textColor="@color/colorPrimaryDark"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
 
         </android.support.v7.widget.Toolbar>
 
