@@ -3,13 +3,13 @@ package pl.elpassion.cloudtimer.signin
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import org.junit.Rule
 import org.junit.Test
-import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isSnackbarWithTextDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity

@@ -27,7 +27,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_signin)
         loginButton.setOnClickListener {
             handleInsertedEmail(emailInput.text.toString())
         }
