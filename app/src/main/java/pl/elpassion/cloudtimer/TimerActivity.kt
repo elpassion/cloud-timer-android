@@ -4,16 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.triggertrap.seekarc.SeekArc
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
+import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
 
-class TimerActivity : AppCompatActivity() {
+class TimerActivity : CloudTimerActivity() {
 
     companion object {
         fun start(activity: Activity, timerActivityResultCode: Int) {

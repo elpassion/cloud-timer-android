@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
+import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*

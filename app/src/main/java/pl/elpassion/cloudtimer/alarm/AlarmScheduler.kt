@@ -4,8 +4,8 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
-import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
 import pl.elpassion.cloudtimer.domain.Timer
 
 var scheduleAlarm = fun(timer: Timer, context: Context) {
