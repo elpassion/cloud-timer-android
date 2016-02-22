@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -10,7 +11,7 @@
         android:id="@+id/timer_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:30 " />
+        tools:text="00:30 " />
 
 
     <LinearLayout
@@ -18,25 +19,25 @@
         android:layout_height="match_parent"
         android:layout_gravity=""
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/timer_title"
             style="@style/ListPrimaryText"
-            android:text="Pralka" />
+            tools:text="Pralka" />
 
         <TextView
             android:id="@+id/timer_end_time"
             style="@style/ListSecondaryText"
-            android:text="12:30" />
+            tools:text="12:30" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/timer_share_button"
-        style="@style/ShareButton"
-        android:text="Share" />
+        style="@style/ListShareButton"
+        android:text="@string/timer_share" />
 
 
 </LinearLayout>

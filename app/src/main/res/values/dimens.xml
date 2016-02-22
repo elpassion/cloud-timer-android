@@ -3,5 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="default_margin_size">16dp</dimen>
-    <dimen name="rounded_rect_radius">8dp</dimen>
+    <dimen name="rounded_rect_radius">16dp</dimen>
+    <dimen name="large_text_size">20sp</dimen>
+    <dimen name="extra_large_text_size">40sp</dimen>
 </resources>

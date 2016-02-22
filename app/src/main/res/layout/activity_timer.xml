@@ -20,9 +20,8 @@
                 android:id="@+id/new_timer_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Enter timer title"
+                android:hint="@string/timer_timer_title"
                 android:textColorHint="@color/colorPrimaryDark"
-                android:backgroundTint="@color/colorPrimaryDark"
                 android:textColor="@color/colorPrimaryDark"
                 android:singleLine="true"
                 android:imeOptions="actionDone"/>
@@ -49,21 +48,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             tools:text="15:00"
-            android:textSize="40dp"/>
+            android:textSize="@dimen/extra_large_text_size"/>
 
         <TextView
             android:id="@+id/timer_time_to_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="@dimen/large_text_size"
             tools:text="12:30"
             android:textColor="@color/colorPrimaryDark"/>
 
         <Button
             android:id="@+id/start_timer_button"
             style="@style/ActiveWideButton"
-            android:text="START"
+            android:text="@string/timer_start"
             android:layout_marginTop="10dp"/>
 
     </LinearLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/InactiveItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/on_click"
@@ -27,15 +28,14 @@
 
         <TextView
             android:id="@+id/finished_timer_title"
-            style="@style/ListInactivePrimaryText"
+            style="@style/ListPrimaryText"
             tools:text="Pralka" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/finished_timer_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share" />
+        style="@style/ListShareButton"
+        android:text="@string/timer_share" />
 
 </LinearLayout>
