@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekarc="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_weight="1">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:src="@drawable/timer_face"/>
+
+    <com.triggertrap.seekarc.SeekArc
+        android:id="@+id/timer_seekArc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        seekarc:arcColor="@color/colorPrimary"
+        seekarc:clockwise="true"
+        seekarc:max="360"
+        android:padding="15dp"
+        seekarc:progress="90"
+        seekarc:progressWidth="4dp"
+        seekarc:progressColor="@color/colorPrimaryElements"
+        seekarc:roundEdges="true"
+        seekarc:startAngle="0"
+        seekarc:sweepAngle="359"
+        seekarc:thumb="@drawable/seekbar_pointer"/>
+
+    <ImageView
+        android:id="@+id/timer_clock_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hourglass"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

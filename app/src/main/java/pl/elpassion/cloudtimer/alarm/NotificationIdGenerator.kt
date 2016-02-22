@@ -1,7 +1,7 @@
 package pl.elpassion.cloudtimer.alarm
 
 import android.content.Context.MODE_PRIVATE
-import pl.elpassion.cloudtimer.CloudTimerApp.Companion.applicationContext
+import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
 
 object NotificationIdGenerator {
 

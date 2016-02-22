@@ -44,12 +44,13 @@ android {
     dataBinding{
         enabled = true
     }
-
+    
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
 }
+
 
 buildscript {
     ext.kotlin_version = '1.0.0'
@@ -67,6 +68,7 @@ buildscript {
 repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -90,5 +92,6 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'com.github.Triggertrap:SeekArc:v1.1'
     testCompile ('junit:junit:4.11')
 }

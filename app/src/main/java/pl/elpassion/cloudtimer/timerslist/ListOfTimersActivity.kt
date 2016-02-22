@@ -5,19 +5,19 @@ import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.Snackbar.LENGTH_INDEFINITE
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerActivity
 import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.LoginHandler
 import pl.elpassion.cloudtimer.signin.SignInActivity
 import java.util.*
 
-class ListOfTimersActivity : AppCompatActivity() {
+class ListOfTimersActivity : CloudTimerActivity() {
 
     companion object {
         private const val timerActivityResultCode = 1
