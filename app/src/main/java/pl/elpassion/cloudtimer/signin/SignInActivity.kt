@@ -18,6 +18,7 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(activity, SignInActivity::class.java)
             activity.startActivityForResult(intent, resultCode)
         }
+
     }
 
     private val emailInput by lazy { findViewById(R.id.email_input) as EditText }

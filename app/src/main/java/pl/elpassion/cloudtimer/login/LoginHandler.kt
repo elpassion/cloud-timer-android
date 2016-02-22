@@ -1,22 +1,30 @@
 package pl.elpassion.cloudtimer.login
 
 import android.content.Intent
+import android.util.Log
+import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.common.applySchedulers
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 
-class LoginHandler(val intent: Intent) {
+object LoginHandler {
 
+    fun isLoggedIn() {
 
-    fun login() {
+    }
+
+    fun login(intent: Intent) {
         val token = intent.dataString.replace(".*token=".toRegex(), "")
         loginService.login(Login(token)).applySchedulers().subscribe(onLoginSuccess, onLoginFailure)
     }
 
-    val onLoginSuccess = { user: User ->
-        AuthTokenSharedPreferences.saveAuthToken(user.authToken); Unit
+    private val onLoginSuccess = { user: User ->
+        AuthTokenSharedPreferences.saveAuthToken(user.authToken)
+        EventBus.getDefault().post(OnLoginSuccess())
     }
 
-    val onLoginFailure = { ex: Throwable ->
+    private val onLoginFailure = { ex: Throwable ->
+        Log.e("Logging in", "exception", ex)
+        EventBus.getDefault().post(OnLoggingFailure())
     }
 
 }

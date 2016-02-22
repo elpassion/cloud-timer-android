@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -13,7 +14,6 @@ import pl.elpassion.cloudtimer.TimerActivity
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.login.LoginHandler
 import pl.elpassion.cloudtimer.signin.SignInActivity
 import java.util.*
 
@@ -22,6 +22,11 @@ class ListOfTimersActivity : CloudTimerActivity() {
     companion object {
         private const val timerActivityResultCode = 1
         private const val loginActivityResultCode = 2
+
+        fun start(context: Context) {
+            val intent = Intent(context, ListOfTimersActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
@@ -103,11 +108,5 @@ class ListOfTimersActivity : CloudTimerActivity() {
         var isLoggedIn = false
         if (!isLoggedIn)
             SignInActivity.start(loginActivityResultCode, this)
-    }
-
-    override fun onNewIntent(intent: Intent) {
-        if (intent.dataString != null)
-            LoginHandler(intent).login()
-        super.onNewIntent(intent)
     }
 }

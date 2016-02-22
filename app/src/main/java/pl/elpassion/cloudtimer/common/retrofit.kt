@@ -1,5 +1,8 @@
 package pl.elpassion.cloudtimer.common
 
+import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,9 +22,12 @@ fun <T> Observable<T>.applySchedulers(): Observable<T> {
 private val baseUrl = "https://cloud-timer.herokuapp.com/api/"
 private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 private val client: OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor).build()
+private val gson: Gson = GsonBuilder()
+        .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
+        .create()
 
 val retrofit = Retrofit.Builder().baseUrl(baseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(client)
         .build()

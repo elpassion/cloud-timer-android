@@ -6,4 +6,6 @@
     <string name="incorrect_email">Incorrect email address</string>
     <string name="connection_error">Connection error, please try again.</string>
     <string name="email_was_sent_message">Activation link was sent to given email address, please check your email inbox.</string>
+    <string name="logging_in_message">Logging in, please wait…</string>
+    <string name="logging_in_failure">Logging in has failed, please try again later.</string>
 </resources>
