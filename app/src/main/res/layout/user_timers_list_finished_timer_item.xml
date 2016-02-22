@@ -7,7 +7,8 @@
     android:background="@drawable/on_click"
     android:clickable="true"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/list_margin">
 
 
     <TextView
@@ -21,10 +22,10 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity=""
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/finished_timer_title"
@@ -36,6 +37,7 @@
     <Button
         android:id="@+id/finished_timer_share_button"
         style="@style/ListShareButton"
+        android:layout_margin="@dimen/list_margin"
         android:text="@string/timer_share" />
 
 </LinearLayout>
