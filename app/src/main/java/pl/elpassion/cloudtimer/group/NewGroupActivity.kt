@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
@@ -16,21 +17,22 @@ class NewGroupActivity : CloudTimerActivity() {
 
     companion object {
         private val timerUUIDKey = "TIMERUUID"
-        fun start(activity: Activity, timerActivityResultCode: Int, sharedTimerUUID: String) {
+        fun start(activity: Activity, sharedTimerUUID: String) {
+            Log.e("ACTIVITY", " New Group Activity created")
             val intent = Intent(activity, NewGroupActivity::class.java)
             intent.putExtra(timerUUIDKey, sharedTimerUUID)
-            activity.startActivityForResult(intent, timerActivityResultCode)
+            activity.startActivity(intent)
         }
     }
 
     val timerToolbar by lazy { findViewById(R.id.new_group_toolbar) as Toolbar }
     private val timersRecyclerView by lazy { findViewById(R.id.timers_recycler_view) as RecyclerView }
     private val usersRecyclerView by lazy { findViewById(R.id.users_recycler_view) as RecyclerView }
-    private val timers: MutableList<Timer> = ArrayList()
+    val timers: MutableList<Timer> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_timer)
+        setContentView(R.layout.new_group)
         timerToolbar.inflateMenu(R.menu.new_group_menu)
         timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         usersRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -38,14 +40,15 @@ class NewGroupActivity : CloudTimerActivity() {
     }
 
     private fun loadTimersAndSetUpRecycleView() {
-        loadSharedTimerFromDB()
+        //loadSharedTimerFromDB(intent.extras.getString(timerUUIDKey))
+        loadSharedTimerFromDB("test")
         setUpRecyclerView()
     }
 
-    private fun loadSharedTimerFromDB() {
+    private fun loadSharedTimerFromDB(timerUUID : String) {
         val dao = TimerDAO.getInstance()
         timers.clear()
-        timers.add(dao.findOne(intent.extras.get(timerUUIDKey) as String))
+        timers.add(dao.findOne(timerUUID))
     }
 
     private fun setUpRecyclerView() {
