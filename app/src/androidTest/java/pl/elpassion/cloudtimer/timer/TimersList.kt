@@ -20,9 +20,9 @@ class TimersList {
 
     @Test
     fun addedTimerShouldBeOnTimersList() {
-        typeTextInView(R.id.timer_title, "test")
+        typeTextInView(R.id.new_timer_title, "test")
         closeSoftKeyboard()
-        pressButton(R.id.start_button)
+        pressButton(R.id.start_timer_button)
         isComponentDisplayed(R.id.timer_share_button)
     }
 

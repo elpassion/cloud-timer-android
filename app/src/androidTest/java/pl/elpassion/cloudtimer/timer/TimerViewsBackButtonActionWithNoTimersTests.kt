@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timer
 
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.espresso.NoActivityResumedException
 import android.support.test.runner.AndroidJUnit4
@@ -20,6 +21,7 @@ class TimerViewsBackButtonActionWithNoTimersTests {
 
     @Test(expected = NoActivityResumedException::class)
     fun appWillCloseAfterBackButtonPressedFromTimerView() {
+        closeSoftKeyboard()
         pressBack()
     }
 

@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timer
 
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.Espresso.pressBack
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Rule
@@ -31,6 +32,7 @@ class TimerViewsBackButtonActionWithTimersTests {
     @Test
     fun timerListActivityWillFireUpAfterBackButtonPressedFromTimerView() {
         pressButton(R.id.create_new_timer)
+        closeSoftKeyboard()
         pressBack()
         isComponentDisplayed(R.id.create_new_timer)
     }

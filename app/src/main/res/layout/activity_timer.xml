@@ -1,82 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center|top"
-    android:orientation="vertical">
+    android:focusableInTouchMode="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/new_timer_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
+
+            <EditText
+                android:id="@+id/new_timer_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Enter timer title"
+                android:textColorHint="@color/colorPrimaryDark"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <include layout="@layout/timer_clock_face"/>
 
         <TextView
+            android:id="@+id/timer_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title: " />
+            android:layout_gravity="center"
+            tools:text="15:00"
+            android:textSize="40dp"
+            android:textColor="@color/colorPrimaryElements"/>
 
-        <EditText
-            android:id="@+id/timer_title"
+        <TextView
+            android:id="@+id/timer_time_to_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            tools:text="12:30"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <Button
+            android:id="@+id/start_timer_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="START"
+            android:textSize="20dp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 
-    <GridLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="2">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="0"
-            android:text="Hours" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="0"
-            android:text="Minutes" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="0"
-            android:text="Seconds" />
-
-        <NumberPicker
-            android:id="@+id/hours_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="1" />
-
-        <NumberPicker
-            android:id="@+id/minutes_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="1" />
-
-        <NumberPicker
-            android:id="@+id/seconds_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_row="1" />
-
-    </GridLayout>
-
-    <Button
-        android:id="@+id/start_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START!" />
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
