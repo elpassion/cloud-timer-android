@@ -106,7 +106,8 @@ class ListOfTimersActivity : AppCompatActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
-        LoginHandler(intent).login()
+        if (intent.dataString != null)
+            LoginHandler(intent).login()
         super.onNewIntent(intent)
     }
 }
