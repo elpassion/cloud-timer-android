@@ -27,8 +27,7 @@
 
         <TextView
             android:id="@+id/finished_timer_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ListInactivePrimaryText"
             tools:text="Pralka" />
 
     </LinearLayout>
