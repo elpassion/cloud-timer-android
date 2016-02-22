@@ -35,7 +35,7 @@ class FinishedTimerItemAdapter (val timer: Timer) : ItemAdapter {
     }
 
     private inner class FinishedTimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val duration = itemView.findViewById(R.id.finished_timer_counter) as TextView
+        val duration = itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView
         val title = itemView.findViewById(R.id.finished_timer_title) as TextView
         val shareButton = itemView.findViewById(R.id.finished_timer_share_button) as Button
     }

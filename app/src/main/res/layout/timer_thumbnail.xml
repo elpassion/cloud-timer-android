@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekarc="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.triggertrap.seekarc.SeekArc
+        android:id="@+id/timer_thumb_seekArc"
+        android:layout_width="@dimen/list_clock_size"
+        android:layout_height="@dimen/list_clock_size"
+        android:padding="15dp"
+        seekarc:arcColor="@color/colorPrimaryDark"
+        seekarc:arcWidth="2dp"
+        seekarc:clockwise="true"
+        seekarc:max="60"
+        seekarc:progress="15"
+        seekarc:progressColor="@color/colorPrimaryElements"
+        seekarc:progressWidth="2dp"
+        seekarc:roundEdges="true"
+        seekarc:startAngle="0"
+        seekarc:sweepAngle="359"
+        seekarc:enabled="false"/>
+
+    <TextView
+        android:id="@+id/timer_thumb_seekArc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        tools:text="12:00" />
+
+</RelativeLayout>

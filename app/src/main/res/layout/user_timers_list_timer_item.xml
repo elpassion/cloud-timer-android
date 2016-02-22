@@ -8,12 +8,7 @@
     android:padding="@dimen/list_margin">
 
 
-    <TextView
-        android:id="@+id/timer_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="00:30 " />
-
+    <include layout="@layout/timer_thumbnail"/>
 
     <LinearLayout
         android:layout_width="0dp"

@@ -5,6 +5,7 @@ import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
+import com.triggertrap.seekarc.SeekArc
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.currentTimeInMillis
@@ -31,10 +32,12 @@ class TimeRefresher(val activity: Activity) : Runnable {
     private fun foreachNotFinishedTimerRefreshCounter(layoutManager: LinearLayoutManager, visibleNotFinishedTimers: Set<Int>) {
         visibleNotFinishedTimers.forEach {
             val view = layoutManager.findViewByPosition(it)
-            val counter = view.findViewById(R.id.timer_counter) as TextView
+            // TODO
+            val counter = ThumbCounter(view.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
+                    view.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
             val timerAdapter = adapter.adapters[it] as TimerItemAdapter
             val timeLeftInMilliSec = timerAdapter.timer.endTime - currentTimeInMillis()
-            counter.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
+            counter.text = timeLeftInMilliSec
         }
     }
 

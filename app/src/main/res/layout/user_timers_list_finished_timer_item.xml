@@ -11,13 +11,14 @@
     android:padding="@dimen/list_margin">
 
 
+    <include layout="@layout/timer_thumbnail"/>
+<!--
     <TextView
         android:id="@+id/finished_timer_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        tools:text="00:30 " />
-
+        tools:text="00:30 " /> -->
 
     <LinearLayout
         android:layout_width="0dp"
