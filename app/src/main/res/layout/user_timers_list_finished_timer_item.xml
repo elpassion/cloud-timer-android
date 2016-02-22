@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/InactiveItem"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/on_click"
     android:clickable="true"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/list_margin">
 
 
     <TextView
@@ -20,23 +22,22 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity=""
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
+
         <TextView
             android:id="@+id/finished_timer_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/ListPrimaryText"
             tools:text="Pralka" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/finished_timer_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share" />
+        style="@style/ListShareButton"
+        android:layout_margin="@dimen/list_margin"
+        android:text="@string/timer_share" />
 
 </LinearLayout>

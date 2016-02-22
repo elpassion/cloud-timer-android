@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CloudTimer</string>
     <string name="action_settings">Settings</string>
+    <string name="timer_timer_title">Enter timer title</string>
+    <string name="timer_share">Share</string>
+    <string name="timer_start">START</string>
 </resources>
