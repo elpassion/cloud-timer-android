@@ -39,7 +39,6 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@color/colorPrimary"
         android:layout_marginTop="?attr/actionBarSize">
 
         <include layout="@layout/timer_clock_face"/>
@@ -50,8 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             tools:text="15:00"
-            android:textSize="40dp"
-            android:textColor="@color/colorPrimaryElements"/>
+            android:textSize="40dp"/>
 
         <TextView
             android:id="@+id/timer_time_to_end"
