@@ -1,4 +1,4 @@
-package pl.elpassion.cloudtimer
+package pl.elpassion.cloudtimer.base
 
 import android.app.Application
 import android.content.Context
@@ -13,7 +13,7 @@ class CloudTimerApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        CloudTimerApp.applicationContext = applicationContext
+        Companion.applicationContext = applicationContext
         Fabric.with(this, Crashlytics())
     }
 }
