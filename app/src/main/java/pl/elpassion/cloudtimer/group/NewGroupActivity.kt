@@ -2,11 +2,16 @@ package pl.elpassion.cloudtimer.group
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
@@ -27,19 +32,32 @@ class NewGroupActivity : CloudTimerActivity() {
         }
     }
 
-    val timerToolbar by lazy { findViewById(R.id.new_group_toolbar) as Toolbar }
+    val newGroupToolbar by lazy { findViewById(R.id.new_group_toolbar) as Toolbar }
     private val timersRecyclerView by lazy { findViewById(R.id.timers_recycler_view) as RecyclerView }
     private val usersRecyclerView by lazy { findViewById(R.id.users_recycler_view) as RecyclerView }
+    private val colorPicker by lazy { findViewById(R.id.group_color_picker) as ColorPicker }
+    private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
+    private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
     val timers: MutableList<Timer> = ArrayList()
     val users: MutableList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_group)
-        timerToolbar.inflateMenu(R.menu.new_group_menu)
+        newGroupToolbar.inflateMenu(R.menu.new_group_menu)
         timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         usersRecyclerView.layoutManager = LinearLayoutManager(this)
         loadRecyclerViews()
+        val groupColorIcon = createGroupColorIcon()
+        colorMenuIcon.background = groupColorIcon
+        colorPicker.showOldCenterColor = false
+        colorPickerLayout.visibility = View.GONE
+        colorPicker.setOnColorChangedListener {
+            groupColorIcon.setColor(colorPicker.color)
+        }
+        colorMenuIcon.setOnClickListener {
+            colorPickerLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun loadRecyclerViews() {
@@ -81,5 +99,13 @@ class NewGroupActivity : CloudTimerActivity() {
         val newAdapter = NewGroupListOfUsersAdapter()
         newAdapter.updateUsers(users)
         usersRecyclerView.adapter = newAdapter
+    }
+
+    private fun createGroupColorIcon() : GradientDrawable {
+        val gd = GradientDrawable()
+        gd.setShape(GradientDrawable.RADIAL_GRADIENT)
+        gd.setStroke(15, Color.WHITE)
+        gd.setColor(Color.CYAN)
+        return gd
     }
 }
