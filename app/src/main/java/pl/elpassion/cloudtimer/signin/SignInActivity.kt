@@ -1,52 +1,72 @@
 package pl.elpassion.cloudtimer.signin
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.common.applySchedulers
+import pl.elpassion.cloudtimer.common.regex
+import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.login.LoginHandler.isLoggedIn
 
 class SignInActivity : AppCompatActivity() {
 
     companion object {
-        fun start(resultCode: Int, activity: Activity) {
-            val intent = Intent(activity, SignInActivity::class.java)
-            activity.startActivityForResult(intent, resultCode)
+        private val timerToShareKey = "timerToShareKey"
+        fun start(context: Context, timer: Timer) {
+            val intent = Intent(context, SignInActivity::class.java)
+            intent.putExtra(timerToShareKey, timer)
+            context.startActivity(intent)
         }
-
     }
 
     private val emailInput by lazy { findViewById(R.id.email_input) as EditText }
     private val loginButton by lazy { findViewById(R.id.login_via_email_button) as Button }
-    val errorMessageTextView by lazy { findViewById(R.id.error_message) as TextView }
-    private val regex = Regex("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")
+    private val errorMessageTextView by lazy { findViewById(R.id.error_message) as TextView }
+    private val timer by lazy { intent.getParcelableExtra<Timer>(timerToShareKey) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
         loginButton.setOnClickListener {
+            loginButton.isEnabled = false
             handleInsertedEmail(emailInput.text.toString())
         }
     }
 
+    override fun onResume() {
+        if (isLoggedIn())
+            Log.e("SignInActivityReopened:", " Start group activity with timer from top")
+        super.onResume()
+    }
+
     private fun handleInsertedEmail(email: String) {
         if (regex.matches(email))
-            signInViaEmailService.singIn(SignInViaEmail(email)).applySchedulers().subscribe(onLoginSuccess, onLoginFailure)
+            signIn(email)
         else
             displayError(incorrectEmail)
     }
 
-    private val onLoginSuccess = { any: Any ->
-        setResult(RESULT_OK)
-        finish()
+    private fun signIn(email: String) {
+        val signInObject = SignInViaEmail(email)
+        signInViaEmailService.singIn(signInObject).applySchedulers().subscribe(onSigninSuccess, onSigninFailure)
     }
 
-    private val onLoginFailure = { ex: Throwable ->
+    private val onSigninSuccess = { any: Any ->
+        loginButton.isEnabled = true
+        val emailWasSentMessage = getString(R.string.email_was_sent_message)
+        Snackbar.make(emailInput, emailWasSentMessage, Snackbar.LENGTH_INDEFINITE).show()
+    }
+
+    private val onSigninFailure = { ex: Throwable ->
+        loginButton.isEnabled = true
         displayError(connectionError)
     }
 
@@ -61,4 +81,3 @@ class SignInActivity : AppCompatActivity() {
         errorMessageTextView.text = errorMessage
     }
 }
-

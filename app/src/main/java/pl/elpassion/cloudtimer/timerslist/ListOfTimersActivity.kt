@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.design.widget.Snackbar.LENGTH_INDEFINITE
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import de.greenrobot.event.EventBus
@@ -21,7 +19,6 @@ class ListOfTimersActivity : CloudTimerActivity() {
 
     companion object {
         private const val timerActivityResultCode = 1
-        private const val loginActivityResultCode = 2
 
         fun start(context: Context) {
             val intent = Intent(context, ListOfTimersActivity::class.java)
@@ -33,9 +30,6 @@ class ListOfTimersActivity : CloudTimerActivity() {
     private val recyclerView by lazy { findViewById(R.id.user_timers_list) as RecyclerView }
     private val timers: MutableList<Timer> = ArrayList()
     private val timeRefresher = TimeRefresher(this)
-
-    private val emailWasSentMessage: String
-        get() = getString(R.string.email_was_sent_message)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,8 +84,6 @@ class ListOfTimersActivity : CloudTimerActivity() {
         loadTimersAndSetUpRecycleView()
         if (isBackedFromTimerActivityAndThereAreNoTimersInDB(requestCode, resultCode))
             finish()
-        else if (isBackedFromLoginActivityAndEmailWasSent(requestCode, resultCode))
-            Snackbar.make(recyclerView, emailWasSentMessage, LENGTH_INDEFINITE).show()
         else
             super.onActivityResult(requestCode, resultCode, data)
     }
@@ -100,13 +92,9 @@ class ListOfTimersActivity : CloudTimerActivity() {
         return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
     }
 
-    private fun isBackedFromLoginActivityAndEmailWasSent(requestCode: Int, resultCode: Int): Boolean {
-        return requestCode == loginActivityResultCode && resultCode == RESULT_OK
-    }
-
     fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick) {
         var isLoggedIn = false
         if (!isLoggedIn)
-            SignInActivity.start(loginActivityResultCode, this)
+            SignInActivity.start(this, onShareTimerButtonClick.timer)
     }
 }

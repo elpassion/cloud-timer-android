@@ -8,13 +8,15 @@ import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 
 object LoginHandler {
 
-    fun isLoggedIn() {
-
-    }
+    fun isLoggedIn(): Boolean = AuthTokenSharedPreferences.isLoggedIn()
 
     fun login(intent: Intent) {
-        val token = intent.dataString.replace(".*token=".toRegex(), "")
-        loginService.login(Login(token)).applySchedulers().subscribe(onLoginSuccess, onLoginFailure)
+        if (intent.dataString != null) {
+            val token = intent.dataString.replace(".*token=".toRegex(), "")
+            loginService.login(Login(token))
+                    .applySchedulers()
+                    .subscribe(onLoginSuccess, onLoginFailure)
+        }
     }
 
     private val onLoginSuccess = { user: User ->
@@ -26,7 +28,6 @@ object LoginHandler {
         Log.e("Logging in", "exception", ex)
         EventBus.getDefault().post(OnLoggingFailure())
     }
-
 }
 
 class Login(val token: String)

@@ -11,6 +11,4 @@ object AuthTokenSharedPreferences {
 
     fun isLoggedIn(): Boolean = sharedPreferences.contains(authTokenKey)
     fun saveAuthToken(authToken: String) = sharedPreferences.edit().putString(authTokenKey, authToken).commit()
-
-
 }

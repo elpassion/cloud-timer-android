@@ -6,25 +6,19 @@ import android.widget.TextView
 import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
+import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
 class LoginActivity : CloudTimerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logging_in)
-        handleLogin(intent)
+        LoginHandler.login(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
-        handleLogin(intent)
+        LoginHandler.login(intent)
         super.onNewIntent(intent)
-    }
-
-    private fun handleLogin(intent: Intent) {
-        val isNotLoggedIn = true
-        if (isNotLoggedIn)
-            if (intent.dataString != null)
-                LoginHandler.login(intent)
     }
 
     override fun onStart() {
@@ -38,6 +32,9 @@ class LoginActivity : CloudTimerActivity() {
     }
 
     fun onEvent(onLogginSuccess: OnLoginSuccess) {
+        if (isTaskRoot)
+            ListOfTimersActivity.start(this)
+
         finish()
     }
 
