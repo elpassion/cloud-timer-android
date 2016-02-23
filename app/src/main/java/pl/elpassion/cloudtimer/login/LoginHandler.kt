@@ -12,7 +12,7 @@ object LoginHandler {
 
     fun login(intent: Intent) {
         if (intent.dataString != null) {
-            val token = intent.dataString.replace(".*token=".toRegex(), "")
+            val token = intent.dataString.replace(".*token=".toRegex(), "").replace("&email.*".toRegex(), "")
             loginService.login(Login(token))
                     .applySchedulers()
                     .subscribe(onLoginSuccess, onLoginFailure)
