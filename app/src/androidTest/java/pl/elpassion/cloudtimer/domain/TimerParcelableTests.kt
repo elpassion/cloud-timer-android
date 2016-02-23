@@ -10,7 +10,7 @@ class TimerParcelableTests {
     val timer = Timer("timer", 2000, 2000, "1234", group, null)
 
     @Test
-    fun ifParcelableWorksCorrect() {
+    fun ifParcelableWorksCorrectly() {
         val parcel = Parcel.obtain()
         timer.writeToParcel(parcel, 0)
         parcel.setDataPosition(0)
