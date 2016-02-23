@@ -13,6 +13,7 @@ data class Timer(val title: String, val duration: Long, val endTime: Long = curr
 
     companion object {
         fun randomUUID(): String = UUID.randomUUID().toString()
+        @JvmField
         final val CREATOR: Parcelable.Creator<Timer> = object : Parcelable.Creator<Timer> {
 
             override fun createFromParcel(parcel: Parcel): Timer {
@@ -27,7 +28,7 @@ data class Timer(val title: String, val duration: Long, val endTime: Long = curr
 
     override fun describeContents(): Int = 0
 
-    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readLong(), parcel.readLong(),  parcel.readString(), parcel.readTypedObject(Group.CREATOR))
+    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readLong(), parcel.readLong(),  parcel.readString(), parcel.readParcelable(Group::class.java.classLoader))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)

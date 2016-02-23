@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 data class User(val name : String, val email : String ): Parcelable{
     companion object {
+        @JvmField
         final val CREATOR: Parcelable.Creator<User> = object : Parcelable.Creator<User> {
 
             override fun createFromParcel(parcel: Parcel): User {

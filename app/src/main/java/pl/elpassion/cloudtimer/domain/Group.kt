@@ -6,6 +6,7 @@ import java.util.*
 
 data class Group(val name: String, val invitationToken: String? = null, val users: MutableList<User> = ArrayList()): Parcelable{
     companion object {
+        @JvmField
         final val CREATOR: Parcelable.Creator<Group> = object : Parcelable.Creator<Group> {
 
             override fun createFromParcel(parcel: Parcel): Group {
