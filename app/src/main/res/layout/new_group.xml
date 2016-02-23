@@ -77,7 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="#80FFFFFF">
+            android:background="#C0000000"
+            android:clickable="true">
 
             <com.larswerkman.holocolorpicker.ColorPicker
                 android:id="@+id/group_color_picker"
@@ -89,7 +90,8 @@
                 ColorPicker:color_pointer_halo_radius="12dp"
                 ColorPicker:color_pointer_radius="7dp"
                 ColorPicker:color_wheel_radius="200dp"
-                ColorPicker:color_wheel_thickness="25dp" />
+                ColorPicker:color_wheel_thickness="25dp"
+                ColorPicker:color_center_halo_radius="15dp"/>
         </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

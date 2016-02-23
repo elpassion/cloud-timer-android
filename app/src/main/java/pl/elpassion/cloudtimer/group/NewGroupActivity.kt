@@ -15,6 +15,7 @@ import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
+import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.domain.User
 import java.util.*
@@ -38,6 +39,7 @@ class NewGroupActivity : CloudTimerActivity() {
     private val colorPicker by lazy { findViewById(R.id.group_color_picker) as ColorPicker }
     private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
+    private val randomColor = Group.randomColor()
     val timers: MutableList<Timer> = ArrayList()
     val users: MutableList<User> = ArrayList()
 
@@ -51,8 +53,11 @@ class NewGroupActivity : CloudTimerActivity() {
         val groupColorIcon = createGroupColorIcon()
         colorMenuIcon.background = groupColorIcon
         colorPicker.showOldCenterColor = false
+        colorPicker.color = randomColor
         colorPickerLayout.visibility = View.GONE
+        colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
         colorPicker.setOnColorChangedListener {
+            colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
             groupColorIcon.setColor(colorPicker.color)
         }
         colorMenuIcon.setOnClickListener {
@@ -105,7 +110,7 @@ class NewGroupActivity : CloudTimerActivity() {
         val gd = GradientDrawable()
         gd.setShape(GradientDrawable.RADIAL_GRADIENT)
         gd.setStroke(15, Color.WHITE)
-        gd.setColor(Color.CYAN)
+        gd.setColor(randomColor)
         return gd
     }
 }
