@@ -37,6 +37,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        normal{
+
+        }
+        toTests{
+
+        }
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }

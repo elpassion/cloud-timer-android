@@ -27,7 +27,7 @@ before_script:
 - sh scripts/emulator.sh
 
 script:
-  - ./gradlew connectedCheck
+  - ./gradlew connectedToTestsDebugAndroidTest
 
 after_success:
   - sh scripts/coveralls.sh
