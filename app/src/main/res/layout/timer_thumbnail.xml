@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="5dp"
     android:orientation="vertical">
 
     <com.triggertrap.seekarc.SeekArc
         android:id="@+id/timer_thumb_seekArc"
         android:layout_width="@dimen/list_clock_size"
         android:layout_height="@dimen/list_clock_size"
-        android:padding="18dp"
+        android:padding="14dp"
         seekarc:arcColor="@color/colorPrimaryDark"
         seekarc:arcWidth="2dp"
         seekarc:clockwise="true"

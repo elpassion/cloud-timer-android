@@ -10,7 +10,7 @@ class ThumbCounter(val textField: TextView ,val arcCounter : SeekArc) {
     var text: Long = 0L
 
     set(text) {
-        textField.text = TimeConverter.formatFromMilliToMinutes(text)
+        textField.text = TimeConverter.formatShortFromMilliToMinutes(text)
         arcCounter.progress = TimeUnit.MINUTES.convert(text, TimeUnit.MILLISECONDS).toInt() //todo minuty?
     }
 
