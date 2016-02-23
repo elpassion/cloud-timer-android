@@ -34,7 +34,7 @@ data class Timer(val title: String, val duration: Long, val endTime: Long = curr
         parcel.writeLong(duration)
         parcel.writeLong(endTime)
         parcel.writeString(uid)
-        parcel.writeTypedObject(group, flags)
+        parcel.writeParcelable(group, flags)
     }
 
 
