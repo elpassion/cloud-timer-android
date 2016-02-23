@@ -55,9 +55,7 @@ class NewGroupActivity : CloudTimerActivity() {
         colorPicker.showOldCenterColor = false
         colorPicker.color = randomColor
         colorPickerLayout.visibility = View.GONE
-        colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
         colorPicker.setOnColorChangedListener {
-            colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
             groupColorIcon.setColor(colorPicker.color)
         }
         colorMenuIcon.setOnClickListener {
@@ -106,11 +104,15 @@ class NewGroupActivity : CloudTimerActivity() {
         usersRecyclerView.adapter = newAdapter
     }
 
-    private fun createGroupColorIcon() : GradientDrawable {
+    private fun createGroupColorIcon(): GradientDrawable {
         val gd = GradientDrawable()
         gd.setShape(GradientDrawable.RADIAL_GRADIENT)
         gd.setStroke(15, Color.WHITE)
         gd.setColor(randomColor)
         return gd
+    }
+
+    fun backFromColorPicker(view: View) {
+        colorPickerLayout.visibility = View.GONE
     }
 }

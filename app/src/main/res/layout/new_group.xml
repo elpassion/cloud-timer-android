@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ColorPicker="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,66 +31,82 @@
     </android.support.design.widget.AppBarLayout>
 
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timers_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:gravity="center">
+            android:layout_height="132dp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/timers_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="132dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/users_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <Button
-                style="@style/ActiveWideButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CREATE" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/color_picker_layout"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/users_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            style="@style/ActiveWideButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CREATE" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/color_picker_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D00A102B"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:onClick="backFromColorPicker" />
+
+        <com.larswerkman.holocolorpicker.ColorPicker
+            android:id="@+id/group_color_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#C0000000"
-            android:clickable="true">
+            android:background="@android:color/transparent"
+            ColorPicker:color_center_halo_radius="15dp"
+            ColorPicker:color_center_radius="35dp"
+            ColorPicker:color_pointer_halo_radius="12dp"
+            ColorPicker:color_pointer_radius="7dp"
+            ColorPicker:color_wheel_radius="200dp"
+            ColorPicker:color_wheel_thickness="25dp" />
 
-            <com.larswerkman.holocolorpicker.ColorPicker
-                android:id="@+id/group_color_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                ColorPicker:color_center_radius="35dp"
-                ColorPicker:color_pointer_halo_radius="12dp"
-                ColorPicker:color_pointer_radius="7dp"
-                ColorPicker:color_wheel_radius="200dp"
-                ColorPicker:color_wheel_thickness="25dp"
-                ColorPicker:color_center_halo_radius="15dp"/>
-        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:onClick="backFromColorPicker" />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
