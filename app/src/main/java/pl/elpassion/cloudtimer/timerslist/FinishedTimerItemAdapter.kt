@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.triggertrap.seekarc.SeekArc
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
@@ -24,18 +25,19 @@ class FinishedTimerItemAdapter (val timer: Timer) : ItemAdapter {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
         val sharedTimerHolder = holder as FinishedTimerHolder
-        sharedTimerHolder.duration.text = TimeConverter.formatFromMilliToMinutes(timer.duration)
+        sharedTimerHolder.ThumbCounter.text = timer.duration
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.shareButton.setOnClickListener {
             Log.e("CLICK"," ON Share Button")
         }
-        sharedTimerHolder.duration.setOnClickListener {
+        sharedTimerHolder.ThumbCounter.setOnClickListener {
             Log.e("Click","On duration")
         }
     }
 
     private inner class FinishedTimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val duration = itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView
+        val ThumbCounter = ThumbCounter(itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
+                itemView.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
         val title = itemView.findViewById(R.id.finished_timer_title) as TextView
         val shareButton = itemView.findViewById(R.id.finished_timer_share_button) as Button
     }

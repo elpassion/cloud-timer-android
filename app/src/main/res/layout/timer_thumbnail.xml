@@ -4,27 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
     android:orientation="vertical">
 
     <com.triggertrap.seekarc.SeekArc
         android:id="@+id/timer_thumb_seekArc"
         android:layout_width="@dimen/list_clock_size"
         android:layout_height="@dimen/list_clock_size"
-        android:padding="15dp"
+        android:padding="18dp"
         seekarc:arcColor="@color/colorPrimaryDark"
         seekarc:arcWidth="2dp"
         seekarc:clockwise="true"
+        seekarc:enabled="false"
         seekarc:max="60"
         seekarc:progress="15"
         seekarc:progressColor="@color/colorPrimaryElements"
         seekarc:progressWidth="2dp"
         seekarc:roundEdges="true"
         seekarc:startAngle="0"
-        seekarc:sweepAngle="359"
-        seekarc:enabled="false"/>
+        seekarc:sweepAngle="359" />
 
     <TextView
         android:id="@+id/timer_thumb_seekArc_text"
+        style="@style/ListSecondaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

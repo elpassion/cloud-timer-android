@@ -11,14 +11,7 @@
     android:padding="@dimen/list_margin">
 
 
-    <include layout="@layout/timer_thumbnail"/>
-<!--
-    <TextView
-        android:id="@+id/finished_timer_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        tools:text="00:30 " /> -->
+    <include layout="@layout/timer_thumbnail" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,6 +24,8 @@
         <TextView
             android:id="@+id/finished_timer_title"
             style="@style/ListPrimaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             tools:text="Pralka" />
 
     </LinearLayout>
@@ -38,6 +33,8 @@
     <Button
         android:id="@+id/finished_timer_share_button"
         style="@style/ListShareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/list_margin"
         android:text="@string/timer_share" />
 
