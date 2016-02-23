@@ -10,7 +10,7 @@ import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
-class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteDatabase.CursorFactory?, version: Int = 1) : SQLiteOpenHelper(context, name, factory, version) {
+class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteDatabase.CursorFactory?, version: Int = 3) : SQLiteOpenHelper(context, name, factory, version) {
 
     companion object {
         private val TABLE_TIMER = "timer"
@@ -20,6 +20,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         private val KEY_TIME_LEFT = "timeLeft"
         private val KEY_END_TIME = "endTime"
         private val KEY_GROUP_NAME = "groupName"
+        private val KEY_GROUP_COLOR = "groupColor"
         private var dao: TimerDAO? = null
         private fun getInstance(context: Context): TimerDAO {
             if (dao == null) dao = TimerDAO(context = context, factory = null)
@@ -41,11 +42,14 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
                 " $KEY_DURATION LONG," +
                 " $KEY_END_TIME LONG," +
                 " $KEY_TIME_LEFT LONG NULLABLE," +
-                " $KEY_GROUP_NAME STRING NULLABLE)"
+                " $KEY_GROUP_NAME STRING NULLABLE," +
+                " $KEY_GROUP_COLOR INT NULLABLE)"
         db.execSQL(CREATE_TIMER_TABLE)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE $TABLE_TIMER")
+        onCreate(db)
     }
 
     fun save(timer: Timer): String {
@@ -56,8 +60,10 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         values.put(KEY_END_TIME, timer.endTime)
         values.put(KEY_TIME_LEFT, timer.timeLeft)
 
-        if (timer.group != null)
+        if (timer.group != null) {
             values.put(KEY_GROUP_NAME, timer.group.name)
+            values.put(KEY_GROUP_COLOR, timer.group.color)
+        }
 
         if (writableDatabase.update(TABLE_TIMER, values, "$KEY_TIMER_UID = ? ", arrayOf(timer.uid)) == 0)
             writableDatabase.insert(TABLE_TIMER, null, values)
@@ -124,7 +130,8 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
             timeLeft = res.getLong(columnTimeLeftIndex)
         }
         val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
-        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName) else null, timeLeft)
+        val groupColor = res.getInt(res.getColumnIndex(KEY_GROUP_COLOR))
+        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName, groupColor) else null, timeLeft)
     }
 
 }
