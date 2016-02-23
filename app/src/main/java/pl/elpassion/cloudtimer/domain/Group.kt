@@ -2,21 +2,12 @@ package pl.elpassion.cloudtimer.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import pl.elpassion.cloudtimer.common.createCreator
 import java.util.*
 
 data class Group(val name: String, val invitationToken: String? = null, val users: MutableList<User> = ArrayList()): Parcelable{
     companion object {
-        @JvmField
-        final val CREATOR: Parcelable.Creator<Group> = object : Parcelable.Creator<Group> {
-
-            override fun createFromParcel(parcel: Parcel): Group {
-                return Group(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Group?> {
-                return arrayOfNulls(size)
-            }
-        }
+        @JvmField final val CREATOR = createCreator { Group(this) }
     }
 
     override fun describeContents(): Int = 0

@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import pl.elpassion.cloudtimer.common.createCreator
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
@@ -13,17 +14,7 @@ data class Timer(val title: String, val duration: Long, val endTime: Long = curr
 
     companion object {
         fun randomUUID(): String = UUID.randomUUID().toString()
-        @JvmField
-        final val CREATOR: Parcelable.Creator<Timer> = object : Parcelable.Creator<Timer> {
-
-            override fun createFromParcel(parcel: Parcel): Timer {
-                return Timer(parcel)
-            }
-
-            override fun newArray(size: Int): Array<Timer?> {
-                return arrayOfNulls(size)
-            }
-        }
+        @JvmField final val CREATOR = createCreator { Timer(this) }
     }
 
     override fun describeContents(): Int = 0

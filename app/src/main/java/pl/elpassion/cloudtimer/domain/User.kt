@@ -2,20 +2,11 @@ package pl.elpassion.cloudtimer.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import pl.elpassion.cloudtimer.common.createCreator
 
 data class User(val name : String, val email : String ): Parcelable{
     companion object {
-        @JvmField
-        final val CREATOR: Parcelable.Creator<User> = object : Parcelable.Creator<User> {
-
-            override fun createFromParcel(parcel: Parcel): User {
-                return User(parcel)
-            }
-
-            override fun newArray(size: Int): Array<User?> {
-                return arrayOfNulls(size)
-            }
-        }
+        @JvmField final val CREATOR = createCreator { User(this) }
     }
 
     override fun describeContents(): Int = 0
