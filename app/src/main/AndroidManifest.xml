@@ -27,6 +27,8 @@
         </activity>
         <activity android:name=".TimerActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".group.GroupListActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".group.NewGroupActivity"
             android:screenOrientation="portrait"/>
         <meta-data
