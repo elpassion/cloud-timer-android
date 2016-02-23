@@ -31,7 +31,7 @@
     </style>
 
     <style name="TitleText" parent="@android:style/TextAppearance.DialogWindowTitle">
-        <item name="android:textColor">@color/colorSecondaryElements</item>
+        <item name="android:textColor">@color/colorPrimaryElements</item>
     </style>
 
     <style name="ActiveWideButton">
