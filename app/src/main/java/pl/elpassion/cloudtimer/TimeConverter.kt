@@ -41,7 +41,7 @@ object TimeConverter {
     }
 
     private fun applyFormat(number: Long) = twoNumbersWithZeros.format(number)
-    private fun getHours(timeInMilli: Long) = MILLISECONDS.toHours(timeInMilli)
-    private fun getMinutes(timeInMilli: Long) = MILLISECONDS.toMinutes(timeInMilli) - HOURS.toMinutes(getHours(timeInMilli))
-    private fun getSeconds(timeInMilli: Long) = MILLISECONDS.toSeconds(timeInMilli) - MINUTES.toSeconds(getMinutes(timeInMilli)) - HOURS.toSeconds(getHours(timeInMilli))
+    fun getHours(timeInMilli: Long) = MILLISECONDS.toHours(timeInMilli)
+    fun getMinutes(timeInMilli: Long) = MILLISECONDS.toMinutes(timeInMilli) - HOURS.toMinutes(getHours(timeInMilli))
+    fun getSeconds(timeInMilli: Long) = MILLISECONDS.toSeconds(timeInMilli) - MINUTES.toSeconds(getMinutes(timeInMilli)) - HOURS.toSeconds(getHours(timeInMilli))
 }

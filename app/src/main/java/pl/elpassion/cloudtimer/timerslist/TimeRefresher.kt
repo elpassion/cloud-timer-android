@@ -32,7 +32,7 @@ class TimeRefresher(val activity: Activity) : Runnable {
         visibleNotFinishedTimers.forEach {
             val view = layoutManager.findViewByPosition(it)
             // TODO
-            val counter = ThumbCounter(view.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
+            val counter = ThumbTimer(view.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
                     view.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
             val timerAdapter = adapter.adapters[it] as TimerItemAdapter
             val timeLeftInMilliSec = timerAdapter.timer.endTime - currentTimeInMillis()

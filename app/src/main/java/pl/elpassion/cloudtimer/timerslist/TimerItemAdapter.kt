@@ -35,7 +35,7 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
     }
 
     private inner class TimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ThumbCounter = ThumbCounter(itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
+        val ThumbCounter = ThumbTimer(itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
                 itemView.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
         val title = itemView.findViewById(R.id.timer_title) as TextView
         val endTime = itemView.findViewById(R.id.timer_end_time) as TextView
