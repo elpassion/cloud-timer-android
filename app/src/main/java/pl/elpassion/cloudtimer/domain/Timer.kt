@@ -1,15 +1,41 @@
 package pl.elpassion.cloudtimer.domain
 
+import android.os.Parcel
+import android.os.Parcelable
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
 
-data class Timer(val title: String, val duration: Long, val endTime: Long = currentTimeMillis() + duration, val uid: String = randomUUID(), val group: Group? = null, val timeLeft: Long? = null) {
-
-    companion object {
-        fun randomUUID(): String = UUID.randomUUID().toString()
-    }
+data class Timer(val title: String, val duration: Long, val endTime: Long = currentTimeMillis() + duration, val uid: String = randomUUID(), val group: Group? = null, val timeLeft: Long? = null) : Parcelable{
 
     val finished: Boolean
         get() = endTime < currentTimeInMillis()
+
+    companion object {
+        fun randomUUID(): String = UUID.randomUUID().toString()
+        final val CREATOR: Parcelable.Creator<Timer> = object : Parcelable.Creator<Timer> {
+
+            override fun createFromParcel(parcel: Parcel): Timer {
+                return Timer(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Timer?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+
+    override fun describeContents(): Int = 0
+
+    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readLong(), parcel.readLong(),  parcel.readString(), parcel.readTypedObject(Group.CREATOR))
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(title)
+        parcel.writeLong(duration)
+        parcel.writeLong(endTime)
+        parcel.writeString(uid)
+        parcel.writeTypedObject(group, flags)
+    }
+
+
 }
