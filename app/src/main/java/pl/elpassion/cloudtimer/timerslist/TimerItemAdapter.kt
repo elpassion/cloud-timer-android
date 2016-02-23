@@ -10,7 +10,9 @@ import android.widget.TextView
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
+import pl.elpassion.cloudtimer.base.CloudTimerApp
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.group.GroupListActivity
 
 class TimerItemAdapter(val timer: Timer) : ItemAdapter {
 
@@ -29,7 +31,8 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
         sharedTimerHolder.shareButton.setOnClickListener {
-            Log.e("CLICK"," ON Share Button")
+            Log.e("CLICK", " ON Share Button")
+            GroupListActivity.start(CloudTimerApp.applicationContext, timer.uid)
         }
     }
 

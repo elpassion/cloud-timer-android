@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/user_pic_view"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="@dimen/default_margin_size"
+        android:src="@drawable/user_default_pic" />
+
+    <TextView
+        android:id="@+id/user_email_text_view"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="example@gmail.com"
+        android:textSize="18dp" />
+</LinearLayout>

@@ -13,7 +13,7 @@ class NewGroupTest {
     val rule = rule<NewGroupActivity> {
         val timerDAO = TimerDAO.Companion.getInstance()
         timerDAO.deleteAll()
-        timerDAO.save(Timer("title", duration = 5000, uid = "test"))
+        timerDAO.save(Timer("title", duration = 10000, uid = "test"))
     }
 
     @Test

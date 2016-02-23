@@ -17,8 +17,7 @@ class NewGroupTimerItemAdapter(val timer: Timer) : ItemAdapter {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
         val sharedTimerHolder = holder as NewGroupTimerItemAdapter.NewGroupTimerHolder
-        val timeLeftInMilliSec = timer.endTime - System.currentTimeMillis()
-        sharedTimerHolder.timer.text = TimeConverter.formatFromMilliToMinutes(timeLeftInMilliSec)
+        sharedTimerHolder.timer.text = TimeConverter.formatFromMilliToTime(timer.endTime)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {

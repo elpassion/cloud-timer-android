@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:background="@drawable/red_ball"
         android:gravity="center"
+        android:textColor="@color/colorButtonText"
         android:textSize="32dp"
         tools:text="15:20" />
 </LinearLayout>
