@@ -24,7 +24,7 @@ class FinishedTimerItemAdapter (val timer: Timer) : ItemAdapter {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
         val sharedTimerHolder = holder as FinishedTimerHolder
-        sharedTimerHolder.ThumbCounter.text = timer.duration
+        sharedTimerHolder.ThumbCounter.time = timer.duration
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.shareButton.setOnClickListener {
             Log.e("CLICK"," ON Share Button")

@@ -36,7 +36,7 @@ class TimeRefresher(val activity: Activity) : Runnable {
                     view.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
             val timerAdapter = adapter.adapters[it] as TimerItemAdapter
             val timeLeftInMilliSec = timerAdapter.timer.endTime - currentTimeInMillis()
-            counter.text = timeLeftInMilliSec
+            counter.time = timeLeftInMilliSec
         }
     }
 
