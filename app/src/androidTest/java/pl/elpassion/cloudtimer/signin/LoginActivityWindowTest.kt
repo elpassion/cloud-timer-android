@@ -12,8 +12,8 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
-import pl.elpassion.cloudtimer.common.deleteSharedPreferences
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 import rx.Observable
@@ -26,7 +26,7 @@ class LoginActivityWindowTest {
         val alarmDao = TimerDAO.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
-        deleteSharedPreferences()
+        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
     @Test
