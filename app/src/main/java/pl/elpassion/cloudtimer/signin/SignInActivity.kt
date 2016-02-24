@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -14,6 +13,7 @@ import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.applySchedulers
 import pl.elpassion.cloudtimer.common.regex
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.groups.GroupActivity
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 
 class SignInActivity : CloudTimerActivity() {
@@ -43,7 +43,7 @@ class SignInActivity : CloudTimerActivity() {
 
     override fun onResume() {
         if (isLoggedIn())
-            Log.e("SignInActivityReopened:", " Start group activity with timer from top")
+            GroupActivity.start(this)
         super.onResume()
     }
 

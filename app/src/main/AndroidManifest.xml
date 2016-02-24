@@ -43,7 +43,8 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".groups.GroupActivity"
+            android:screenOrientation="portrait"/>
         <receiver
             android:name=".alarm.AlarmReceiver"
             android:process=":remote" />
