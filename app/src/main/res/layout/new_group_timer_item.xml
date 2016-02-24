@@ -12,6 +12,7 @@
         android:layout_height="80dp"
         android:background="@drawable/red_ball"
         android:gravity="center"
+        android:layout_marginRight="@dimen/default_margin_size"
         android:textColor="@color/colorButtonText"
         android:textSize="26dp"
         tools:text="15:20" />

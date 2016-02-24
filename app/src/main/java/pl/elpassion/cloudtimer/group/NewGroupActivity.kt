@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
@@ -34,17 +36,21 @@ class NewGroupActivity : CloudTimerActivity() {
         }
     }
 
-    val newGroupToolbar by lazy { findViewById(R.id.new_group_toolbar) as Toolbar }
+    private val newGroupToolbar by lazy { findViewById(R.id.new_group_toolbar) as Toolbar }
     private val timersRecyclerView by lazy { findViewById(R.id.timers_recycler_view) as RecyclerView }
     private val usersRecyclerView by lazy { findViewById(R.id.users_recycler_view) as RecyclerView }
     private val colorPicker by lazy { findViewById(R.id.group_color_picker) as ColorPicker }
     private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
     private val addUserButton by lazy { findViewById(R.id.add_new_user_button) as FloatingActionButton }
+    private val addUserLayout by lazy { findViewById(R.id.enter_emile_layout) as LinearLayout }
+    private val emileEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
+    private val addUserEmileButton by lazy { findViewById(R.id.add_user_emile_button) as Button }
+
     private val randomColor = Group.randomColor()
     private val groupColorIcon = createGroupColorIcon()
-    val timers: MutableList<Timer> = ArrayList()
-    val users: MutableList<User> = ArrayList()
+    private val timers: MutableList<Timer> = ArrayList()
+    private val users: MutableList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +60,21 @@ class NewGroupActivity : CloudTimerActivity() {
         colorMenuIcon.background = groupColorIcon
         colorPicker.showOldCenterColor = false
         colorPicker.color = randomColor
-        colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
-        colorPickerLayout.visibility = View.GONE
         setUpListenersOnColorPicker()
-        addUserButton.setOnClickListener { Log.e("CLICKED!", "ADD USER BUTTON CLICKED!") }
+        addUserLayout.setOnClickListener {
+            backFromUserEmileLayout()
+        }
+        addUserButton.setOnClickListener {
+            Log.e("CLICKED!", "ADD USER BUTTON CLICKED!")
+            addUserLayout.visibility = View.VISIBLE
+        }
+        addUserEmileButton.setOnClickListener {
+            val emile = emileEditText.text.toString()
+            if (users.filter { it.email.equals(emile) }.isEmpty())
+                users.add(User(emile.replace(Regex("@*."), ""), emile))
+            setUpUsersRecyclerView()
+            backFromUserEmileLayout()
+        }
     }
 
     private fun loadRecyclerViews() {
@@ -77,6 +94,9 @@ class NewGroupActivity : CloudTimerActivity() {
         val dao = TimerDAO.getInstance()
         timers.clear()
         timers.add(dao.findOne(timerUUID))
+        timers.add(Timer("", 60000))
+        timers.add(Timer("", 70000))
+        timers.add(Timer("", 80000))
     }
 
     private fun setUpTimersRecyclerView() {
@@ -87,13 +107,18 @@ class NewGroupActivity : CloudTimerActivity() {
 
     private fun loadAndSetUpUsersRecyclerView() {
         usersRecyclerView.layoutManager = LinearLayoutManager(this)
-        users.clear()
         loadUsers()
         setUpUsersRecyclerView()
     }
 
     private fun loadUsers() {
         //todo Download users from server
+        users.add(User("Mietek", "mietek@gmail.com"))
+        users.add(User("Ziutek", "ziutek@gmail.com"))
+        users.add(User("Andrzej", "andrzej@gmail.com"))
+        users.add(User("Mietek", "mietek@gmail.com"))
+        users.add(User("Ziutek", "ziutek@gmail.com"))
+        users.add(User("Andrzej", "andrzej@gmail.com"))
         users.add(User("Mietek", "mietek@gmail.com"))
         users.add(User("Ziutek", "ziutek@gmail.com"))
         users.add(User("Andrzej", "andrzej@gmail.com"))
@@ -116,13 +141,23 @@ class NewGroupActivity : CloudTimerActivity() {
         return gd
     }
 
-    fun backFromColorPicker() {
-        colorPickerLayout.visibility = View.GONE
+    private fun backFromColorPicker() {
+        goneWithTheView(colorPickerLayout)
+    }
+
+    private fun backFromUserEmileLayout() {
+        goneWithTheView(addUserLayout)
+    }
+
+    private fun goneWithTheView(v: View) {
+        v.visibility = View.GONE
     }
 
     override fun onBackPressed() {
         if (colorPickerLayout.visibility == View.VISIBLE)
             backFromColorPicker()
+        else if (addUserLayout.visibility == View.VISIBLE)
+            backFromUserEmileLayout()
         else
             super.onBackPressed()
     }

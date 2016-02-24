@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ColorPicker="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true">
@@ -70,14 +70,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:src="@android:drawable/btn_star_big_off"
-                app:layout_behavior="pl.elpassion.cloudtimer.group.ScrollAwareFABBehavior"/>
+                app:layout_behavior="pl.elpassion.cloudtimer.group.ScrollAwareFABBehavior" />
 
         </android.support.design.widget.CoordinatorLayout>
 
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="todo facebook button" />
 
         <Button
             style="@style/ActiveWideButton"
@@ -94,7 +95,8 @@
         android:background="#D00A102B"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <View
             android:id="@+id/color_picker_up_view"
@@ -126,6 +128,33 @@
             android:background="@android:color/transparent"
             android:clickable="true"
             android:onClick="backFromColorPicker" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/enter_emile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D00A102B"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/emile_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Enter emile address"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/add_user_emile_button"
+            style="@style/ActiveWideButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textSize="40dp" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
