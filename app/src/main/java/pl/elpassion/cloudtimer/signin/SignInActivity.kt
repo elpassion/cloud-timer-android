@@ -11,7 +11,7 @@ import android.widget.TextView
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.applySchedulers
-import pl.elpassion.cloudtimer.common.regex
+import pl.elpassion.cloudtimer.common.emailRegex
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.groups.GroupActivity
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
@@ -48,7 +48,7 @@ class SignInActivity : CloudTimerActivity() {
     }
 
     private fun handleInsertedEmail(email: String) {
-        if (regex.matches(email))
+        if (emailRegex.matches(email))
             signIn(email)
         else
             displayError(incorrectEmail)
