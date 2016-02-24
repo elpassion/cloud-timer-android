@@ -3,7 +3,7 @@ package pl.elpassion.cloudtimer.login
 import android.content.Intent
 import android.net.Uri
 import android.support.test.espresso.Espresso.pressBack
-import org.junit.Before
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -22,15 +22,25 @@ class LoginActivityFlowBehaviourTests {
                 return Observable.just(User("user", "url", "email", "token"))
             }
         }
+        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
-    @Before
-    fun wipeAuthToken() {
-        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
+    @After
+    fun closePreviousActivities(){
+        try {
+            (1..6).forEach { pressBack() }
+        } catch(e:Exception) { }
     }
 
     @Test
     fun whenThereIsSignInActivityOnActivityStackGroupActivityShouldBeFired() {
+        startLoginActivity()
+        isComponentDisplayed(R.id.group_list_view)
+    }
+
+    @Test
+    fun whenThereIsSignInActivityOnActivityStackGroupActivityShouldBeFiredWhenLoginActivityWasFiredSecondTime() {
+        startLoginActivityWithNoData()
         startLoginActivity()
         isComponentDisplayed(R.id.group_list_view)
     }
