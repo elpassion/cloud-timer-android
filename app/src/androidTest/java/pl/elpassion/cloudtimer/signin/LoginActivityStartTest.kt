@@ -9,6 +9,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
@@ -19,6 +20,7 @@ class LoginActivityStartTest {
         val alarmDao = TimerDAO.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("placeholder", 1001000L))
+        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
     @Test
