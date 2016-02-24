@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer.login
 
 import android.content.Intent
 import android.net.Uri
+import android.support.test.espresso.Espresso.pressBack
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,6 +33,18 @@ class LoginActivityFlowBehaviourTests {
     fun whenThereIsSignInActivityOnActivityStackGroupActivityShouldBeFired() {
         startLoginActivity()
         isComponentDisplayed(R.id.group_list_view)
+    }
+
+    @Test
+    fun whenUserBackedFromLoginActivitySignInActivityShouldBeResumed() {
+        startLoginActivityWithNoData()
+        pressBack()
+        isComponentDisplayed(R.id.email_input)
+    }
+
+    private fun startLoginActivityWithNoData() {
+        val intent = Intent(rule.activity, LoginActivity::class.java)
+        rule.activity.startActivity(intent)
     }
 
     private fun startLoginActivity() {
