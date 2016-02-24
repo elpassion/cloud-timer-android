@@ -40,6 +40,7 @@ class NewGroupActivity : CloudTimerActivity() {
     private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
     private val randomColor = Group.randomColor()
+    private val groupColorIcon = createGroupColorIcon()
     val timers: MutableList<Timer> = ArrayList()
     val users: MutableList<User> = ArrayList()
 
@@ -47,20 +48,13 @@ class NewGroupActivity : CloudTimerActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_group)
         newGroupToolbar.inflateMenu(R.menu.new_group_menu)
-        timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        usersRecyclerView.layoutManager = LinearLayoutManager(this)
         loadRecyclerViews()
-        val groupColorIcon = createGroupColorIcon()
         colorMenuIcon.background = groupColorIcon
         colorPicker.showOldCenterColor = false
         colorPicker.color = randomColor
+        colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
         colorPickerLayout.visibility = View.GONE
-        colorPicker.setOnColorChangedListener {
-            groupColorIcon.setColor(colorPicker.color)
-        }
-        colorMenuIcon.setOnClickListener {
-            colorPickerLayout.visibility = View.VISIBLE
-        }
+        setUpListenersOnColorPicker()
     }
 
     private fun loadRecyclerViews() {
@@ -69,6 +63,7 @@ class NewGroupActivity : CloudTimerActivity() {
     }
 
     private fun loadAndSetUpTimersRecycleView() {
+        timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         if (intent.extras != null)
             loadSharedTimerFromDB(intent.extras.getString(timerUUIDKey))
         else loadSharedTimerFromDB("test")
@@ -88,6 +83,7 @@ class NewGroupActivity : CloudTimerActivity() {
     }
 
     private fun loadAndSetUpUsersRecyclerView() {
+        usersRecyclerView.layoutManager = LinearLayoutManager(this)
         users.clear()
         loadUsers()
         setUpUsersRecyclerView()
@@ -112,7 +108,28 @@ class NewGroupActivity : CloudTimerActivity() {
         return gd
     }
 
-    fun backFromColorPicker(view: View) {
+    fun backFromColorPicker() {
         colorPickerLayout.visibility = View.GONE
+    }
+
+    override fun onBackPressed() {
+        if (colorPickerLayout.visibility == View.VISIBLE)
+            backFromColorPicker()
+        else
+            super.onBackPressed()
+    }
+
+    private fun setUpListenersOnColorPicker() {
+        colorPicker.setOnColorChangedListener {
+            groupColorIcon.setColor(colorPicker.color)
+        }
+        colorMenuIcon.setOnClickListener {
+            if (colorPickerLayout.visibility == View.VISIBLE)
+                backFromColorPicker()
+            else
+                colorPickerLayout.visibility = View.VISIBLE
+        }
+        findViewById(R.id.color_picker_up_view).setOnClickListener { backFromColorPicker() }
+        findViewById(R.id.color_picker_down_view).setOnClickListener { backFromColorPicker() }
     }
 }

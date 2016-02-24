@@ -7,15 +7,15 @@
 
     <ImageView
         android:id="@+id/user_pic_view"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
         android:layout_margin="@dimen/default_margin_size"
         android:src="@drawable/user_default_pic" />
 
     <TextView
         android:id="@+id/user_email_text_view"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="43dp"
         android:layout_weight="1"
         android:gravity="center"
         android:text="example@gmail.com"

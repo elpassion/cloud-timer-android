@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/new_group_timer_text_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@drawable/red_ball"
         android:gravity="center"
         android:textColor="@color/colorButtonText"
-        android:textSize="32dp"
+        android:textSize="26dp"
         tools:text="15:20" />
 </LinearLayout>

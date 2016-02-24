@@ -8,7 +8,7 @@ class Group(val name: String, val invitationToken: String? = null, val users: Mu
     companion object {
         fun randomColor() : Int {
             val rnd = Random()
-            return Color.rgb(rnd.nextInt(), rnd.nextInt(), rnd.nextInt())
+            return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
         }
     }
 }

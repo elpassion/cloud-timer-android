@@ -46,7 +46,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/timers_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="132dp" />
+            android:layout_height="96dp" />
 
         <View
             android:layout_width="match_parent"
@@ -80,6 +80,7 @@
         android:orientation="vertical">
 
         <View
+            android:id="@+id/color_picker_up_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -101,6 +102,7 @@
             ColorPicker:color_wheel_thickness="25dp" />
 
         <View
+            android:id="@+id/color_picker_down_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
