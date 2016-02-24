@@ -29,10 +29,9 @@ class LoginActivityFlowBehaviourTests {
     }
 
     @Test
-    fun whenStackOfActivitiesIsEmptyLoginActivityShouldStartListOfTimersActivity() {
+    fun whenThereIsSignInActivityOnActivityStackGroupActivityShouldBeFired() {
         startLoginActivity()
         isComponentDisplayed(R.id.group_list_view)
-
     }
 
     private fun startLoginActivity() {

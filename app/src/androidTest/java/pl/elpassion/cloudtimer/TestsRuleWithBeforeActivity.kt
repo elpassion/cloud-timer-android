@@ -8,3 +8,9 @@ inline fun <reified T : CloudTimerActivity> rule(crossinline beforeActivityFunct
         override fun beforeActivityLaunched() = beforeActivityFunction()
     }
 }
+
+inline fun <reified T : CloudTimerActivity> ruleManuallyStarted(crossinline beforeActivityFunction: () -> Unit): ActivityTestRule<T> {
+    return object : ActivityTestRule<T>(T::class.java, false, false) {
+        override fun beforeActivityLaunched() = beforeActivityFunction()
+    }
+}
