@@ -4,19 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import pl.elpassion.cloudtimer.R
+import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.applySchedulers
 import pl.elpassion.cloudtimer.common.regex
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.LoginHandler.isLoggedIn
 
-class SignInActivity : AppCompatActivity() {
+class SignInActivity : CloudTimerActivity() {
 
     companion object {
         private val timerToShareKey = "timerToShareKey"
