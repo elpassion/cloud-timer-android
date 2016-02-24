@@ -21,8 +21,8 @@ class TimersLocalDisplayTest {
     fun localTimerDisplayCorrectly() {
         isComponentDisplayed(R.id.timer_thumb_seekArc)
         isComponentDisplayed(R.id.timer_thumb_seekArc_text)
-        isComponentDisplayed(R.id.timer_title)
-        isComponentDisplayed(R.id.timer_end_time)
+        //isComponentDisplayed(R.id.timer_title)
+        //isComponentDisplayed(R.id.timer_end_time)
         isComponentDisplayed(R.id.timer_share_button)
         isComponentNotDisplayed(R.id.group_circle)
     }
