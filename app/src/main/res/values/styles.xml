@@ -6,6 +6,38 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimaryElements</item>
+    </style>
+
+    <style name="ListPrimaryText">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textColor">@color/colorTitleTimerText</item>
+    </style>
+
+    <style name="ListSecondaryText">
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/colorSecondaryElements</item>
+    </style>
+
+    <style name="ListShareButton">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:background">@drawable/rounded_rect</item>
+        <item name="android:textColor">@color/colorButtonText</item>
+    </style>
+
+    <style name="InactiveItem">
+        <item name="android:alpha">0.4</item>
+    </style>
+
+    <style name="TitleText" parent="@android:style/TextAppearance.DialogWindowTitle">
+        <item name="android:textColor">@color/colorPrimaryElements</item>
+    </style>
+
+    <style name="ActiveWideButton">
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorButtonText</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

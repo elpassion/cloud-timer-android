@@ -48,8 +48,8 @@ object ComponentsTestsUtils {
     fun checkIfComponentHasString(componentId: Int, stringId: Int) {
         onView(withId(componentId)).check(matches(withText(stringId)))
     }
-    
-    fun isComponentDisplayed(id : Int) {
+ 
+    fun isComponentDisplayed(id: Int) {
         onView(withId(id)).check(matches(isDisplayed()))
     }
 

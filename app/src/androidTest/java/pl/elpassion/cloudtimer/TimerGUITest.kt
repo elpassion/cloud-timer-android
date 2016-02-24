@@ -57,7 +57,7 @@ class TimerGUITest {
         clickOnTimerWithCoordinates(Pair(width, heightOnRanges))
     }
 
-    private fun clickOnTimerLocation(location : GeneralLocation) {
+    private fun clickOnTimerLocation(location: GeneralLocation) {
         performAction(R.id.timer_seekArc, onSeekArcClickWithLocation(location))
     }
 

@@ -4,6 +4,8 @@
     <color name="colorPrimaryElements">#7FB1FF</color>
     <color name="colorSecondaryElements">#3C77D3</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorButtonText">#FFF</color>
+    <color name="colorTitleTimerText">#FFF</color>
     <color name="colorAccent">#dd4547</color>
     <color name="colorTimerBackgroundElements">#953034</color>
 </resources>

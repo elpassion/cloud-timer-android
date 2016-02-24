@@ -6,9 +6,9 @@ import android.media.MediaPlayer
 import android.media.RingtoneManager
 
 object AlarmMediaPlayer {
-    var player : MediaPlayer = MediaPlayer() // todo // <----
+    var player: MediaPlayer = MediaPlayer() // todo // <----
 
-    fun playSound(context : Context) {
+    fun playSound(context: Context) {
         player.setAudioStreamType(AudioManager.STREAM_ALARM)
         player.setDataSource(context, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
         player.prepare()

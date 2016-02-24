@@ -1,8 +1,7 @@
 package pl.elpassion.cloudtimer
 
 import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 

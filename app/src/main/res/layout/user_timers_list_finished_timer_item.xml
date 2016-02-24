@@ -2,41 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/on_click"
-    android:clickable="true"
-    android:gravity="center"
-    android:orientation="horizontal">
-
-
-    <TextView
-        android:id="@+id/finished_timer_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        tools:text="00:30 " />
-
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity=""
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        style="@style/InactiveItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/list_margin">
+
+        <include
+            android:id="@+id/included_seek_arc"
+            layout="@layout/timer_thumbnail" />
 
         <TextView
             android:id="@+id/finished_timer_title"
+            style="@style/ListPrimaryText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            tools:text="Pralka" />
+
+        <Button
+            android:id="@+id/finished_timer_share_button"
+            style="@style/ListShareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Pralka" />
+            android:text="@string/timer_share" />
+
+        <include layout="@layout/timer_group_icon" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/finished_timer_share_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share" />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginLeft="@dimen/list_separator_margin"
+        android:layout_marginStart="@dimen/list_separator_margin"
+        android:background="@android:drawable/divider_horizontal_bright" />
 </LinearLayout>

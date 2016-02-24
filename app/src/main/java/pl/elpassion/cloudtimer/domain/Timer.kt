@@ -9,6 +9,8 @@ import java.util.*
 
 data class Timer(val title: String, val duration: Long, val endTime: Long = currentTimeMillis() + duration, val uid: String = randomUUID(), val group: Group? = null, val timeLeft: Long? = null) : Parcelable{
 
+    constructor(title: String, duration: Long, group: Group) : this(title, duration, currentTimeMillis() + duration, randomUUID(), group, null)
+    
     val finished: Boolean
         get() = endTime < currentTimeInMillis()
 

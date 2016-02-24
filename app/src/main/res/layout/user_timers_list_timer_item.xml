@@ -1,45 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:padding="@dimen/list_margin"
+    android:paddingLeft="@dimen/list_margin"
+    android:paddingStart="@dimen/list_margin"
+    android:paddingRight="0dp"
+    android:paddingEnd="0dp">
 
-
-    <TextView
-        android:id="@+id/timer_counter"
+    <include
+        android:id="@+id/included_seek_arc"
+        layout="@layout/timer_thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:30 " />
-
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity=""
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/included_seek_arc"
+        android:layout_toLeftOf="@+id/timer_share_button"
+        android:layout_toEndOf="@+id/included_seek_arc"
+        android:layout_toStartOf="@+id/timer_share_button"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <TextView
             android:id="@+id/timer_title"
-            android:layout_width="wrap_content"
+            style="@style/ListPrimaryText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pralka" />
+            tools:text="Pralka" />
 
         <TextView
             android:id="@+id/timer_end_time"
-            android:layout_width="wrap_content"
+            style="@style/ListSecondaryText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="12:30" />
+            tools:text="12:30" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/timer_share_button"
+        style="@style/ListShareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/list_margin"
+        android:text="@string/timer_share" />
 
+    <include layout="@layout/timer_group_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/list_margin"/>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="@dimen/list_separator_margin"
+        android:layout_marginStart="@dimen/list_separator_margin"
+        android:background="@android:drawable/divider_horizontal_bright" />
+
+</RelativeLayout>
