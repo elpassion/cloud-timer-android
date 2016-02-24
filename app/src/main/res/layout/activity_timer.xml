@@ -40,7 +40,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_marginTop="?attr/actionBarSize">
 
-        <include layout="@layout/timer_clock_face"/>
+        <include layout="@layout/timer_clock_face" />
 
         <TextView
             android:id="@+id/timer_duration"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -35,6 +36,7 @@ class TimerActivity : CloudTimerActivity() {
     protected val alarmDao by lazy { TimerDAO.getInstance() }
     var timerDurationInMilis: Long = 0
     private val handler = Handler()
+    private val timerRefreshRunnable = TimerEndTimeRefresher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,15 +58,15 @@ class TimerActivity : CloudTimerActivity() {
     }
 
     override fun onResume() {
-        handler.postDelayed(TimerEndTimeRefresher(), 1000)
+        handler.postDelayed(timerRefreshRunnable, 1000)
         timerDuration.text = "15:00"
         refreshTimerEndTime()
         super.onResume()
     }
 
-    override fun onStop() {
-        handler.removeCallbacks(TimerEndTimeRefresher())
-        super.onStop()
+    override fun onPause() {
+        handler.removeCallbacks(timerRefreshRunnable)
+        super.onPause()
     }
 
     private fun refreshTimerEndTime() {
