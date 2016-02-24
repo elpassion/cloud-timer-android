@@ -1,5 +1,7 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.graphics.PorterDuff
+import android.opengl.Visibility
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,8 +31,15 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
         sharedTimerHolder.ThumbCounter.time = timeLeftInMilliSec
         sharedTimerHolder.title.text = timer.title
         sharedTimerHolder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
-        sharedTimerHolder.shareButton.setOnClickListener {
-            Log.e("CLICK"," ON Share Button")
+        if (timer.group != null) {
+            sharedTimerHolder.shareButton.visibility = View.GONE
+            sharedTimerHolder.groupCircle.background.setColorFilter(timer.group.color, PorterDuff.Mode.MULTIPLY)
+            sharedTimerHolder.groupCircle.text = (timer.group.name)[0].toString()
+        } else {
+            sharedTimerHolder.groupCircle.visibility = View.GONE
+            sharedTimerHolder.shareButton.setOnClickListener {
+                Log.e("CLICK", " ON Share Button")
+            }
         }
     }
 
@@ -40,6 +49,7 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
         val title = itemView.findViewById(R.id.timer_title) as TextView
         val endTime = itemView.findViewById(R.id.timer_end_time) as TextView
         val shareButton = itemView.findViewById(R.id.timer_share_button) as Button
+        val groupCircle = itemView.findViewById(R.id.groupCircle) as TextView
     }
 
 }

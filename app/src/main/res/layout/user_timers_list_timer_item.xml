@@ -59,6 +59,14 @@
         android:layout_margin="@dimen/list_margin"
         android:text="@string/timer_share" />
 
+    <include layout="@layout/timer_group_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/list_margin"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
