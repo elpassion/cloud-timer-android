@@ -36,6 +36,10 @@ object ComponentsTestsUtils {
         onView(withId(id)).check(matches(isDisplayed()))
     }
 
+    fun isComponentNotDisplayed(id : Int) {
+        onView(withId(id)).check(matches(not(isDisplayed())))
+    }
+
     fun typeTextInView(id: Int, text: String) {
         onView(withId(id)).perform(typeText(text))
     }

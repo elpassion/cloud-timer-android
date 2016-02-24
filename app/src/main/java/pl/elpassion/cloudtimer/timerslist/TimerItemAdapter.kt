@@ -48,7 +48,7 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
         val title = itemView.findViewById(R.id.timer_title) as TextView
         val endTime = itemView.findViewById(R.id.timer_end_time) as TextView
         val shareButton = itemView.findViewById(R.id.timer_share_button) as Button
-        val groupCircle = itemView.findViewById(R.id.groupCircle) as TextView
+        val groupCircle = itemView.findViewById(R.id.group_circle) as TextView
     }
 
 }
