@@ -14,3 +14,5 @@ interface LoginService {
 }
 
 var loginService = retrofit.create(LoginService::class.java)
+
+class Login(val token: String)

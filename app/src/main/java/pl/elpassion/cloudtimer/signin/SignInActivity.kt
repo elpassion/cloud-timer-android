@@ -14,7 +14,7 @@ import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.applySchedulers
 import pl.elpassion.cloudtimer.common.regex
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.login.LoginHandler.isLoggedIn
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 
 class SignInActivity : CloudTimerActivity() {
 
