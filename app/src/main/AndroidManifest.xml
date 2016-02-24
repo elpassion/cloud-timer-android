@@ -28,8 +28,7 @@
             android:name=".TimerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".signin.SignInActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
