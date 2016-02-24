@@ -50,5 +50,5 @@ class AlarmServiceTest {
 
     private fun clearIntent() = getBroadcast(activity, REQUEST_CODE, Intent(activity, alarmReceiverClass), FLAG_CANCEL_CURRENT).cancel()
     private fun getPendingIntent() = getPendingIntent(REQUEST_CODE)
-    private fun getPendingIntent(reqCode : Int) = getBroadcast(activity, reqCode, Intent(activity, alarmReceiverClass), FLAG_NO_CREATE)
+    private fun getPendingIntent(reqCode: Int) = getBroadcast(activity, reqCode, Intent(activity, alarmReceiverClass), FLAG_NO_CREATE)
 }

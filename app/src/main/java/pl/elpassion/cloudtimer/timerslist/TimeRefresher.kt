@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.TextView
 import com.triggertrap.seekarc.SeekArc
-import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.currentTimeInMillis
 
 class TimeRefresher(val activity: Activity) : Runnable {

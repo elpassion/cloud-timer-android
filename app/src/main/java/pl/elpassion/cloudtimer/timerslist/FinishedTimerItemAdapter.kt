@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.triggertrap.seekarc.SeekArc
-import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
@@ -39,7 +38,7 @@ class FinishedTimerItemAdapter(val timer: Timer) : ItemAdapter {
             }
         }
         sharedTimerHolder.ThumbCounter.setOnClickListener {
-            Log.e("Click","On duration")
+            Log.e("Click", "On duration")
         }
     }
 

@@ -98,7 +98,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         readableDatabase.delete(TABLE_TIMER, null, null)
     }
 
-    fun findNextTimerToSchedule() : Timer?{
+    fun findNextTimerToSchedule(): Timer? {
         val now = currentTimeInMillis()
         val res: Cursor = readableDatabase.rawQuery("select * from $TABLE_TIMER where $KEY_END_TIME  > $now order by $KEY_END_TIME limit 1", null)
         res.moveToFirst()

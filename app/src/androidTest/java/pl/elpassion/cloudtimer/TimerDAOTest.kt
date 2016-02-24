@@ -87,7 +87,7 @@ class TimerDAOTest {
     }
 
     @Test
-    fun ifThereAreNoTimersToScheduleMethodShouldReturnNull(){
+    fun ifThereAreNoTimersToScheduleMethodShouldReturnNull() {
         alarmDao.deleteAll()
         assertNull(alarmDao.findNextTimerToSchedule())
     }
