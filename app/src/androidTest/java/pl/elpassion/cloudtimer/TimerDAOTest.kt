@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer
 
+import android.graphics.Color
 import org.junit.Assert.*
 import org.junit.Test
 import pl.elpassion.cloudtimer.domain.Group
@@ -51,7 +52,7 @@ class TimerDAOTest {
                 alarmDao.save(Timer(
                         title = "notLocal",
                         duration = threeSeconds,
-                        group = Group("elParafia"))))
+                        group = Group("elParafia", Color.MAGENTA))))
         assertEquals(2, alarmDao.findLocalTimers().size)
         uuIds.forEach { alarmDao.deleteOne(it) }
     }
