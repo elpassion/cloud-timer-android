@@ -2,7 +2,6 @@ package pl.elpassion.cloudtimer.login
 
 import android.content.Intent
 import android.net.Uri
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -17,16 +16,12 @@ class ActivityStackBehaviourAfterLogin {
 
     @JvmField @Rule
     val rule = ruleManuallyStarted <LoginActivity> {
-        TimerDAO.getInstance().save(Timer("",100000))
+        TimerDAO.getInstance().save(Timer("", 100000))
         loginService = object : LoginService {
             override fun login(email: Login): Observable<User> {
                 return Observable.just(User("user", "url", "email", "token"))
             }
         }
-    }
-
-    @Before
-    fun wipeAuthToken() {
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
