@@ -2,8 +2,8 @@ package pl.elpassion.cloudtimer.login
 
 import org.junit.Rule
 import org.junit.Test
+import pl.elpassion.cloudtimer.ComponentsTestsUtils
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkIfComponentHasString
-import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.rule
 
@@ -22,7 +22,6 @@ class LoginViewTests {
 
     @Test
     fun ifProgressBarIsPresented() {
-
-        checkTextMatching(R.id.logging_in_progressbar, "Progressbar")
+        ComponentsTestsUtils.isComponentDisplayed(R.id.logging_in_progressbar)
     }
 }
