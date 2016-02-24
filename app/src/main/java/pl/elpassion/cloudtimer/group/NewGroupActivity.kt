@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -39,6 +40,7 @@ class NewGroupActivity : CloudTimerActivity() {
     private val colorPicker by lazy { findViewById(R.id.group_color_picker) as ColorPicker }
     private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
+    private val addUserButton by lazy { findViewById(R.id.add_new_user_button) as FloatingActionButton }
     private val randomColor = Group.randomColor()
     private val groupColorIcon = createGroupColorIcon()
     val timers: MutableList<Timer> = ArrayList()
@@ -55,6 +57,8 @@ class NewGroupActivity : CloudTimerActivity() {
         colorPicker.setTouchAnywhereOnColorWheelEnabled(true)
         colorPickerLayout.visibility = View.GONE
         setUpListenersOnColorPicker()
+        addUserButton.setOnClickListener { Log.e("CLICKED!", "ADD USER BUTTON CLICKED!") }
+
     }
 
     private fun loadRecyclerViews() {
@@ -92,6 +96,11 @@ class NewGroupActivity : CloudTimerActivity() {
     private fun loadUsers() {
         //todo Download users from server
         users.add(User("Mietek", "mietek@gmail.com"))
+        users.add(User("Ziutek", "ziutek@gmail.com"))
+        users.add(User("Andrzej", "andrzej@gmail.com"))
+        users.add(User("Mietek", "mietek@gmail.com"))
+        users.add(User("Ziutek", "ziutek@gmail.com"))
+        users.add(User("Andrzej", "andrzej@gmail.com"))
     }
 
     private fun setUpUsersRecyclerView() {

@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/default_margin_size"
+    android:paddingLeft="@dimen/default_margin_size">
 
     <ImageView
         android:id="@+id/user_pic_view"
         android:layout_width="43dp"
         android:layout_height="43dp"
-        android:layout_margin="@dimen/default_margin_size"
         android:src="@drawable/user_default_pic" />
 
     <TextView
