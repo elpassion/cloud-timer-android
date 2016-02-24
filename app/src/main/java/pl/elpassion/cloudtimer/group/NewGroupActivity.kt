@@ -58,7 +58,6 @@ class NewGroupActivity : CloudTimerActivity() {
         colorPickerLayout.visibility = View.GONE
         setUpListenersOnColorPicker()
         addUserButton.setOnClickListener { Log.e("CLICKED!", "ADD USER BUTTON CLICKED!") }
-
     }
 
     private fun loadRecyclerViews() {
