@@ -7,7 +7,7 @@ import java.util.*
 
 open class BaseRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val adapters: MutableList<ItemAdapter<out RecyclerView.ViewHolder>> = ArrayList()
+    val adapters: MutableList<ItemAdapter<RecyclerView.ViewHolder>> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val adapter = adapters.first { it.itemViewType == viewType }
