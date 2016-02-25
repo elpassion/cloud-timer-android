@@ -23,4 +23,10 @@ class AuthTokenSharedPreferencesTests {
         Assert.assertTrue(AuthTokenSharedPreferences.isLoggedIn())
     }
 
+    @Test
+    fun ifUserIsNotLoggedInAuthTokenShouldBeNull() {
+        Assert.assertFalse(AuthTokenSharedPreferences.isLoggedIn())
+        Assert.assertNull(AuthTokenSharedPreferences.readAuthToken())
+    }
+
 }
