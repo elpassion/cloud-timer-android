@@ -57,6 +57,15 @@ class AuthTokenSharedPreferencesTests {
         assertNotNull(AuthTokenSharedPreferences.readEmail())
     }
 
+    @Test
+    fun readEmailShouldBeTheSameAsSavedOne() {
+        val authToken = "1234"
+        val email = "email"
+        AuthTokenSharedPreferences.saveAuthToken(authToken)
+        AuthTokenSharedPreferences.saveEmail(email)
+        Assert.assertEquals(email, AuthTokenSharedPreferences.readEmail())
+    }
+
 
 
 }
