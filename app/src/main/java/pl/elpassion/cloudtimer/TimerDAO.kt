@@ -131,7 +131,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         }
         val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
         val groupColor = res.getInt(res.getColumnIndex(KEY_GROUP_COLOR))
-        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName, groupColor) else null, timeLeft)
+        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName, color = groupColor) else null, timeLeft)
     }
 
 }

@@ -10,7 +10,7 @@ import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.User
 
-class NewGroupUserItemAdapter(val user: User) : ItemAdapter {
+class NewGroupUserItemAdapter(val user: User) : ItemAdapter<RecyclerView.ViewHolder>() {
 
     override val itemViewType: Int = R.layout.group_user_item
 

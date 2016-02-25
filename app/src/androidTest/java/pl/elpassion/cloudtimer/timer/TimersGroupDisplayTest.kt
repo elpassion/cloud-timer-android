@@ -16,7 +16,7 @@ class TimersGroupDisplayTest {
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity> {
         TimerDAO.getInstance().deleteAll()
-        TimerDAO.getInstance().save(Timer("test", 10000, Group("elParafia", Color.RED)))
+        TimerDAO.getInstance().save(Timer("test", 10000, Group("elParafia", color = Color.RED)))
     }
 
     @Test

@@ -52,7 +52,7 @@ class TimerDAOTest {
                 alarmDao.save(Timer(
                         title = "notLocal",
                         duration = threeSeconds,
-                        group = Group("elParafia", Color.MAGENTA))))
+                        group = Group("elParafia", color = Color.MAGENTA))))
         assertEquals(2, alarmDao.findLocalTimers().size)
         uuIds.forEach { alarmDao.deleteOne(it) }
     }

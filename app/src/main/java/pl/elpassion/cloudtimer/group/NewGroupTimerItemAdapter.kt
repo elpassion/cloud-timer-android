@@ -11,7 +11,7 @@ import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
-class NewGroupTimerItemAdapter(val timer: Timer) : ItemAdapter {
+class NewGroupTimerItemAdapter(val timer: Timer) : ItemAdapter<RecyclerView.ViewHolder>() {
 
     override val itemViewType: Int = R.layout.new_group_timer_item
 

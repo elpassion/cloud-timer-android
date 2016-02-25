@@ -6,7 +6,7 @@ import org.junit.Test
 
 class TimerParcelableTests {
 
-    val group = Group("grupa1", 1,"123456", mutableListOf(User("user1", "user1@gmail.com"), User("user2", "user2@gmail.com")))
+    val group = Group("grupa1", "123456", 1, mutableListOf(User("user1", "user1@gmail.com"), User("user2", "user2@gmail.com")))
     val timer = Timer("timer", 2000, 2000, "1234", group, null)
 
     @Test
