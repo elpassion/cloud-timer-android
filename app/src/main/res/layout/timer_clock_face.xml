@@ -15,13 +15,11 @@
 
     <com.triggertrap.seekarc.SeekArc
         android:id="@+id/timer_seekArc"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         seekarc:clockwise="true"
         seekarc:max="360"
-        android:padding="20dp"
+        android:padding="50dp"
         seekarc:progress="90"
         seekarc:progressWidth="4dp"
         seekarc:progressColor="@color/colorPrimaryElements"

@@ -14,7 +14,7 @@ class TimersLocalDisplayTest {
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity> {
         TimerDAO.getInstance().deleteAll()
-        TimerDAO.getInstance().save(Timer("test", 1000))
+        TimerDAO.getInstance().save(Timer("test", 10000))
     }
 
     @Test
