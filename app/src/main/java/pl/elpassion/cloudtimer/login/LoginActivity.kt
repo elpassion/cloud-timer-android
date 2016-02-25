@@ -19,6 +19,7 @@ class LoginActivity : CloudTimerActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_logging_in)
+        loggingMessage.text = getString(R.string.logging_in_message)
         setUpRetryLoggingInButton()
         saveUrlFromIntent(intent)
         login()
@@ -38,6 +39,7 @@ class LoginActivity : CloudTimerActivity() {
     }
 
     override fun onNewIntent(intent: Intent) {
+        loggingMessage.text = getString(R.string.logging_in_message)
         setUpRetryLoggingInButton()
         saveUrlFromIntent(intent)
         login()
