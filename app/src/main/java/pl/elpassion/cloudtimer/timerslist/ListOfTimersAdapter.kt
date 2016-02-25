@@ -1,12 +1,13 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.support.v7.widget.RecyclerView
 import pl.elpassion.cloudtimer.adapter.BaseRecyclerViewAdapter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
-internal fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<ItemAdapter> {
-    val itemsAdapters = ArrayList<ItemAdapter>()
+internal fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<ItemAdapter<out RecyclerView.ViewHolder>> {
+    val itemsAdapters = ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>()
     val (finished, notFinished) = timers.partition { it.finished }
     notFinished.sortedBy { it.endTime }.forEach { itemsAdapters.add(TimerItemAdapter(it)) }
     finished.sortedByDescending { it.endTime }.forEach { itemsAdapters.add(FinishedTimerItemAdapter(it)) }

@@ -14,35 +14,34 @@ import pl.elpassion.cloudtimer.TimeConverter
 import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 
-class TimerItemAdapter(val timer: Timer) : ItemAdapter {
+class TimerItemAdapter(val timer: Timer) : ItemAdapter<TimerItemAdapter.TimerHolder>() {
 
     override val itemViewType: Int = R.layout.user_timers_list_timer_item
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup): TimerHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(itemViewType, parent, false)
         return TimerHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
-        val sharedTimerHolder = holder as TimerHolder
+    override fun onBindViewHolder(holder: TimerHolder) {
         val timeLeftInMilliSec = timer.endTime - System.currentTimeMillis()
-        sharedTimerHolder.ThumbCounter.time = timeLeftInMilliSec
-        sharedTimerHolder.title.text = timer.title
-        sharedTimerHolder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
+        holder.ThumbCounter.time = timeLeftInMilliSec
+        holder.title.text = timer.title
+        holder.endTime.text = TimeConverter.formatFromMilliToTime(timer.endTime)
         if (timer.group != null) {
-            sharedTimerHolder.shareButton.visibility = View.GONE
-            sharedTimerHolder.groupCircle.background.setColorFilter(timer.group.color, PorterDuff.Mode.MULTIPLY)
-            sharedTimerHolder.groupCircle.text = (timer.group.name)[0].toString()
+            holder.shareButton.visibility = View.GONE
+            holder.groupCircle.background.setColorFilter(timer.group.color, PorterDuff.Mode.MULTIPLY)
+            holder.groupCircle.text = (timer.group.name)[0].toString()
         } else {
-            sharedTimerHolder.groupCircle.visibility = View.GONE
-            sharedTimerHolder.shareButton.setOnClickListener {
+            holder.groupCircle.visibility = View.GONE
+            holder.shareButton.setOnClickListener {
                 EventBus.getDefault().post(OnShareTimerButtonClick(timer))
             }
         }
     }
 
-    private inner class TimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TimerHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ThumbCounter = ThumbTimer(itemView.findViewById(R.id.timer_thumb_seekArc_text) as TextView,
                 itemView.findViewById(R.id.timer_thumb_seekArc) as SeekArc)
         val title = itemView.findViewById(R.id.timer_title) as TextView
@@ -50,5 +49,4 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter {
         val shareButton = itemView.findViewById(R.id.timer_share_button) as Button
         val groupCircle = itemView.findViewById(R.id.group_circle) as TextView
     }
-
 }
