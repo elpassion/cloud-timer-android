@@ -36,7 +36,6 @@ class SignInActivity : CloudTimerActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
         loginButton.setOnClickListener {
-            loginButton.isEnabled = false
             handleInsertedEmail(emailInput.text.toString())
         }
     }
@@ -55,6 +54,7 @@ class SignInActivity : CloudTimerActivity() {
     }
 
     private fun signIn(email: String) {
+        loginButton.isEnabled = false
         val signInObject = SignInViaEmail(email)
         signInViaEmailService.singIn(signInObject).applySchedulers().subscribe(onSigninSuccess, onSigninFailure)
     }

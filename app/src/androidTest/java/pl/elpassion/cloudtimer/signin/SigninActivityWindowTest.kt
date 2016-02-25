@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkIfComponentHasString
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisabled
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentEnabled
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
@@ -63,6 +64,12 @@ class SigninActivityWindowTest {
         }
         sentActivationEmail("potato@gmail.com")
         isComponentDisabled(R.id.send_activation_email)
+    }
+
+    @Test
+    fun whenIncorrectEmailWasInsertedSendButtonShouldBeEnabled() {
+        sentActivationEmail("potato")
+        isComponentEnabled(R.id.send_activation_email)
     }
 
     private fun sentActivationEmail(email: String) {

@@ -60,4 +60,8 @@ object ComponentsTestsUtils {
     fun isComponentDisabled(id : Int){
         onView(withId(id)).check(matches(not(isEnabled())))
     }
+
+    fun isComponentEnabled(id : Int){
+        onView(withId(id)).check(matches(isEnabled()))
+    }
 }
