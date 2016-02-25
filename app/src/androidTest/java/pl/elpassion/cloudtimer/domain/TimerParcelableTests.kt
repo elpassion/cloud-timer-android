@@ -17,4 +17,11 @@ class TimerParcelableTests {
         val timerFromParcel = Timer.CREATOR.createFromParcel(parcel)
         Assert.assertEquals(timer, timerFromParcel)
     }
+
+    @Test
+    fun parcelablesMethodDescribeContentsShouldAlwaysReturnZero() {
+        Assert.assertEquals(0, timer.describeContents())
+        Assert.assertEquals(0, group.describeContents())
+        Assert.assertEquals(0, group.users[0].describeContents())
+    }
 }
