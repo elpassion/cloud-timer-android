@@ -2,6 +2,7 @@ package pl.elpassion.cloudtimer
 
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit.*
 
 object TimeConverter {
 
@@ -11,9 +12,6 @@ object TimeConverter {
         formatter
     }
     private val twoNumbersWithZeros = "%02d"
-    private val hoursConstant = 60 * 60 * 1000
-    private val minutesConstant = 60 * 1000
-    private val secondsConstant = 1000
 
     fun formatFromMilliToTime(timeInMilli: Long): String {
         val date = Date(timeInMilli)
@@ -21,20 +19,29 @@ object TimeConverter {
     }
 
     fun formatFromMilliToMinutes(timeInMilli: Long): String {
-        val hours = timeInMilli / hoursConstant
-        val minutes = timeInMilli % hoursConstant / minutesConstant
-        val seconds = timeInMilli % minutesConstant / secondsConstant
-        return createStringTime(hours, minutes, seconds)
+        return createStringTime(getHours(timeInMilli), getMinutes(timeInMilli), getSeconds(timeInMilli))
+    }
+
+    fun formatShortFromMilliToMinutes(timeInMilli: Long): String {
+        return createShortTime(getHours(timeInMilli), getMinutes(timeInMilli), getSeconds(timeInMilli))
     }
 
     private fun createStringTime(hours: Long, minutes: Long, seconds: Long): String {
-        val secondsWithZeros = twoNumbersWithZeros.format(seconds)
-        val minutesWithZeros = twoNumbersWithZeros.format(minutes)
         if (hours > 0)
-            return "$hours:$minutesWithZeros:$secondsWithZeros"
+            return "$hours:${applyFormat(minutes)}:${applyFormat(seconds)}"
         else
-            return "$minutes:$secondsWithZeros"
+            return "$minutes:${applyFormat(seconds)}"
     }
 
+    private fun createShortTime(hours: Long, minutes: Long, seconds: Long): String {
+        if (hours > 0)
+            return "${hours}h:${applyFormat(minutes)}"
+        else
+            return "$minutes:${applyFormat(seconds)}"
+    }
 
+    private fun applyFormat(number: Long) = twoNumbersWithZeros.format(number)
+    fun getHours(timeInMilli: Long) = MILLISECONDS.toHours(timeInMilli)
+    fun getMinutes(timeInMilli: Long) = MILLISECONDS.toMinutes(timeInMilli) - HOURS.toMinutes(getHours(timeInMilli))
+    fun getSeconds(timeInMilli: Long) = MILLISECONDS.toSeconds(timeInMilli) - MINUTES.toSeconds(getMinutes(timeInMilli)) - HOURS.toSeconds(getHours(timeInMilli))
 }

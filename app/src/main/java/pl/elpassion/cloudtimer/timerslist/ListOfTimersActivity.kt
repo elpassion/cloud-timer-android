@@ -1,22 +1,29 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerActivity
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.signin.SignInActivity
 import java.util.*
 
 class ListOfTimersActivity : CloudTimerActivity() {
 
     companion object {
         private const val timerActivityResultCode = 1
-        private const val loginActivityResultCode = 2
+
+        fun start(context: Context) {
+            val intent = Intent(context, ListOfTimersActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 
     private val createNewTimerButton by lazy { findViewById(R.id.create_new_timer) as FloatingActionButton }
@@ -63,11 +70,13 @@ class ListOfTimersActivity : CloudTimerActivity() {
 
     override fun onResume() {
         timeRefresher.refreshAfterOneSec()
+        EventBus.getDefault().register(this)
         super.onResume()
     }
 
     override fun onPause() {
         timeRefresher.stop()
+        EventBus.getDefault().unregister(this)
         super.onPause()
     }
 
@@ -83,4 +92,9 @@ class ListOfTimersActivity : CloudTimerActivity() {
         return requestCode == timerActivityResultCode && resultCode == RESULT_CANCELED && timers.isEmpty()
     }
 
+    fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick) {
+        var isLoggedIn = false
+        if (!isLoggedIn)
+            SignInActivity.start(this, onShareTimerButtonClick.timer)
+    }
 }

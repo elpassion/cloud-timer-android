@@ -29,6 +29,7 @@ class TimerGUITest {
         return GeneralClickAction(Tap.SINGLE, provideCoordinates(coordinates), Press.FINGER)
     }
 
+
     private fun provideCoordinates(coordinates: Pair<Int, Int>): CoordinatesProvider {
         return CoordinatesProvider { view ->
             val screenPositions = IntArray(2)
@@ -57,7 +58,7 @@ class TimerGUITest {
         clickOnTimerWithCoordinates(Pair(width, heightOnRanges))
     }
 
-    private fun clickOnTimerLocation(location : GeneralLocation) {
+    private fun clickOnTimerLocation(location: GeneralLocation) {
         performAction(R.id.timer_seekArc, onSeekArcClickWithLocation(location))
     }
 

@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import java.util.*
 
-open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class BaseRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val adapters: MutableList<ItemAdapter> = ArrayList()
+    val adapters: MutableList<ItemAdapter<out RecyclerView.ViewHolder>> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
         return adapters.first { it.itemViewType == viewType }
@@ -14,7 +14,7 @@ open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        adapters[position].onBindViewHolder(holder)
+        adapters[position].onBindBaseViewHolder(holder)
     }
 
     override fun getItemCount(): Int {

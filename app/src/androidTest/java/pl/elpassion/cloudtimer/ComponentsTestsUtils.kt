@@ -15,12 +15,12 @@ object ComponentsTestsUtils {
         onView(withId(id)).check(matches(withText(value)))
     }
 
-    fun checkTextStartsAndEndsWith(id: Int, startText: String, endText: String) {
+    fun checkTextStartsAndEndsWith(id: Int, startText: String, endText : String) {
         onView(withId(id)).check(matches(allOf(withText(startsWith(startText)),
                 withText(endsWith(endText)))))
     }
 
-    fun checkTextContainsNoNewLine(id: Int) {
+    fun checkTextContainsNoNewLine(id : Int) {
         onView(withId(id)).check(matches(not(withText(containsString("\n")))))
     }
 
@@ -28,15 +28,32 @@ object ComponentsTestsUtils {
         onView(withId(id)).perform(click());
     }
 
-    fun performAction(id: Int, viewAction: ViewAction) {
+    fun performAction(id : Int, viewAction : ViewAction) {
         onView(withId(id)).perform(viewAction)
     }
+    
+    fun typeText(id: Int, text: String) {
+        onView(withId(id)).perform(typeText(text))
+    }
+    
+    fun isComponentNotDisplayed(id: Int) {
+        onView(withId(id)).check(matches(not(isDisplayed())))
+    }
 
+    fun isSnackbarWithTextDisplayed(text: String) {
+        onView(withId(android.support.design.R.id.snackbar_text))
+                .check(matches(withText(text)));
+    }
+
+    fun checkIfComponentHasString(componentId: Int, stringId: Int) {
+        onView(withId(componentId)).check(matches(withText(stringId)))
+    }
+ 
     fun isComponentDisplayed(id: Int) {
         onView(withId(id)).check(matches(isDisplayed()))
     }
 
-    fun typeTextInView(id: Int, text: String) {
+    fun typeTextInView(id: Int, text: String){
         onView(withId(id)).perform(typeText(text))
     }
 

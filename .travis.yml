@@ -21,13 +21,13 @@ before_install:
   -in fabric.properties.enc -out app/fabric.properties -d
 
 install:
-- ./gradlew build
+- ./gradlew assembleToTestsDebug
 
 before_script:
 - sh scripts/emulator.sh
 
 script:
-  - ./gradlew connectedCheck
+  - ./gradlew createToTestsDebugCoverageReport
 
 after_success:
   - sh scripts/coveralls.sh

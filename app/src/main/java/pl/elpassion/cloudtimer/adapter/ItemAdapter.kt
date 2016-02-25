@@ -3,8 +3,14 @@ package pl.elpassion.cloudtimer.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 
-interface ItemAdapter {
-    val itemViewType: Int
-    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
-    fun onBindViewHolder(holder: RecyclerView.ViewHolder)
+abstract class ItemAdapter<VH : RecyclerView.ViewHolder> {
+
+    abstract val itemViewType: Int
+    abstract fun onCreateViewHolder(parent: ViewGroup): VH
+    abstract fun onBindViewHolder(holder: VH)
+
+    fun onBindBaseViewHolder(holder: RecyclerView.ViewHolder) {
+        @Suppress("UNCHECKED_CAST")
+        onBindViewHolder(holder as VH)
+    }
 }

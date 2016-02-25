@@ -122,7 +122,7 @@ class TimerListRefreshActionsTest {
     }
 
     @Test
-    fun shouldNotifyAboutJustFinishedTimerToMoveTwoPositionBelow(){
+    fun shouldNotifyAboutJustFinishedTimerToMoveTwoPositionBelow() {
         adapter.updateTimers(listOf(Timer("timer", 2000), Timer("timer", 1000000), Timer("timer", 3000000)))
         adapter.registerAdapterDataObserver(observer)
         currentTimeInMillis = { System.currentTimeMillis() + 3000 }

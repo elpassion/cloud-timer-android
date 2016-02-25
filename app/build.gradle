@@ -37,37 +37,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        normal{
+
+        }
+        toTests{
+
+        }
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     dataBinding{
         enabled = true
     }
+    
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
-        exclude group: 'com.android.support'
-    }
-    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1') {
-        exclude group: 'com.android.support'
-    }
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile "org.jetbrains.kotlin:kotlin-project:$kotlin_version"
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
-        transitive = true;
-    }
-    compile 'com.github.Triggertrap:SeekArc:v1.1'
-    testCompile ('junit:junit:4.11')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.larswerkman:HoloColorPicker:1.5'
-}
+
 buildscript {
     ext.kotlin_version = '1.0.0'
     repositories {
@@ -85,4 +78,30 @@ repositories {
     mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
     maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.1') {
+        exclude group: 'com.android.support'
+    }
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'de.greenrobot:eventbus:2.4.1'
+    compile 'io.reactivex:rxjava:1.1.1'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    compile 'com.github.Triggertrap:SeekArc:v1.1'
+    compile 'com.larswerkman:HoloColorPicker:1.5'
+    testCompile ('junit:junit:4.11')
 }
