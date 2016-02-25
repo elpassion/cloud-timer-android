@@ -13,6 +13,8 @@ object AuthTokenSharedPreferences {
     fun saveAuthToken(authToken: String) = sharedPreferences.edit().putString(authTokenKey, authToken).commit()
 
     fun readAuthToken(): String? {
+        if (isLoggedIn())
+            return ""
         return null
     }
 }
