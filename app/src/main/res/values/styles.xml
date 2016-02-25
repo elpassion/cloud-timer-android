@@ -24,6 +24,7 @@
     <style name="ListSecondaryText" parent="ListText">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:textColor">@color/colorSecondaryElements</item>
+        <item name="android:textColorHint">@color/colorSecondaryElements</item>
     </style>
 
     <style name="ListShareButton">

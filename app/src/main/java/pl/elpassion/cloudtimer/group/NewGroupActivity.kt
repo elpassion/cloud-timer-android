@@ -48,7 +48,7 @@ class NewGroupActivity : CloudTimerActivity() {
     private val emileEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
     private val colorPickerHiderUP by lazy { findViewById(R.id.color_picker_up_view) }
     private val colorPickerHiderDOWN by lazy { findViewById(R.id.color_picker_down_view) }
-    private val addUserEmileButton by lazy { findViewById(R.id.add_user_emile_button) as Button }
+    private val addUserEmailButton by lazy { findViewById(R.id.add_user_emile_button) as Button }
     private val randomColor = Group.randomColor()
     private val groupColorIcon = createGroupColorIcon()
 
@@ -101,16 +101,19 @@ class NewGroupActivity : CloudTimerActivity() {
         addUserButton.setOnClickListener {
             addUserLayout.visibility = VISIBLE
         }
-        addUserEmileButton.setOnClickListener {
+        addUserEmailButton.setOnClickListener {
             emailButtonClickAction()
         }
     }
 
     private fun emailButtonClickAction() {
-        val email = emileEditText.text.toString()
-        val isUserWithEmailAvailable = users.any { it.email.equals(email) }
-        if (isUserWithEmailAvailable)
-            users.add(User(email.replace("@*.".toRegex(), ""), email))
+        val emailString = emileEditText.text.toString()
+        val emailsList = (emailString.split("\n"))
+        for (email in emailsList) {
+            val isUserWithEmailAvailable = users.none { it.email.equals(email) }
+            if (isUserWithEmailAvailable)
+                users.add(User(email.replace("@*.".toRegex(), ""), email))
+        }
         setUpUsersRecyclerView()
         backFromLayout(addUserLayout)
     }

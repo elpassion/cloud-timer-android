@@ -142,11 +142,12 @@
 
         <EditText
             android:id="@+id/emile_edit_text"
-            android:layout_width="wrap_content"
+            style="@style/ListSecondaryText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Enter emile address"
-            android:textSize="20dp" />
+            android:hint="Enter email addresses"
+            android:textSize="20dp"/>
 
         <Button
             android:id="@+id/add_user_emile_button"
