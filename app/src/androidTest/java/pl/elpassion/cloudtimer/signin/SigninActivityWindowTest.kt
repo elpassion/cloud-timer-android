@@ -7,6 +7,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkIfComponentHasString
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisabled
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
@@ -50,6 +51,18 @@ class SigninActivityWindowTest {
         }
         sentActivationEmail("potato@gmail.com")
         assertTrue(isCorrectMail)
+    }
+
+
+    @Test
+    fun whenEmailWasSentButtonSendShouldBeDisabled() {
+        signInViaEmailService = object : SignInViaEmailService {
+            override fun singIn(email: SignInViaEmail): Observable<Any> {
+                return Observable.never()
+            }
+        }
+        sentActivationEmail("potato@gmail.com")
+        isComponentDisabled(R.id.send_activation_email)
     }
 
     private fun sentActivationEmail(email: String) {

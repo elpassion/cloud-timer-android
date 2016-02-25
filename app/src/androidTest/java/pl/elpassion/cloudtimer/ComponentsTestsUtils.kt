@@ -56,4 +56,8 @@ object ComponentsTestsUtils {
     fun typeTextInView(id: Int, text: String){
         onView(withId(id)).perform(typeText(text))
     }
+
+    fun isComponentDisabled(id : Int){
+        onView(withId(id)).check(matches(not(isEnabled())))
+    }
 }
