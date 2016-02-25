@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import java.util.*
 
-open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class BaseRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val adapters: MutableList<ItemAdapter> = ArrayList()
 
