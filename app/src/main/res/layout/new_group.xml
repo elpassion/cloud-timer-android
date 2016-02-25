@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content" />
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/add_new_user_button"
+                android:id="@+id/add_new_user_to_group_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
@@ -81,6 +81,7 @@
             android:text="todo facebook button" />
 
         <Button
+            android:id="@+id/create_new_group_button"
             style="@style/ActiveWideButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

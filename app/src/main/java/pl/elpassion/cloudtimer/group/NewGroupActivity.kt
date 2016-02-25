@@ -43,7 +43,7 @@ class NewGroupActivity : CloudTimerActivity() {
     private val colorPicker by lazy { findViewById(R.id.group_color_picker) as ColorPicker }
     private val colorPickerLayout by lazy { findViewById(R.id.color_picker_layout) as LinearLayout }
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
-    private val addUserButton by lazy { findViewById(R.id.add_new_user_button) as FloatingActionButton }
+    private val addUserButton by lazy { findViewById(R.id.add_new_user_to_group_button) as FloatingActionButton }
     private val addUserLayout by lazy { findViewById(R.id.enter_emile_layout) as LinearLayout }
     private val emileEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
     private val colorPickerHiderUP by lazy { findViewById(R.id.color_picker_up_view) }
