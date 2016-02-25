@@ -13,6 +13,7 @@ import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 class LoginActivity : CloudTimerActivity() {
 
     private val retryLoggingInButton by lazy { findViewById(R.id.retry_logging_in) }
+    private val loggingMessage by lazy { findViewById(R.id.logging_message) as TextView }
     private var urlString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,13 @@ class LoginActivity : CloudTimerActivity() {
 
     private fun setUpRetryLoggingInButton() {
         retryLoggingInButton.visibility = View.GONE
-        retryLoggingInButton.setOnClickListener { login() }
+        retryLoggingInButton.setOnClickListener {
+            loggingMessage.text = getString(R.string.logging_in_message)
+            login()
+        }
     }
 
-    fun saveUrlFromIntent(intent: Intent){
+    fun saveUrlFromIntent(intent: Intent) {
         if (intent.dataString != null)
             urlString = intent.dataString
     }
@@ -61,7 +65,6 @@ class LoginActivity : CloudTimerActivity() {
     }
 
     private val onLoginFailure = { ex: Throwable ->
-        val loggingMessage = findViewById(R.id.logging_message) as TextView
         loggingMessage.text = getString(R.string.logging_in_failure)
         retryLoggingInButton.visibility = View.VISIBLE
     }

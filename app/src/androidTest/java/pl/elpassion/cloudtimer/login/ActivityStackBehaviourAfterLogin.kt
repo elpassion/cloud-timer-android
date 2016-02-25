@@ -40,6 +40,12 @@ class ActivityStackBehaviourAfterLogin {
             return Observable.error(Throwable())
         }
     }
+    val loginServiceNeverEnding: LoginService = object : LoginService {
+        override fun login(email: Login): Observable<User> {
+            ++serviceCallCounter
+            return Observable.never()
+        }
+    }
 
     @After
     fun closePreviousActivities(){
@@ -67,8 +73,9 @@ class ActivityStackBehaviourAfterLogin {
     fun ifUserHasTriedLogInAgainThereShouldBeTwoCallsToApi() {
         loginService = loginServiceFail
         launchActivityWithData()
-        loginService = loginServiceSuccess
+        loginService = loginServiceNeverEnding
         pressButton(R.id.retry_logging_in)
+        checkTextMatching(R.id.logging_message, R.string.logging_in_message)
         Assert.assertEquals(2, serviceCallCounter)
     }
 
