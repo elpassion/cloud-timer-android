@@ -10,7 +10,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.util.Log
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -45,10 +46,12 @@ class NewGroupActivity : CloudTimerActivity() {
     private val addUserButton by lazy { findViewById(R.id.add_new_user_button) as FloatingActionButton }
     private val addUserLayout by lazy { findViewById(R.id.enter_emile_layout) as LinearLayout }
     private val emileEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
+    private val colorPickerHiderUP by lazy { findViewById(R.id.color_picker_up_view) }
+    private val colorPickerHiderDOWN by lazy { findViewById(R.id.color_picker_down_view) }
     private val addUserEmileButton by lazy { findViewById(R.id.add_user_emile_button) as Button }
-
     private val randomColor = Group.randomColor()
     private val groupColorIcon = createGroupColorIcon()
+
     private val timers: MutableList<Timer> = ArrayList()
     private val users: MutableList<User> = ArrayList()
 
@@ -57,29 +60,59 @@ class NewGroupActivity : CloudTimerActivity() {
         setContentView(R.layout.new_group)
         newGroupToolbar.inflateMenu(R.menu.new_group_menu)
         loadRecyclerViews()
-        colorMenuIcon.background = groupColorIcon
-        colorPicker.showOldCenterColor = false
-        colorPicker.color = randomColor
-        setUpListenersOnColorPicker()
-        addUserLayout.setOnClickListener {
-            backFromUserEmileLayout()
-        }
-        addUserButton.setOnClickListener {
-            Log.e("CLICKED!", "ADD USER BUTTON CLICKED!")
-            addUserLayout.visibility = View.VISIBLE
-        }
-        addUserEmileButton.setOnClickListener {
-            val emile = emileEditText.text.toString()
-            if (users.filter { it.email.equals(emile) }.isEmpty())
-                users.add(User(emile.replace(Regex("@*."), ""), emile))
-            setUpUsersRecyclerView()
-            backFromUserEmileLayout()
-        }
+        setUpColorPicker()
+        setUpGroupViewListeners()
     }
 
     private fun loadRecyclerViews() {
         loadAndSetUpTimersRecycleView()
         loadAndSetUpUsersRecyclerView()
+    }
+
+    private fun setUpColorPicker() {
+        colorMenuIcon.background = groupColorIcon
+        colorPicker.showOldCenterColor = false
+        colorPicker.color = randomColor
+        setUpColorPickerListeners()
+    }
+
+    private fun setUpColorPickerListeners() {
+        colorPicker.setOnColorChangedListener {
+            groupColorIcon.setColor(colorPicker.color)
+        }
+        colorPickerHiderUP.setOnClickListener {
+            backFromLayout(colorPickerLayout)
+        }
+        colorPickerHiderDOWN.setOnClickListener {
+            backFromLayout(colorPickerLayout)
+        }
+        colorMenuIcon.setOnClickListener {
+            if (isViewVisible(colorPickerLayout))
+                backFromLayout(colorPickerLayout)
+            else
+                colorPickerLayout.visibility = VISIBLE
+        }
+    }
+
+    private fun setUpGroupViewListeners() {
+        addUserLayout.setOnClickListener {
+            backFromLayout(addUserLayout)
+        }
+        addUserButton.setOnClickListener {
+            addUserLayout.visibility = VISIBLE
+        }
+        addUserEmileButton.setOnClickListener {
+            emailButtonClickAction()
+        }
+    }
+
+    private fun emailButtonClickAction() {
+        val email = emileEditText.text.toString()
+        val isUserWithEmailAvailable = users.any { it.email.equals(email) }
+        if (isUserWithEmailAvailable)
+            users.add(User(email.replace("@*.".toRegex(), ""), email))
+        setUpUsersRecyclerView()
+        backFromLayout(addUserLayout)
     }
 
     private fun loadAndSetUpTimersRecycleView() {
@@ -141,38 +174,16 @@ class NewGroupActivity : CloudTimerActivity() {
         return gd
     }
 
-    private fun backFromColorPicker() {
-        goneWithTheView(colorPickerLayout)
-    }
-
-    private fun backFromUserEmileLayout() {
-        goneWithTheView(addUserLayout)
-    }
-
-    private fun goneWithTheView(v: View) {
-        v.visibility = View.GONE
+    private fun backFromLayout(layout: LinearLayout) {
+        layout.visibility = GONE
     }
 
     override fun onBackPressed() {
-        if (colorPickerLayout.visibility == View.VISIBLE)
-            backFromColorPicker()
-        else if (addUserLayout.visibility == View.VISIBLE)
-            backFromUserEmileLayout()
+        if (isViewVisible(addUserLayout))
+            backFromLayout(addUserLayout)
         else
             super.onBackPressed()
     }
 
-    private fun setUpListenersOnColorPicker() {
-        colorPicker.setOnColorChangedListener {
-            groupColorIcon.setColor(colorPicker.color)
-        }
-        colorMenuIcon.setOnClickListener {
-            if (colorPickerLayout.visibility == View.VISIBLE)
-                backFromColorPicker()
-            else
-                colorPickerLayout.visibility = View.VISIBLE
-        }
-        findViewById(R.id.color_picker_up_view).setOnClickListener { backFromColorPicker() }
-        findViewById(R.id.color_picker_down_view).setOnClickListener { backFromColorPicker() }
-    }
+    private fun isViewVisible(view: LinearLayout) = view.visibility == VISIBLE
 }
