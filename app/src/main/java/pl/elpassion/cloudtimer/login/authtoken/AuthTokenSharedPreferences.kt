@@ -19,6 +19,8 @@ object AuthTokenSharedPreferences {
     }
 
     fun readEmail(): String? {
+        if (isLoggedIn())
+            return ""
         return null
     }
 }
