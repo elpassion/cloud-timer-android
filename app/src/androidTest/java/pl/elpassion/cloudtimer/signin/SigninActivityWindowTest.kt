@@ -2,7 +2,7 @@ package pl.elpassion.cloudtimer.signin
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,14 +15,13 @@ import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
-import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 import rx.Observable
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityWindowTest {
+class SigninActivityWindowTest {
 
     @Rule @JvmField
-    val rule = rule<ListOfTimersActivity>() {
+    val rule = rule<SignInActivity>() {
         val alarmDao = TimerDAO.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
@@ -31,7 +30,6 @@ class LoginActivityWindowTest {
 
     @Test
     fun initTest() {
-        pressButton(R.id.timer_share_button)
         isComponentNotDisplayed(R.id.error_message)
     }
 
@@ -51,13 +49,12 @@ class LoginActivityWindowTest {
             }
         }
         sentActivationEmail("potato@gmail.com")
-        Assert.assertTrue(isCorrectMail)
+        assertTrue(isCorrectMail)
     }
 
     private fun sentActivationEmail(email: String) {
-        pressButton(R.id.timer_share_button)
         typeText(R.id.email_input, email)
         closeSoftKeyboard()
-        pressButton(R.id.login_via_email_button)
+        pressButton(R.id.send_activation_email)
     }
 }

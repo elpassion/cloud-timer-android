@@ -28,7 +28,7 @@ class SignInActivity : CloudTimerActivity() {
     }
 
     private val emailInput by lazy { findViewById(R.id.email_input) as EditText }
-    private val loginButton by lazy { findViewById(R.id.login_via_email_button) as Button }
+    private val loginButton by lazy { findViewById(R.id.send_activation_email) as Button }
     private val errorMessageTextView by lazy { findViewById(R.id.error_message) as TextView }
     private val timer by lazy { intent.getParcelableExtra<Timer>(timerToShareKey) }
 
