@@ -17,4 +17,8 @@ object AuthTokenSharedPreferences {
             return sharedPreferences.getString(authTokenKey, "")
         return null
     }
+
+    fun readEmail(): String? {
+        return null
+    }
 }

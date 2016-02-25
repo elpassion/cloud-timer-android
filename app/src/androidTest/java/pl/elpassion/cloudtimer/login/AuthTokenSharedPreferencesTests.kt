@@ -44,6 +44,12 @@ class AuthTokenSharedPreferencesTests {
         Assert.assertEquals(authToken, AuthTokenSharedPreferences.readAuthToken())
     }
 
+    @Test
+    fun ifUserIsNotLoggedInEmailShouldBeNull() {
+        assertFalse(AuthTokenSharedPreferences.isLoggedIn())
+        assertNull(AuthTokenSharedPreferences.readEmail())
+    }
+
 
 
 }
