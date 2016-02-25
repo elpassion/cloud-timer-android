@@ -18,11 +18,7 @@ class FinishedTimerItemAdapter(val timer: Timer) : ItemAdapter<FinishedTimerItem
 
     override val itemViewType: Int = R.layout.user_timers_list_finished_timer_item
 
-    override fun onCreateViewHolder(parent: ViewGroup): FinishedTimerHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(itemViewType, parent, false)
-        return FinishedTimerHolder(view)
-    }
+    override fun onCreateViewHolder(itemView: View) = FinishedTimerHolder(itemView)
 
     override fun onBindViewHolder(holder: FinishedTimerHolder) {
         holder.ThumbCounter.time = timer.duration

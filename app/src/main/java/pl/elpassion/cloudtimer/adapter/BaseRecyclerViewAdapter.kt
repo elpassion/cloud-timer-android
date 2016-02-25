@@ -1,6 +1,7 @@
 package pl.elpassion.cloudtimer.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import java.util.*
 
@@ -8,9 +9,10 @@ open class BaseRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
 
     val adapters: MutableList<ItemAdapter<out RecyclerView.ViewHolder>> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
-        return adapters.first { it.itemViewType == viewType }
-                .onCreateViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val adapter = adapters.first { it.itemViewType == viewType }
+        val itemView = LayoutInflater.from(parent.context).inflate(adapter.itemViewType, parent, false)
+        return adapter.onCreateViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
