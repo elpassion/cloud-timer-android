@@ -16,7 +16,7 @@ import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 import rx.Observable
 
-class LoginApiTests {
+class SigninApiTests {
 
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity>() {
@@ -58,7 +58,7 @@ class LoginApiTests {
         pressButton(R.id.timer_share_button)
         typeText(R.id.email_input, "email@gmail.com")
         closeSoftKeyboard()
-        pressButton(R.id.login_via_email_button)
+        pressButton(R.id.send_activation_email)
     }
 
 }

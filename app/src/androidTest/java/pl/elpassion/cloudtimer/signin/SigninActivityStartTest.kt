@@ -14,7 +14,7 @@ import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityStartTest {
+class SigninActivityStartTest {
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity>() {
         val alarmDao = TimerDAO.getInstance()
@@ -26,6 +26,6 @@ class LoginActivityStartTest {
     @Test
     fun startLoginActivity() {
         pressButton(R.id.timer_share_button)
-        isComponentDisplayed(R.id.login_via_email_button)
+        isComponentDisplayed(R.id.send_activation_email)
     }
 }

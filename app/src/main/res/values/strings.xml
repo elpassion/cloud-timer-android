@@ -11,4 +11,5 @@
     <string name="timer_timer_title">Enter timer title</string>
     <string name="timer_share">Share</string>
     <string name="timer_start">START</string>
+    <string name="retry_logging_in">Try to login again.</string>
 </resources>
