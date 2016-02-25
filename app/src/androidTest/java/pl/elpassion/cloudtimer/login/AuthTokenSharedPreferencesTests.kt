@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.login
 
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +35,13 @@ class AuthTokenSharedPreferencesTests {
         AuthTokenSharedPreferences.saveAuthToken("1234")
         assertTrue(AuthTokenSharedPreferences.isLoggedIn())
         assertNotNull(AuthTokenSharedPreferences.readAuthToken())
+    }
+
+    @Test
+    fun readAuthTokenShouldBeTheSameAsSavedOne() {
+        val authToken = "1234"
+        AuthTokenSharedPreferences.saveAuthToken(authToken)
+        Assert.assertEquals(authToken, AuthTokenSharedPreferences.readAuthToken())
     }
 
 

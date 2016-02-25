@@ -14,7 +14,7 @@ object AuthTokenSharedPreferences {
 
     fun readAuthToken(): String? {
         if (isLoggedIn())
-            return ""
+            return sharedPreferences.getString(authTokenKey, "")
         return null
     }
 }
