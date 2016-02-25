@@ -15,6 +15,10 @@ object ComponentsTestsUtils {
         onView(withId(id)).check(matches(withText(value)))
     }
 
+    fun checkTextMatching(id: Int, stringId: Int) {
+        onView(withId(id)).check(matches(withText(stringId)))
+    }
+
     fun checkTextStartsAndEndsWith(id: Int, startText: String, endText : String) {
         onView(withId(id)).check(matches(allOf(withText(startsWith(startText)),
                 withText(endsWith(endText)))))
