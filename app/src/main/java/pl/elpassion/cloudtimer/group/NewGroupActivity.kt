@@ -17,7 +17,6 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
@@ -27,12 +26,11 @@ import java.util.*
 class NewGroupActivity : CloudTimerActivity() {
 
     companion object {
-        private val timerUUIDKey = "TIMERUUID"
-        fun start(context: Context, sharedTimerUUID: String) {
+        private val timerKey = "Timer"
+        fun start(context: Context, timer: Timer) {
             Log.e("ACTIVITY", " New Group Activity created")
             val intent = Intent(context, NewGroupActivity::class.java)
-            intent.putExtra(timerUUIDKey, sharedTimerUUID)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.putExtra(timerKey, timer)
             context.startActivity(intent)
         }
     }
@@ -120,19 +118,10 @@ class NewGroupActivity : CloudTimerActivity() {
 
     private fun loadAndSetUpTimersRecycleView() {
         timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        if (intent.extras != null)
-            loadSharedTimerFromDB(intent.extras.getString(timerUUIDKey))
-        else loadSharedTimerFromDB("test")
-        setUpTimersRecyclerView()
-    }
-
-    private fun loadSharedTimerFromDB(timerUUID: String) {
-        val dao = TimerDAO.getInstance()
         timers.clear()
-        timers.add(dao.findOne(timerUUID))
-        timers.add(Timer("", 60000))
-        timers.add(Timer("", 70000))
-        timers.add(Timer("", 80000))
+        val element = intent.getParcelableExtra<Timer>(timerKey)
+        timers.add(element)
+        setUpTimersRecyclerView()
     }
 
     private fun setUpTimersRecyclerView() {

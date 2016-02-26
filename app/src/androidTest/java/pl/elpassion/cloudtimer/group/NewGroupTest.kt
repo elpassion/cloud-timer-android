@@ -1,5 +1,8 @@
 package pl.elpassion.cloudtimer.group
 
+import android.content.Intent
+import android.support.test.espresso.Espresso.closeSoftKeyboard
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -9,14 +12,21 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.rule
+import pl.elpassion.cloudtimer.ruleManuallyStarted
 
 class NewGroupTest {
     @Rule @JvmField
-    val rule = rule<NewGroupActivity> {
+    val rule = ruleManuallyStarted<NewGroupActivity> {
         val timerDAO = TimerDAO.Companion.getInstance()
         timerDAO.deleteAll()
         timerDAO.save(Timer("title", duration = 10000, uid = "test"))
+    }
+
+    @Before
+    fun launchActivityData() {
+        val intent = Intent()
+        intent.putExtra("Timer", Timer(title = "Title", duration = 50000))
+        rule.launchActivity(intent)
     }
 
     private fun clickOnColorPickerButton() {
@@ -55,6 +65,7 @@ class NewGroupTest {
     @Test
     fun afterClickOnAddNewUserButtonScreenWithEmailFieldShouldBeDisplayed() {
         clickOnAddNewUserButton()
+        closeSoftKeyboard()
         isComponentDisplayed(R.id.enter_emile_layout)
         isComponentDisplayed(R.id.emile_edit_text)
         isComponentDisplayed(R.id.add_user_emile_button)
@@ -65,6 +76,7 @@ class NewGroupTest {
         val email = "newuser@com.pl"
         clickOnAddNewUserButton()
         typeTextInView(R.id.emile_edit_text, email)
+        closeSoftKeyboard()
         clickOnAddEmail()
         isInRecyclerView(R.id.users_recycler_view, R.id.user_email_text_view)
     }

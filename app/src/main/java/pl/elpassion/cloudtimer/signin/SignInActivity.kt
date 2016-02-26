@@ -13,7 +13,7 @@ import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.applySchedulers
 import pl.elpassion.cloudtimer.common.emailRegex
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.groups.GroupActivity
+import pl.elpassion.cloudtimer.group.GroupListActivity
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 
 class SignInActivity : CloudTimerActivity() {
@@ -43,7 +43,7 @@ class SignInActivity : CloudTimerActivity() {
 
     override fun onResume() {
         if (isLoggedIn())
-            GroupActivity.start(this)
+            GroupListActivity.start(this, timer)
         super.onResume()
     }
 

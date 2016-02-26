@@ -54,7 +54,7 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -72,7 +72,7 @@
                 android:src="@android:drawable/btn_star_big_off"
                 app:layout_behavior="pl.elpassion.cloudtimer.group.ScrollAwareFABBehavior" />
 
-        </android.support.design.widget.CoordinatorLayout>
+        </FrameLayout>
 
 
         <Button
