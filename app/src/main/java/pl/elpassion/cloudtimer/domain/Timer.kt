@@ -7,21 +7,30 @@ import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
 
-data class Timer(val title: String, val duration: Long, val endTime: Long = currentTimeMillis() + duration, val uid: String = randomUUID(), val group: Group? = null) : Parcelable{
-
-    constructor(title: String, duration: Long, group: Group) : this(title, duration, currentTimeMillis() + duration, randomUUID(), group)
-    
-    val finished: Boolean
-        get() = endTime < currentTimeInMillis()
+data class Timer(
+        val title: String,
+        val duration: Long,
+        val endTime: Long = currentTimeMillis() + duration,
+        val uid: String = randomUUID(),
+        val group: Group? = null) : Parcelable {
 
     companion object {
         fun randomUUID(): String = UUID.randomUUID().toString()
-        @JvmField final val CREATOR = createCreator { Timer(this) }
+        @JvmField final val CREATOR = createCreator {
+            Timer(
+                    title = readString(),
+                    duration = readLong(),
+                    endTime = readLong(),
+                    uid = readString(),
+                    group = readParcelable(Group::class.java.classLoader)
+            )
+        }
     }
 
-    override fun describeContents(): Int = 0
+    val finished: Boolean
+        get() = endTime < currentTimeInMillis()
 
-    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readLong(), parcel.readLong(),  parcel.readString(), parcel.readParcelable(Group::class.java.classLoader))
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
