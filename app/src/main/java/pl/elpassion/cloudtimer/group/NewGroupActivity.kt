@@ -18,6 +18,7 @@ import android.widget.LinearLayout
 import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
+import pl.elpassion.cloudtimer.common.emailRegex
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.domain.User
@@ -108,9 +109,11 @@ class NewGroupActivity : CloudTimerActivity() {
         val emailString = emileEditText.text.toString()
         val emailsList = (emailString.split("\n"))
         for (email in emailsList) {
-            val isUserWithEmailAvailable = users.none { it.email.equals(email) }
-            if (isUserWithEmailAvailable)
-                users.add(User(email.replace("@*.".toRegex(), ""), email))
+            if (emailRegex.matches(email)) {
+                val isUserWithEmailAvailable = users.none { it.email.equals(email) }
+                if (isUserWithEmailAvailable)
+                    users.add(User(email.replace("@*.".toRegex(), ""), email))
+            }
         }
         setUpUsersRecyclerView()
         backFromLayout(addUserLayout)
