@@ -3,6 +3,8 @@ package pl.elpassion.cloudtimer.domain
 import android.os.Parcel
 import android.os.Parcelable
 import pl.elpassion.cloudtimer.common.createCreator
+import pl.elpassion.cloudtimer.common.createNullableFromParcel
+import pl.elpassion.cloudtimer.common.writeNullableToParcel
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
@@ -22,13 +24,10 @@ data class Timer(
                     duration = readLong(),
                     endTime = readLong(),
                     uid = readString(),
-                    group = readParcelable(Group::class.java.classLoader)
+                    group = Group.CREATOR.createNullableFromParcel(this)
             )
         }
     }
-
-    val finished: Boolean
-        get() = endTime < currentTimeInMillis()
 
     override fun describeContents(): Int = 0
 
@@ -37,6 +36,9 @@ data class Timer(
         parcel.writeLong(duration)
         parcel.writeLong(endTime)
         parcel.writeString(uid)
-        parcel.writeParcelable(group, flags)
+        group.writeNullableToParcel(parcel, flags)
     }
+
+    val finished: Boolean
+        get() = endTime < currentTimeInMillis()
 }
