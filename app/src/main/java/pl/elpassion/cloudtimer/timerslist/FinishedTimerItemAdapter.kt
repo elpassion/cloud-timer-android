@@ -3,9 +3,7 @@ package pl.elpassion.cloudtimer.timerslist
 import android.graphics.PorterDuff
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import com.triggertrap.seekarc.SeekArc
@@ -26,7 +24,6 @@ class FinishedTimerItemAdapter(val timer: Timer) : ItemAdapter<FinishedTimerItem
         if (timer.group != null) {
             holder.shareButton.visibility = View.GONE
             holder.groupCircle.background.setColorFilter(timer.group.color, PorterDuff.Mode.MULTIPLY)
-            holder.groupCircle.text = (timer.group.name)[0].toString()
             holder.groupCircle.text = (timer.group.name)[0].toString()
         } else {
             holder.groupCircle.visibility = View.GONE
