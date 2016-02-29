@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextMatching
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimerDAO
@@ -66,6 +67,7 @@ class ActivityStackBehaviourAfterLogin {
         loginService = loginServiceFail
         launchActivityWithData()
         checkTextMatching(R.id.logging_message, R.string.logging_in_failure)
+        isComponentNotDisplayed(R.id.logging_in_progressbar)
         isComponentDisplayed(R.id.retry_logging_in)
     }
 
@@ -76,6 +78,7 @@ class ActivityStackBehaviourAfterLogin {
         loginService = loginServiceNeverEnding
         pressButton(R.id.retry_logging_in)
         checkTextMatching(R.id.logging_message, R.string.logging_in_message)
+        isComponentDisplayed(R.id.logging_in_progressbar)
         Assert.assertEquals(2, serviceCallCounter)
     }
 
@@ -93,6 +96,5 @@ class ActivityStackBehaviourAfterLogin {
         intent.data = Uri.parse("test")
         rule.launchActivity(intent)
     }
-
-
+    
 }

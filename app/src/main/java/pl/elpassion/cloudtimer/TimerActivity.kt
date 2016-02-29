@@ -4,15 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.widget.Toolbar
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.triggertrap.seekarc.SeekArc
+import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToMinutes
+import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToTime
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.timer.CustomSeekArc
-import pl.elpassion.cloudtimer.timer.seekArcChangeListener
+import pl.elpassion.cloudtimer.timer.SeekArcWrapper
 
 class TimerActivity : CloudTimerActivity() {
 
@@ -23,42 +24,38 @@ class TimerActivity : CloudTimerActivity() {
         }
     }
 
-    val customSeekArc by lazy { findViewById(R.id.timer_seekArc) as CustomSeekArc }
+    val seekArcWrapper by lazy {
+        val seekArc = findViewById(R.id.timer_seekArc) as SeekArc
+        SeekArcWrapper(seekArc) {
+            timerEndTime.text = formatFromMilliToTime(it.endTime)
+            timerDuration.text = formatFromMilliToMinutes(it.timerDurationInMillis)
+        }
+    }
     val timerDuration by lazy { findViewById(R.id.timer_duration) as TextView }
-    val timerEndTime by lazy { findViewById(R.id.timer_time_to_end) as TextView }
-    val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
-    val timerTitle by lazy { findViewById(R.id.new_timer_title) as EditText }
-    val timerToolbar by lazy { findViewById(R.id.new_timer_toolbar) as Toolbar }
-    protected val alarmDao by lazy { TimerDAO.getInstance() }
+    private val timerEndTime by lazy { findViewById(R.id.timer_time_to_end) as TextView }
+    private val startTimerButton by lazy { findViewById(R.id.start_timer_button) as Button }
+    private val timerTitle by lazy { findViewById(R.id.new_timer_title) as EditText }
     private val handler = Handler()
     private val timerRefreshRunnable = TimerEndTimeRefresher()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
-        val timerDurationInMillis = customSeekArc.timerDurationInMillis.toLong()
-        timerDuration.text = TimeConverter.formatFromMilliToMinutes(timerDurationInMillis)
-        setUpSeekArcListener()
+        timerDuration.text = formatFromMilliToMinutes(seekArcWrapper.timerDurationInMillis)
         refreshTimerEndTime()
-        timerToolbar.inflateMenu(R.menu.timer_menu)
         startTimerButton.setOnClickListener {
             startNewTimer()
         }
     }
 
-    private fun setUpSeekArcListener() {
-        customSeekArc.setOnSeekArcChangeListener(seekArcChangeListener {
-            val currentTime = currentTimeInMillis()
-            val timerEndTimeInMillis = currentTime + customSeekArc.timerDurationInMillis
-            timerEndTime.text = TimeConverter.formatFromMilliToTime(timerEndTimeInMillis)
-            timerDuration.text = TimeConverter.formatFromMilliToMinutes(customSeekArc.timerDurationInMillis.toLong())
-        })
+    private fun refreshTimerEndTime() {
+        timerEndTime.text = formatFromMilliToTime(seekArcWrapper.endTime)
     }
 
     private fun startNewTimer() {
-        val newTimer = Timer(timerTitle.text.toString(), customSeekArc.timerDurationInMillis)
+        val newTimer = Timer(timerTitle.text.toString(), seekArcWrapper.timerDurationInMillis)
         scheduleAlarm(newTimer, this)
-        alarmDao.save(newTimer)
+        TimerDAO.getInstance().save(newTimer)
         finish()
     }
 
@@ -71,11 +68,6 @@ class TimerActivity : CloudTimerActivity() {
     override fun onPause() {
         handler.removeCallbacks(timerRefreshRunnable)
         super.onPause()
-    }
-
-    private fun refreshTimerEndTime() {
-        val endTime = System.currentTimeMillis() + customSeekArc.timerDurationInMillis
-        timerEndTime.text = TimeConverter.formatFromMilliToTime(endTime)
     }
 
     inner class TimerEndTimeRefresher : Runnable {
