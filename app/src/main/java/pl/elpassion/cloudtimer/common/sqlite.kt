@@ -21,9 +21,10 @@ fun Cursor.getInt(key: String): Int {
 
 fun Cursor.getNullableInt(key: String): Int? {
     val columnIndex = getColumnIndex(key)
-    if (this.isNull(columnIndex))
-        return getInt(columnIndex)
-    else return null
+    if (isNull(columnIndex))
+        return null
+
+    return getInt(columnIndex)
 }
 
 
@@ -31,7 +32,7 @@ fun Cursor.getLong(key: String): Long {
     return getLong(getColumnIndex(key))
 }
 
-fun ContentValues.putBoolean(key: String, value : Boolean){
+fun ContentValues.putBoolean(key: String, value: Boolean) {
     val intValue = if (value) 1 else 0
     put(key, intValue)
 }

@@ -19,9 +19,10 @@ class TimerDAOTest {
     protected val alarmDao by lazy { TimerDAO.getInstance() }
 
     @Test
-    fun isAlarmCanByAddedToDB() {
+    fun timerShouldBeSavedCorrectly() {
+        val timer = Timer("test", 10000, group = Group("elParafia", Color.RED))
         val uid = alarmDao.save(timer)
-        assertEquals(alarmDao.findOne(uid), timer)
+        assertEquals(timer, alarmDao.findOne(uid))
     }
 
     @Test(expected = NoSuchElementException::class)
@@ -98,5 +99,6 @@ class TimerDAOTest {
         val timerUuid = alarmDao.save(timer)
         assertEquals(timer, alarmDao.findOne(timerUuid))
     }
+
 
 }
