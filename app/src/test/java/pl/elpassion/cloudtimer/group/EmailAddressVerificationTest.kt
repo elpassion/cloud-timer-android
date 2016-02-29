@@ -3,7 +3,7 @@ package pl.elpassion.cloudtimer.group
 import org.junit.Assert.*
 import org.junit.Test
 import pl.elpassion.cloudtimer.common.isEmailValid
-import pl.elpassion.cloudtimer.common.splitAndTrimEmails
+import pl.elpassion.cloudtimer.common.splitByWhitespaces
 
 
 class EmailAddressVerificationTest {
@@ -13,7 +13,6 @@ class EmailAddressVerificationTest {
     private val emptyEmail = ""
     private val emailWithWhiteSpaces = "email@example.com  "
     private val emails = "$correctOneEmail\n$incorrectEmail\n$emptyEmail\n$emailWithWhiteSpaces"
-
 
 
     @Test
@@ -42,17 +41,7 @@ class EmailAddressVerificationTest {
     }
 
     @Test
-    fun splitEmailsReturnsListOfEmailsFromOneEmail() {
-        assertEquals(1, splitAndTrimEmails(correctOneEmail).size)
-    }
-
-    @Test
-    fun splitEmailsShouldReturnsEmptyListOnOneIncorrectEmail() {
-        assertEquals(1, splitAndTrimEmails(incorrectEmail).size)
-    }
-
-    @Test
-    fun splitEmailShouldReturnListOf2Emails() {
-        assertEquals(4, splitAndTrimEmails(emails).size)
+    fun splitByWhitespacesShouldReturnEmailListFromEmailsString() {
+        assertEquals(listOf(correctOneEmail, incorrectEmail, emailWithWhiteSpaces.trim()), splitByWhitespaces(emails))
     }
 }

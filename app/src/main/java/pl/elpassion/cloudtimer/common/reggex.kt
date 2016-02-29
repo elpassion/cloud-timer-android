@@ -7,4 +7,4 @@ val isEmailValid = fun(email: String): Boolean {
     return emailRegex.matches(email.trim())
 }
 
-val splitAndTrimEmails = fun(emailString: String): List<String> = emailString.split("[\\n\\s\\r]+".toRegex())
+val splitByWhitespaces = fun(input: String): List<String> = input.trim().split("[\\n\\s\\r]+".toRegex())

@@ -20,7 +20,7 @@ import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.common.isEmailValid
-import pl.elpassion.cloudtimer.common.splitAndTrimEmails
+import pl.elpassion.cloudtimer.common.splitByWhitespaces
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.domain.User
@@ -110,12 +110,29 @@ class NewGroupActivity : CloudTimerActivity() {
 
     private fun emailButtonClickAction() {
         val emailString = emailEditText.text.toString()
-        splitAndTrimEmails(emailString).forEach {
-            if (isEmailValid(it)) {
-
+        val emails = splitByWhitespaces(emailString)
+        if (areEmailsInvalid(emails)) {
+            emailTextLayout.error = "Insert valid email address"
+        } else {
+            val usersFromEmails = emails.map { mapEmailToUser(it) }
+            if (usersFromEmails.any { users.contains(it) })
+                emailTextLayout.error = "User was already added"
+            else {
+                users.addAll(usersFromEmails)
+                emailTextLayout.error = null
+                emailEditText.setText("")
+                setUpUsersRecyclerView()
+                backFromLayout(addUserLayout)
             }
         }
     }
+
+    private fun mapEmailToUser(it: String): User {
+        val userName = it.replace("@.*".toRegex(), "")
+        return User(userName, it)
+    }
+
+    private fun areEmailsInvalid(emails: List<String>) = emails.any { !isEmailValid(it) }
 
     private fun loadAndSetUpTimersRecycleView() {
         timersRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -139,8 +156,8 @@ class NewGroupActivity : CloudTimerActivity() {
 
     private fun loadUsers() {
         //todo Download users from server
-        users.add(User("Mietek", "mietek@gmail.com"))
-        users.add(User("Ziutek", "ziutek@gmail.com"))
+        users.add(User("mietek", "mietek@gmail.com"))
+        users.add(User("ziutek", "ziutek@gmail.com"))
     }
 
     private fun setUpUsersRecyclerView() {
