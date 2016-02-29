@@ -11,6 +11,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextStartsAndEndsWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.performAction
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
+import pl.elpassion.cloudtimer.timer.TimerActivity
 
 class TimerGUITest {
     @Rule @JvmField

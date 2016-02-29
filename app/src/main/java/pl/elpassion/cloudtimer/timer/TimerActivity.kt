@@ -1,4 +1,4 @@
-package pl.elpassion.cloudtimer
+package pl.elpassion.cloudtimer.timer
 
 import android.app.Activity
 import android.content.Intent
@@ -8,12 +8,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.triggertrap.seekarc.SeekArc
+import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToMinutes
 import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToTime
+import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.timer.SeekArcWrapper
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 
 class TimerActivity : CloudTimerActivity() {
 
@@ -56,6 +58,13 @@ class TimerActivity : CloudTimerActivity() {
         val newTimer = Timer(timerTitle.text.toString(), seekArcWrapper.timerDurationInMillis)
         scheduleAlarm(newTimer, this)
         TimerDAO.getInstance().save(newTimer)
+        if (isLoggedIn())
+            sendTimerService.sendTimer(Any()).subscribe(onSendTimerSuccess)
+        else
+            finish()
+    }
+
+    private val onSendTimerSuccess = { user: Any ->
         finish()
     }
 
