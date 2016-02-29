@@ -41,8 +41,10 @@ class SignInActivity : CloudTimerActivity() {
     }
 
     override fun onResume() {
-        if (isLoggedIn())
+        if (isLoggedIn()) {
             GroupActivity.start(this)
+            finish()
+        }
         super.onResume()
     }
 
