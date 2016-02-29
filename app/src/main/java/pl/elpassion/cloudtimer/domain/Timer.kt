@@ -2,9 +2,7 @@ package pl.elpassion.cloudtimer.domain
 
 import android.os.Parcel
 import android.os.Parcelable
-import pl.elpassion.cloudtimer.common.createCreator
-import pl.elpassion.cloudtimer.common.createNullableFromParcel
-import pl.elpassion.cloudtimer.common.writeNullableToParcel
+import pl.elpassion.cloudtimer.common.*
 import pl.elpassion.cloudtimer.currentTimeInMillis
 import java.lang.System.currentTimeMillis
 import java.util.*
@@ -25,8 +23,8 @@ data class Timer(
                     duration = readLong(),
                     endTime = readLong(),
                     uid = readString(),
-                    group = Group.CREATOR.createNullableFromParcel(this)
-
+                    group = Group.CREATOR.createNullableFromParcel(this),
+                    sync = readBoolean()
             )
         }
     }
@@ -39,6 +37,7 @@ data class Timer(
         parcel.writeLong(endTime)
         parcel.writeString(uid)
         group.writeNullableToParcel(parcel, flags)
+        parcel.writeBoolean(sync)
     }
 
     val finished: Boolean
