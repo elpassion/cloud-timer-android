@@ -100,5 +100,12 @@ class TimerDAOTest {
         assertEquals(timer, alarmDao.findOne(timerUuid))
     }
 
-
+    @Test
+    fun changeTimerToSyncedMethodShouldChangeSyncValueForSpecificTimer() {
+        alarmDao.deleteAll()
+        val timerUuid = alarmDao.save(Timer("", 1))
+        alarmDao.changeTimerToSynced(timerUuid)
+        val timerFromDB = alarmDao.findOne(timerUuid)
+        assertTrue(timerFromDB.sync)
+    }
 }

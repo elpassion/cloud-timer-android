@@ -130,4 +130,8 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         return Timer(title, duration, endTime, uId, group, sync)
     }
 
+    fun changeTimerToSynced(timerUuid: String) {
+        readableDatabase.execSQL("UPDATE $TABLE_TIMER SET $KEY_SYNC=1 WHERE $KEY_TIMER_UID=\"$timerUuid\"")
+    }
+
 }
