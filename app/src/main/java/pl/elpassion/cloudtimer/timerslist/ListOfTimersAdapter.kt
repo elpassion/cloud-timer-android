@@ -6,7 +6,7 @@ import pl.elpassion.cloudtimer.adapter.ItemAdapter
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
-internal fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<ItemAdapter<out RecyclerView.ViewHolder>> {
+fun createAdaptersForCloudTimerItems(timers: List<Timer>): ArrayList<ItemAdapter<out RecyclerView.ViewHolder>> {
     val itemsAdapters = ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>()
     val (finished, notFinished) = timers.partition { it.finished }
     notFinished.sortedBy { it.endTime }.forEach { itemsAdapters.add(TimerItemAdapter(it)) }

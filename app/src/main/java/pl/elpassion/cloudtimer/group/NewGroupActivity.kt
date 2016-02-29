@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.TextInputLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -18,7 +19,8 @@ import android.widget.LinearLayout
 import com.larswerkman.holocolorpicker.ColorPicker
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
-import pl.elpassion.cloudtimer.common.emailRegex
+import pl.elpassion.cloudtimer.common.isEmailValid
+import pl.elpassion.cloudtimer.common.splitAndTrimEmails
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.domain.User
@@ -44,10 +46,11 @@ class NewGroupActivity : CloudTimerActivity() {
     private val colorMenuIcon by lazy { findViewById(R.id.group_colour_settings) }
     private val addUserButton by lazy { findViewById(R.id.add_new_user_to_group_button) as FloatingActionButton }
     private val addUserLayout by lazy { findViewById(R.id.enter_emile_layout) as LinearLayout }
-    private val emileEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
+    private val emailEditText by lazy { findViewById(R.id.emile_edit_text) as EditText }
     private val colorPickerHiderUP by lazy { findViewById(R.id.color_picker_up_view) }
     private val colorPickerHiderDOWN by lazy { findViewById(R.id.color_picker_down_view) }
     private val addUserEmailButton by lazy { findViewById(R.id.add_user_emile_button) as Button }
+    private val emailTextLayout by lazy { findViewById(R.id.email_address_textlayout) as TextInputLayout }
     private val randomColor = Group.randomColor()
     private val groupColorIcon = createGroupColorIcon()
 
@@ -106,17 +109,12 @@ class NewGroupActivity : CloudTimerActivity() {
     }
 
     private fun emailButtonClickAction() {
-        val emailString = emileEditText.text.toString()
-        val emailsList = (emailString.split("\n"))
-        for (email in emailsList) {
-            if (emailRegex.matches(email)) {
-                val isUserWithEmailAvailable = users.none { it.email.equals(email) }
-                if (isUserWithEmailAvailable)
-                    users.add(User(email.replace("@*.".toRegex(), ""), email))
+        val emailString = emailEditText.text.toString()
+        splitAndTrimEmails(emailString).forEach {
+            if (isEmailValid(it)) {
+
             }
         }
-        setUpUsersRecyclerView()
-        backFromLayout(addUserLayout)
     }
 
     private fun loadAndSetUpTimersRecycleView() {
@@ -143,16 +141,6 @@ class NewGroupActivity : CloudTimerActivity() {
         //todo Download users from server
         users.add(User("Mietek", "mietek@gmail.com"))
         users.add(User("Ziutek", "ziutek@gmail.com"))
-        users.add(User("Andrzej", "andrzej@gmail.com"))
-        users.add(User("Mietek", "mietek@gmail.com"))
-        users.add(User("Ziutek", "ziutek@gmail.com"))
-        users.add(User("Andrzej", "andrzej@gmail.com"))
-        users.add(User("Mietek", "mietek@gmail.com"))
-        users.add(User("Ziutek", "ziutek@gmail.com"))
-        users.add(User("Andrzej", "andrzej@gmail.com"))
-        users.add(User("Mietek", "mietek@gmail.com"))
-        users.add(User("Ziutek", "ziutek@gmail.com"))
-        users.add(User("Andrzej", "andrzej@gmail.com"))
     }
 
     private fun setUpUsersRecyclerView() {

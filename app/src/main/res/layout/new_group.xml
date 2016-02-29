@@ -141,14 +141,23 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <EditText
-            android:id="@+id/emile_edit_text"
-            style="@style/ListSecondaryText"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_address_textlayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Enter email addresses"
-            android:textSize="20dp"/>
+            app:errorEnabled="true"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/emile_edit_text"
+                style="@style/ListSecondaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter email addresses"
+                android:textSize="20dp"/>
+
+        </android.support.design.widget.TextInputLayout>
+
 
         <Button
             android:id="@+id/add_user_emile_button"

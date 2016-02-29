@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timerslist
 
+import android.support.v7.widget.RecyclerView
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -47,7 +48,7 @@ class TimersListAdapterTest {
         assertEquals(3, countOfTimerAdapters(adapters))
     }
 
-    private fun countOfTimerAdapters(adapters: ArrayList<ItemAdapter>): Int {
+    private fun countOfTimerAdapters(adapters: ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>): Int {
         return adapters.filter { it is TimerItemAdapter }.size
     }
 
@@ -57,7 +58,7 @@ class TimersListAdapterTest {
         assertEquals(3, countOfFinishedTimerAdapters(adapters))
     }
 
-    private fun countOfFinishedTimerAdapters(adapters: ArrayList<ItemAdapter>): Int {
+    private fun countOfFinishedTimerAdapters(adapters: ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>): Int {
         return adapters.filter { it is FinishedTimerItemAdapter }.size
     }
 
@@ -83,7 +84,7 @@ class TimersListAdapterTest {
         Assert.assertTrue(hasTwoDifferentAdapters(adapters))
     }
 
-    private fun hasTwoDifferentAdapters(adapters: ArrayList<ItemAdapter>): Boolean {
+    private fun hasTwoDifferentAdapters(adapters: ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>): Boolean {
         return adapters.any { it is TimerItemAdapter } &&
                 adapters.any { it is FinishedTimerItemAdapter }
     }
@@ -95,7 +96,7 @@ class TimersListAdapterTest {
         assertTrue(isCorrectOrder)
     }
 
-    private fun checkIfFinishedTimersAreBelowNotFinished(adapters: ArrayList<ItemAdapter>): Boolean {
+    private fun checkIfFinishedTimersAreBelowNotFinished(adapters: ArrayList<ItemAdapter<out RecyclerView.ViewHolder>>): Boolean {
         return adapters.dropWhile { it is TimerItemAdapter }
                 .none { it is TimerItemAdapter }
     }
