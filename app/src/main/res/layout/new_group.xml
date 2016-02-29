@@ -17,7 +17,7 @@
             android:background="?attr/colorPrimary">
 
             <EditText
-                android:id="@+id/new_timer_title"
+                android:id="@+id/new_group_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimaryDark"

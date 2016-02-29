@@ -43,7 +43,7 @@ class NewGroupTest {
 
     @Test
     fun componentsShouldBeDisplayed() {
-        isComponentDisplayed(R.id.new_timer_title)
+        isComponentDisplayed(R.id.new_group_name)
         isComponentDisplayed(R.id.group_colour_settings)
         isComponentDisplayed(R.id.timers_recycler_view)
         isComponentDisplayed(R.id.users_recycler_view)
