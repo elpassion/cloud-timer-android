@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timer
 
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -19,6 +20,13 @@ class ListOfTimersActivityTests {
         currentTimeInMillis = { 0 }
         TimerDAO.getInstance().deleteAll()
         TimerDAO.getInstance().save(Timer("test", 1))
+    }
+
+    @After
+    fun revertCurrentTimeInMillis() {
+        currentTimeInMillis = {
+            System.currentTimeMillis()
+        }
     }
 
     @Test
