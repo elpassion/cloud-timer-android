@@ -82,15 +82,6 @@ class ActivityStackBehaviourAfterLogin {
         Assert.assertEquals(2, serviceCallCounter)
     }
 
-    @Test
-    fun ifLoggingFailedAndNewActivationLinkWasClickedMessageShouldBeCorrect() {
-        loginService = loginServiceFail
-        launchActivityWithData()
-        loginService = loginServiceNeverEnding
-        rule.activity.startActivity(Intent(rule.activity, LoginActivity::class.java))
-        checkTextMatching(R.id.logging_message, R.string.logging_in_message)
-    }
-
     private fun launchActivityWithData() {
         val intent = Intent()
         intent.data = Uri.parse("test")
