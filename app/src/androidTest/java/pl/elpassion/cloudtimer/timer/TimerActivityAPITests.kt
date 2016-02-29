@@ -37,4 +37,5 @@ class TimerActivityAPITests {
         pressButton(R.id.start_timer_button)
         assertEquals(1, counter)
     }
+
 }

@@ -21,12 +21,11 @@ class TimerDAOTest {
     @Test
     fun isAlarmCanByAddedToDB() {
         val uid = alarmDao.save(timer)
-        timer = Timer(timer.title, timer.duration, timer.endTime, uid)
-        assertTrue(alarmDao.findOne(uid).title.equals(timer.title))
+        assertEquals(alarmDao.findOne(uid), timer)
     }
 
     @Test(expected = NoSuchElementException::class)
-    fun isTestTimerCanByDeleted() {
+    fun checkIfTimerCanBeDeleted() {
         val uid = alarmDao.save(timer2)
         timer2 = Timer(timer2.title, timer2.duration, timer2.endTime, uid)
         alarmDao.deleteOne(uid)
@@ -91,4 +90,13 @@ class TimerDAOTest {
         alarmDao.deleteAll()
         assertNull(alarmDao.findNextTimerToSchedule())
     }
+
+    @Test
+    fun addedSyncTimerShouldBeInsertedToDBCorrectly() {
+        alarmDao.deleteAll()
+        val timer = Timer("", 1, sync = true)
+        val timerUuid = alarmDao.save(timer)
+        assertEquals(timer, alarmDao.findOne(timerUuid))
+    }
+
 }

@@ -14,7 +14,8 @@ data class Timer(
         val duration: Long,
         val endTime: Long = currentTimeMillis() + duration,
         val uid: String = randomUUID(),
-        val group: Group? = null) : Parcelable {
+        val group: Group? = null,
+        val sync: Boolean = false) : Parcelable {
 
     companion object {
         fun randomUUID(): String = UUID.randomUUID().toString()
@@ -25,6 +26,7 @@ data class Timer(
                     endTime = readLong(),
                     uid = readString(),
                     group = Group.CREATOR.createNullableFromParcel(this)
+
             )
         }
     }

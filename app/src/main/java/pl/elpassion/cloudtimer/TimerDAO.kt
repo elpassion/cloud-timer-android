@@ -6,21 +6,22 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
+import pl.elpassion.cloudtimer.common.*
 import pl.elpassion.cloudtimer.domain.Group
 import pl.elpassion.cloudtimer.domain.Timer
 import java.util.*
 
-class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteDatabase.CursorFactory?, version: Int = 3) : SQLiteOpenHelper(context, name, factory, version) {
+class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteDatabase.CursorFactory?, version: Int = 4) : SQLiteOpenHelper(context, name, factory, version) {
 
     companion object {
         private val TABLE_TIMER = "timer"
         private val KEY_TIMER_TITLE = "title"
         private val KEY_TIMER_UID = "uId"
         private val KEY_DURATION = "duration"
-        private val KEY_TIME_LEFT = "timeLeft"
         private val KEY_END_TIME = "endTime"
         private val KEY_GROUP_NAME = "groupName"
         private val KEY_GROUP_COLOR = "groupColor"
+        private val KEY_SYNC = "sync"
         private var dao: TimerDAO? = null
         private fun getInstance(context: Context): TimerDAO {
             if (dao == null) dao = TimerDAO(context = context, factory = null)
@@ -41,7 +42,8 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
                 " $KEY_DURATION LONG," +
                 " $KEY_END_TIME LONG," +
                 " $KEY_GROUP_NAME STRING NULLABLE," +
-                " $KEY_GROUP_COLOR INT NULLABLE)"
+                " $KEY_GROUP_COLOR INT NULLABLE," +
+                " $KEY_SYNC INT)"
         db.execSQL(CREATE_TIMER_TABLE)
     }
 
@@ -56,6 +58,7 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
         values.put(KEY_TIMER_TITLE, timer.title)
         values.put(KEY_DURATION, timer.duration)
         values.put(KEY_END_TIME, timer.endTime)
+        values.putBoolean(KEY_SYNC, timer.sync)
         if (timer.group != null) {
             values.put(KEY_GROUP_NAME, timer.group.name)
             values.put(KEY_GROUP_COLOR, timer.group.color)
@@ -116,13 +119,15 @@ class TimerDAO(context: Context, name: String = "cloudTimerDB", factory: SQLiteD
     }
 
     private fun getTimerFromCursor(res: Cursor): Timer {
-        val uId = res.getString(res.getColumnIndex(KEY_TIMER_UID))
-        val title = res.getString(res.getColumnIndex(KEY_TIMER_TITLE))
-        val duration = res.getLong(res.getColumnIndex(KEY_DURATION))
-        val endTime = res.getLong(res.getColumnIndex(KEY_END_TIME))
-        val groupName = res.getString(res.getColumnIndex(KEY_GROUP_NAME))
-        val groupColor = res.getInt(res.getColumnIndex(KEY_GROUP_COLOR))
-        return Timer(title, duration, endTime, uId, if (groupName != null) Group(groupName, groupColor) else null)
+        val uId = res.getString(KEY_TIMER_UID)
+        val title = res.getString(KEY_TIMER_TITLE)
+        val duration = res.getLong(KEY_DURATION)
+        val endTime = res.getLong(KEY_END_TIME)
+        val groupName = res.getNullableString(KEY_GROUP_NAME)
+        val groupColor = res.getNullableInt(KEY_GROUP_COLOR)
+        val sync = res.getBoolean(KEY_SYNC)
+        val group = if (groupName != null && groupColor != null) Group(groupName, groupColor) else null
+        return Timer(title, duration, endTime, uId, group, sync)
     }
 
 }
