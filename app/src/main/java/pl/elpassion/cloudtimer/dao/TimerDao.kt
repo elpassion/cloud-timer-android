@@ -8,7 +8,7 @@ interface TimerDao {
 
     fun findAll(): List<Timer>
 
-    fun findOne(uuId: String): Timer?
+    fun findOne(uuId: String): Timer
 
     fun deleteAll()
 

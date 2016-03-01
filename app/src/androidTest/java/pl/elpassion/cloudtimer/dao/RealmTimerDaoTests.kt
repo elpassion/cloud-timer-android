@@ -1,9 +1,7 @@
 package pl.elpassion.cloudtimer.dao
 
 import org.junit.After
-import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import pl.elpassion.cloudtimer.currentTimeInMillis
@@ -16,11 +14,13 @@ class RealmTimerDaoTests() {
 
     @Before
     fun setUp(){
+        dao.deleteAll()
         currentTimeInMillis = { 0 }
     }
 
     @After
     fun cleanUp(){
+        dao.deleteAll()
         currentTimeInMillis = { System.currentTimeMillis() }
     }
 
@@ -67,15 +67,20 @@ class RealmTimerDaoTests() {
 
     @Test
     fun findNextToScheduleShouldReturnNullIfThereAreNoTimersToSchedule() {
-        dao.deleteAll()
-        Assert.assertNull(dao.findNextTimerToSchedule())
+        assertNull(dao.findNextTimerToSchedule())
     }
 
     private fun setUpDBAndReturnFirstToScheduleTimerUuid(): String {
-        dao.deleteAll()
         dao.save(Timer(uid = "1",title="", duration = 1000 * 60))
         dao.save(Timer(uid = "2",title="", duration = -1000 * 60))
         return dao.save(Timer(uid = "3",title="", duration = 1000 * 49))
+    }
+
+    @Test
+    fun changeTimerToSyncedShouldChangeTimerValue() {
+        val timerUuid = dao.save(Timer("timer", 100, sync = false))
+        dao.changeTimerToSynced(timerUuid)
+        assertTrue(dao.findOne(timerUuid).sync)
     }
 
 }

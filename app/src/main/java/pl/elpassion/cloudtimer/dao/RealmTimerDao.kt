@@ -44,10 +44,10 @@ object RealmTimerDao : TimerDao {
         }
     }
 
-    override fun findOne(uuId: String): Timer? {
+    override fun findOne(uuId: String): Timer {
         return inRealm {
             where(TimerRealmObject::class.java)
-                    .equalTo("uuid", uuId).findFirst()?.createTimer()
+                    .equalTo("uuid", uuId).findFirst().createTimer()
         }
     }
 
@@ -59,15 +59,18 @@ object RealmTimerDao : TimerDao {
     }
 
     override fun findNextTimerToSchedule(): Timer? {
-        val now = currentTimeInMillis()
         return inRealm {
             where(TimerRealmObject::class.java)
-                    .greaterThan("endTime", now)
+                    .greaterThan("endTime", currentTimeInMillis())
                     .findAllSorted("endTime", Sort.ASCENDING).firstOrNull()?.createTimer()
         }
     }
 
-    override fun changeTimerToSynced(timerUuid: String) {
-        throw UnsupportedOperationException()
+    override fun changeTimerToSynced(uuid: String) {
+        inRealmAndTransaction {
+            where(TimerRealmObject::class.java)
+                    .equalTo("uuid", uuid).findFirst().sync = true
+        }
+
     }
 }
