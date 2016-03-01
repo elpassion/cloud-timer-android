@@ -37,8 +37,13 @@ object RealmTimerDao : TimerDao {
         return timers
     }
 
-    override fun findOne(uuId: String): Timer {
-        throw UnsupportedOperationException()
+    override fun findOne(uuId: String): Timer? {
+        var timer : Timer? = null
+        inRealm {
+            timer = where(TimerRealmObject::class.java)
+                    .equalTo("uuid", uuId).findFirst().createTimer()
+        }
+        return timer
     }
 
     override fun deleteAll() {
