@@ -4,13 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import pl.elpassion.cloudtimer.common.*
 import pl.elpassion.cloudtimer.currentTimeInMillis
-import java.lang.System.currentTimeMillis
 import java.util.*
 
 data class Timer(
         val title: String,
         val duration: Long,
-        val endTime: Long = currentTimeMillis() + duration,
+        val endTime: Long = currentTimeInMillis() + duration,
         val uid: String = randomUUID(),
         val group: Group? = null,
         val sync: Boolean = false) : Parcelable {

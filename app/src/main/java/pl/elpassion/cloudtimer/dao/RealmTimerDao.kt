@@ -1,6 +1,8 @@
 package pl.elpassion.cloudtimer.dao
 
 import io.realm.Realm
+import io.realm.Sort
+import pl.elpassion.cloudtimer.currentTimeInMillis
 import pl.elpassion.cloudtimer.domain.Timer
 
 object RealmTimerDao : TimerDao {
@@ -45,7 +47,7 @@ object RealmTimerDao : TimerDao {
     override fun findOne(uuId: String): Timer? {
         return inRealm {
             where(TimerRealmObject::class.java)
-                    .equalTo("uuid", uuId).findFirst().createTimer()
+                    .equalTo("uuid", uuId).findFirst()?.createTimer()
         }
     }
 
@@ -57,7 +59,12 @@ object RealmTimerDao : TimerDao {
     }
 
     override fun findNextTimerToSchedule(): Timer? {
-        throw UnsupportedOperationException()
+        val now = currentTimeInMillis()
+        return inRealm {
+            where(TimerRealmObject::class.java)
+                    .greaterThan("endTime", now)
+                    .findAllSorted("endTime", Sort.ASCENDING).firstOrNull()?.createTimer()
+        }
     }
 
     override fun changeTimerToSynced(timerUuid: String) {
