@@ -59,12 +59,13 @@ class TimerActivity : CloudTimerActivity() {
         scheduleAlarm(newTimer, this)
         TimerDAO.getInstance().save(newTimer)
         if (isLoggedIn())
-            sendTimerService.sendTimer(Any()).subscribe(onSendTimerSuccess)
+            sendTimerService.sendTimer(TimerToSend(newTimer)).subscribe(onSendTimerSuccess)
         else
             finish()
     }
 
-    private val onSendTimerSuccess = { user: Any ->
+    private val onSendTimerSuccess = { receivedTimer: ReceivedTimer ->
+        TimerDAO.getInstance().changeTimerToSynced(receivedTimer.uuid)
         finish()
     }
 
