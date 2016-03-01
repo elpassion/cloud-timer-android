@@ -16,16 +16,22 @@ object RealmTimerDao : TimerDao {
         val realm = Realm.getDefaultInstance()
         try {
             return inRealm(realm)
-        } finally{
+        } finally {
             realm.close()
         }
     }
 
-    override fun save(timer: Timer): String {
+    private fun <T> inRealmAndTransaction(func: Realm.() -> T): T {
         return inRealm {
             inTransaction {
-                copyToRealmOrUpdate(TimerRealmObject(timer)).uuid
+                func()
             }
+        }
+    }
+
+    override fun save(timer: Timer): String {
+        return inRealmAndTransaction {
+            copyToRealmOrUpdate(TimerRealmObject(timer)).uuid
         }
     }
 
@@ -44,11 +50,9 @@ object RealmTimerDao : TimerDao {
     }
 
     override fun deleteAll() {
-        inRealm {
-            inTransaction {
-                where(TimerRealmObject::class.java)
-                        .findAll().removeAll { true }
-            }
+        inRealmAndTransaction {
+            where(TimerRealmObject::class.java)
+                    .findAll().removeAll { true }
         }
     }
 
