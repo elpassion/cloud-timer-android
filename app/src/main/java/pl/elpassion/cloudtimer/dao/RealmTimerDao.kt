@@ -71,6 +71,5 @@ object RealmTimerDao : TimerDao {
             where(TimerRealmObject::class.java)
                     .equalTo("uuid", uuid).findFirst().sync = true
         }
-
     }
 }

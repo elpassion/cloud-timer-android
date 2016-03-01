@@ -12,7 +12,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.ruleManuallyStarted
@@ -22,11 +22,11 @@ class ActivityStackBehaviourAfterLogin {
 
     @JvmField @Rule
     val rule = ruleManuallyStarted <LoginActivity> {
-        TimerDAO.getInstance().save(Timer("", 100000))
+        TimerDaoProvider.getInstance().save(Timer("", 100000))
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
-    var serviceCallCounter  = 0
+    var serviceCallCounter = 0
 
     val loginServiceSuccess: LoginService = object : LoginService {
         override fun login(email: Login): Observable<User> {
@@ -49,10 +49,11 @@ class ActivityStackBehaviourAfterLogin {
     }
 
     @After
-    fun closePreviousActivities(){
+    fun closePreviousActivities() {
         try {
             (1..6).forEach { Espresso.pressBack() }
-        } catch(e:Exception) { }
+        } catch(e: Exception) {
+        }
     }
 
     @Test
@@ -87,5 +88,5 @@ class ActivityStackBehaviourAfterLogin {
         intent.data = Uri.parse("test")
         rule.launchActivity(intent)
     }
-    
+
 }

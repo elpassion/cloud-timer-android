@@ -11,9 +11,9 @@ import com.triggertrap.seekarc.SeekArc
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToMinutes
 import pl.elpassion.cloudtimer.TimeConverter.formatFromMilliToTime
-import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.alarm.scheduleAlarm
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 
@@ -57,7 +57,7 @@ class TimerActivity : CloudTimerActivity() {
     private fun startNewTimer() {
         val newTimer = Timer(timerTitle.text.toString(), seekArcWrapper.timerDurationInMillis)
         scheduleAlarm(newTimer, this)
-        TimerDAO.getInstance().save(newTimer)
+        TimerDaoProvider.getInstance().save(newTimer)
         if (isLoggedIn())
             sendTimerService.sendTimer(TimerToSend(newTimer)).subscribe(onSendTimerSuccess)
         else
@@ -65,7 +65,7 @@ class TimerActivity : CloudTimerActivity() {
     }
 
     private val onSendTimerSuccess = { receivedTimer: ReceivedTimer ->
-        TimerDAO.getInstance().changeTimerToSynced(receivedTimer.uuid)
+        TimerDaoProvider.getInstance().changeTimerToSynced(receivedTimer.uuid)
         finish()
     }
 

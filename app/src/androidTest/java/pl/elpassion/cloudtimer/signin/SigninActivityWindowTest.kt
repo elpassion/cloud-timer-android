@@ -13,7 +13,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
@@ -24,7 +24,7 @@ class SigninActivityWindowTest {
 
     @Rule @JvmField
     val rule = rule<SignInActivity>() {
-        val alarmDao = TimerDAO.getInstance()
+        val alarmDao = TimerDaoProvider.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()

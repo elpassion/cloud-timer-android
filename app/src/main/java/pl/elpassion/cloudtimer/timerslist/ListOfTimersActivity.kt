@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import de.greenrobot.event.EventBus
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.groups.GroupActivity
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
@@ -50,7 +50,7 @@ class ListOfTimersActivity : CloudTimerActivity() {
     }
 
     private fun loadTimersFromDB() {
-        val dao = TimerDAO.getInstance()
+        val dao = TimerDaoProvider.getInstance()
         timers.clear()
         timers.addAll(dao.findAll())
     }

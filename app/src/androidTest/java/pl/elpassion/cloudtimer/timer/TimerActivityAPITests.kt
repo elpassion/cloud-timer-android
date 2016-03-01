@@ -7,7 +7,7 @@ import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
 import rx.Observable
@@ -16,7 +16,7 @@ class TimerActivityAPITests {
 
     @Rule @JvmField
     val rule = rule<TimerActivity> {
-        TimerDAO.getInstance().deleteAll()
+        TimerDaoProvider.getInstance().deleteAll()
         AuthTokenSharedPreferences.saveAuthToken("test")
     }
 
@@ -36,7 +36,7 @@ class TimerActivityAPITests {
     }
 
     @After
-    fun logOut(){
+    fun logOut() {
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
     }
 
@@ -51,7 +51,7 @@ class TimerActivityAPITests {
     fun whenUserIsLoggedInAndServiceReturnSuccessTimerInDBShouldBeMarkedAsSync() {
         sendTimerService = successService
         pressButton(R.id.start_timer_button)
-        val timer = TimerDAO.getInstance().findAll().first()
+        val timer = TimerDaoProvider.getInstance().findAll().first()
         assertTrue(timer.sync)
     }
 

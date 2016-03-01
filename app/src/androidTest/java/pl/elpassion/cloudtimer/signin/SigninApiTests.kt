@@ -8,8 +8,8 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isSnackbarWithTextDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.base.CloudTimerApp.Companion.applicationContext
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
@@ -20,7 +20,7 @@ class SigninApiTests {
 
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity>() {
-        val alarmDao = TimerDAO.getInstance()
+        val alarmDao = TimerDaoProvider.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 100000))
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()

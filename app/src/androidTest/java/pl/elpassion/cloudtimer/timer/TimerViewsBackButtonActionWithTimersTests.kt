@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
@@ -24,7 +24,7 @@ class TimerViewsBackButtonActionWithTimersTests {
 
     @Rule @JvmField
     val activity = rule<ListOfTimersActivity> {
-        val timerDao = TimerDAO.getInstance()
+        val timerDao = TimerDaoProvider.getInstance()
         timerDao.deleteAll()
         timerDao.save(getTimer())
     }

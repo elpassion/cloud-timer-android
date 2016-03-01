@@ -7,7 +7,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
@@ -15,7 +15,7 @@ class TimersList {
 
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity> {
-        TimerDAO.getInstance().deleteAll()
+        TimerDaoProvider.getInstance().deleteAll()
     }
 
     @Test

@@ -6,8 +6,8 @@ import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
 import pl.elpassion.cloudtimer.currentTimeInMillis
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
@@ -18,8 +18,8 @@ class ListOfTimersActivityTests {
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity> {
         currentTimeInMillis = { 0 }
-        TimerDAO.getInstance().deleteAll()
-        TimerDAO.getInstance().save(Timer("test", 1))
+        TimerDaoProvider.getInstance().deleteAll()
+        TimerDaoProvider.getInstance().save(Timer("test", 1))
     }
 
     @After
