@@ -47,7 +47,12 @@ object RealmTimerDao : TimerDao {
     }
 
     override fun deleteAll() {
-        throw UnsupportedOperationException()
+        inRealm {
+            inTransaction {
+                where(TimerRealmObject::class.java)
+                .findAll().removeAll { true }
+            }
+        }
     }
 
     override fun findNextTimerToSchedule(): Timer? {
