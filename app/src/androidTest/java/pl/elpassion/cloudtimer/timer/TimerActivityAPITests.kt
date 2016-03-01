@@ -55,4 +55,13 @@ class TimerActivityAPITests {
         assertTrue(timer.sync)
     }
 
+    @Test
+    fun whenUserIsNotLoggedInServiceShouldNotBeFired() {
+        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
+        sendTimerService = neverEndingService
+        pressButton(R.id.start_timer_button)
+        assertEquals(0, counter)
+    }
+
+
 }
