@@ -10,14 +10,14 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isInRecyclerView
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.ruleManuallyStarted
 
 class NewGroupTest {
     @Rule @JvmField
     val rule = ruleManuallyStarted<NewGroupActivity> {
-        val timerDAO = TimerDAO.Companion.getInstance()
+        val timerDAO = TimerDaoProvider.getInstance()
         timerDAO.deleteAll()
         timerDAO.save(Timer("title", duration = 10000, uid = "test"))
     }

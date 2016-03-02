@@ -21,6 +21,8 @@ class GroupListActivity() : CloudTimerActivity() {
         super.onCreate(savedInstanceState)
         if (noGroupExists) {
             NewGroupActivity.start(this, intent.extras.getParcelable<Timer>(timerKey))
+            finish()
         }
     }
+
 }

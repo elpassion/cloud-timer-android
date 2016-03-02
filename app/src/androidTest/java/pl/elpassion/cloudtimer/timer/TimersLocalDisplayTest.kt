@@ -1,5 +1,6 @@
 package pl.elpassion.cloudtimer.timer
 
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
@@ -7,6 +8,7 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
@@ -15,6 +17,11 @@ class TimersLocalDisplayTest {
     val rule = rule<ListOfTimersActivity> {
         TimerDaoProvider.getInstance().deleteAll()
         TimerDaoProvider.getInstance().save(Timer("test", 10000))
+    }
+
+    @After
+    fun login(){
+        AuthTokenSharedPreferences.saveAuthToken("s")
     }
 
     @Test

@@ -13,13 +13,16 @@ import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.alarm.AlarmReceiver
 import pl.elpassion.cloudtimer.alarm.AlarmReceiver.Companion.REQUEST_CODE
+import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.timer.TimerActivity
 
 @RunWith(AndroidJUnit4::class)
 class AlarmServiceTest {
 
     @Rule @JvmField
-    val rule = rule<TimerActivity>{}
+    val rule = rule<TimerActivity>{
+        AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
+    }
     private val alarmReceiverClass = AlarmReceiver::class.java
 
     @Test

@@ -33,7 +33,7 @@ class ListOfTimersActivityTests {
     fun groupActivityShouldBeStartedWhenUserIsLoggedInOnShareButtonCLick() {
         AuthTokenSharedPreferences.saveAuthToken("token")
         pressButton(R.id.timer_share_button)
-        isComponentDisplayed(R.id.group_list_view)
+        isComponentDisplayed(R.id.timers_recycler_view)
     }
 
     @Test

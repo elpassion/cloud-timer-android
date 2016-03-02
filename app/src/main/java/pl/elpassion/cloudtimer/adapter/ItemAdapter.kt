@@ -2,7 +2,6 @@ package pl.elpassion.cloudtimer.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 
 abstract class ItemAdapter<VH : RecyclerView.ViewHolder> {
 

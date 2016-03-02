@@ -11,7 +11,7 @@ import pl.elpassion.cloudtimer.R
 import pl.elpassion.cloudtimer.base.CloudTimerActivity
 import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
-import pl.elpassion.cloudtimer.groups.GroupActivity
+import pl.elpassion.cloudtimer.group.GroupListActivity
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences.isLoggedIn
 import pl.elpassion.cloudtimer.signin.SignInActivity
 import pl.elpassion.cloudtimer.timer.TimerActivity
@@ -96,7 +96,7 @@ class ListOfTimersActivity : CloudTimerActivity() {
 
     fun onEvent(onShareTimerButtonClick: OnShareTimerButtonClick) {
         if (isLoggedIn())
-            GroupActivity.start(this)
+            GroupListActivity.start(this, onShareTimerButtonClick.timer)
         else
             SignInActivity.start(this, onShareTimerButtonClick.timer)
     }

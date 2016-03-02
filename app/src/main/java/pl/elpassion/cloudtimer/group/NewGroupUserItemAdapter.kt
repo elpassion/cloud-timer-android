@@ -1,9 +1,7 @@
 package pl.elpassion.cloudtimer.group
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import pl.elpassion.cloudtimer.R
@@ -19,11 +17,7 @@ class NewGroupUserItemAdapter(val user: User) : ItemAdapter<RecyclerView.ViewHol
         userHolder.userEmail.text = user.email
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(itemViewType, parent, false)
-        return NewGroupUserHolder(view)
-    }
+    override fun onCreateViewHolder(view: View): RecyclerView.ViewHolder = NewGroupUserHolder(view)
 
     private inner class NewGroupUserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val userPic = itemView.findViewById(R.id.user_pic_view) as ImageView
