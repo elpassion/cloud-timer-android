@@ -1,9 +1,9 @@
 package pl.elpassion.cloudtimer
 
+import android.app.PendingIntent
 import android.app.PendingIntent.*
 import android.content.Intent
 import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -13,13 +13,13 @@ import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.alarm.AlarmReceiver
 import pl.elpassion.cloudtimer.alarm.AlarmReceiver.Companion.REQUEST_CODE
+import pl.elpassion.cloudtimer.timer.TimerActivity
 
 @RunWith(AndroidJUnit4::class)
 class AlarmServiceTest {
 
     @Rule @JvmField
-    val activityRule = ActivityTestRule<TimerActivity>(TimerActivity::class.java)
-    val activity by lazy { activityRule.activity }
+    val rule = rule<TimerActivity>{}
     private val alarmReceiverClass = AlarmReceiver::class.java
 
     @Test
@@ -48,7 +48,13 @@ class AlarmServiceTest {
         assertNull(alarmUp)
     }
 
-    private fun clearIntent() = getBroadcast(activity, REQUEST_CODE, Intent(activity, alarmReceiverClass), FLAG_CANCEL_CURRENT).cancel()
+    private fun clearIntent() {
+        val intent = Intent(rule.activity, alarmReceiverClass)
+        getBroadcast(rule.activity, REQUEST_CODE, intent, FLAG_CANCEL_CURRENT).cancel()
+    }
     private fun getPendingIntent() = getPendingIntent(REQUEST_CODE)
-    private fun getPendingIntent(reqCode: Int) = getBroadcast(activity, reqCode, Intent(activity, alarmReceiverClass), FLAG_NO_CREATE)
+    private fun getPendingIntent(reqCode: Int): PendingIntent? {
+        val intent = Intent(rule.activity, alarmReceiverClass)
+        return getBroadcast(rule.activity, reqCode, intent, FLAG_NO_CREATE)
+    }
 }

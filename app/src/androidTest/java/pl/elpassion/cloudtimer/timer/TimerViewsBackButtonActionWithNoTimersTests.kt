@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
@@ -16,7 +16,7 @@ class TimerViewsBackButtonActionWithNoTimersTests {
 
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity> {
-        TimerDAO.getInstance().deleteAll()
+        TimerDaoProvider.getInstance().deleteAll()
     }
 
     @Test(expected = NoActivityResumedException::class)

@@ -27,7 +27,7 @@ before_script:
 - sh scripts/emulator.sh
 
 script:
-  - ./gradlew createToTestsDebugCoverageReport
+  - ./gradlew createToTestsDebugCoverageReport test
 
 after_success:
   - sh scripts/coveralls.sh

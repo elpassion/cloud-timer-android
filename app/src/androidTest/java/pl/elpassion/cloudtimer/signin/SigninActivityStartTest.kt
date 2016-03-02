@@ -7,17 +7,17 @@ import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
 import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityStartTest {
+class SigninActivityStartTest {
     @Rule @JvmField
     val rule = rule<ListOfTimersActivity>() {
-        val alarmDao = TimerDAO.getInstance()
+        val alarmDao = TimerDaoProvider.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("placeholder", 1001000L))
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
@@ -26,6 +26,6 @@ class LoginActivityStartTest {
     @Test
     fun startLoginActivity() {
         pressButton(R.id.timer_share_button)
-        isComponentDisplayed(R.id.login_via_email_button)
+        isComponentDisplayed(R.id.send_activation_email)
     }
 }

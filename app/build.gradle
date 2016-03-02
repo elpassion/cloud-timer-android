@@ -24,6 +24,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -60,6 +61,10 @@ android {
     }
 }
 
+
+kapt {
+    generateStubs = true
+}
 
 buildscript {
     ext.kotlin_version = '1.0.0'
@@ -102,6 +107,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
     compile 'com.github.Triggertrap:SeekArc:v1.1'
+    compile 'io.realm:realm-android:0.87.5'
     compile 'com.larswerkman:HoloColorPicker:1.5'
     testCompile ('junit:junit:4.11')
 }

@@ -2,34 +2,43 @@ package pl.elpassion.cloudtimer.domain
 
 import android.os.Parcel
 import android.os.Parcelable
-import pl.elpassion.cloudtimer.common.createCreator
+import pl.elpassion.cloudtimer.common.*
 import pl.elpassion.cloudtimer.currentTimeInMillis
-import java.lang.System.currentTimeMillis
 import java.util.*
 
-data class Timer(val title: String, val duration: Long, val endTime: Long = currentTimeMillis() + duration, val uid: String = randomUUID(), val group: Group? = null, val timeLeft: Long? = null) : Parcelable{
-
-    constructor(title: String, duration: Long, group: Group) : this(title, duration, currentTimeMillis() + duration, randomUUID(), group, null)
-    
-    val finished: Boolean
-        get() = endTime < currentTimeInMillis()
+data class Timer(
+        val title: String,
+        val duration: Long,
+        val endTime: Long = currentTimeInMillis() + duration,
+        val uid: String = randomUUID(),
+        val group: Group? = null,
+        val sync: Boolean = false) : Parcelable {
 
     companion object {
         fun randomUUID(): String = UUID.randomUUID().toString()
-        @JvmField final val CREATOR = createCreator { Timer(this) }
+        @JvmField final val CREATOR = createCreator {
+            Timer(
+                    title = readString(),
+                    duration = readLong(),
+                    endTime = readLong(),
+                    uid = readString(),
+                    group = Group.CREATOR.createNullableFromParcel(this),
+                    sync = readBoolean()
+            )
+        }
     }
 
     override fun describeContents(): Int = 0
-
-    constructor(parcel: Parcel) : this(parcel.readString(), parcel.readLong(), parcel.readLong(),  parcel.readString(), parcel.readParcelable(Group::class.java.classLoader))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeLong(duration)
         parcel.writeLong(endTime)
         parcel.writeString(uid)
-        parcel.writeParcelable(group, flags)
+        group.writeNullableToParcel(parcel, flags)
+        parcel.writeBoolean(sync)
     }
 
-
+    val finished: Boolean
+        get() = endTime < currentTimeInMillis()
 }

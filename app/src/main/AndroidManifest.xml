@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TimerActivity"
+            android:name=".timer.TimerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".signin.SignInActivity"
             android:screenOrientation="portrait"/>

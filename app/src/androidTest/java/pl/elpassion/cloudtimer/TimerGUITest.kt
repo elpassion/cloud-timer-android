@@ -11,11 +11,13 @@ import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkTextStartsAndEndsWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.performAction
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeTextInView
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
+import pl.elpassion.cloudtimer.timer.TimerActivity
 
 class TimerGUITest {
     @Rule @JvmField
     val rule = rule<TimerActivity> {
-        TimerDAO.getInstance().deleteAll()
+        TimerDaoProvider.getInstance().deleteAll()
     }
 
     val defaultWidth by lazy { getDefaultDisplayMetrics().first / 40 }
@@ -79,7 +81,6 @@ class TimerGUITest {
         isComponentDisplayed(R.id.timer_duration)
         isComponentDisplayed(R.id.timer_time_to_end)
         isComponentDisplayed(R.id.start_timer_button)
-        isComponentDisplayed(R.id.action_settings)
     }
 
     @Test

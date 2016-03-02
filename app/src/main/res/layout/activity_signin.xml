@@ -13,19 +13,27 @@
         android:id="@+id/email_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/blue_undersore"
         android:gravity="center_horizontal"
         android:hint="@string/login_email_hint"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:padding="6dp"
+        android:textColor="@color/colorButtonText"
+        android:textColorHighlight="@color/colorPrimaryElements"
+        android:textColorHint="@color/colorHint" />
 
     <TextView
         android:id="@+id/error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="4dp"
         android:text="@string/connection_error"
+        android:textColor="@color/colorAccent"
         android:visibility="invisible" />
 
     <Button
-        android:id="@+id/login_via_email_button"
+        android:id="@+id/send_activation_email"
+        style="@style/ActiveWideButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login_send" />

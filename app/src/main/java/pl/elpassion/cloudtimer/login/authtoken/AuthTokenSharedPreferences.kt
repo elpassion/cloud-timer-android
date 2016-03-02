@@ -7,8 +7,23 @@ object AuthTokenSharedPreferences {
 
     private val sharedPreferencesKey = "pl.elpassion.cloud-timer"
     private val authTokenKey = "authToken"
+    private val emailKey = "emailKey"
     val sharedPreferences = applicationContext.getSharedPreferences(sharedPreferencesKey, MODE_PRIVATE)
 
     fun isLoggedIn(): Boolean = sharedPreferences.contains(authTokenKey)
     fun saveAuthToken(authToken: String) = sharedPreferences.edit().putString(authTokenKey, authToken).commit()
+
+    fun readAuthToken(): String? {
+        if (isLoggedIn())
+            return sharedPreferences.getString(authTokenKey, "")
+        return null
+    }
+
+    fun readEmail(): String? {
+        if (isLoggedIn())
+            return sharedPreferences.getString(emailKey, "")
+        return null
+    }
+
+    fun saveEmail(email: String) = sharedPreferences.edit().putString(emailKey, email).commit()
 }

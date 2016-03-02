@@ -18,11 +18,7 @@ class TimerItemAdapter(val timer: Timer) : ItemAdapter<TimerItemAdapter.TimerHol
 
     override val itemViewType: Int = R.layout.user_timers_list_timer_item
 
-    override fun onCreateViewHolder(parent: ViewGroup): TimerHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(itemViewType, parent, false)
-        return TimerHolder(view)
-    }
+    override fun onCreateViewHolder(itemView: View) = TimerHolder(itemView)
 
     override fun onBindViewHolder(holder: TimerHolder) {
         val timeLeftInMilliSec = timer.endTime - System.currentTimeMillis()

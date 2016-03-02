@@ -2,28 +2,29 @@ package pl.elpassion.cloudtimer.signin
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.runner.AndroidJUnit4
-import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.checkIfComponentHasString
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentDisabled
+import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentEnabled
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.isComponentNotDisplayed
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.pressButton
 import pl.elpassion.cloudtimer.ComponentsTestsUtils.typeText
 import pl.elpassion.cloudtimer.R
-import pl.elpassion.cloudtimer.TimerDAO
+import pl.elpassion.cloudtimer.dao.TimerDaoProvider
 import pl.elpassion.cloudtimer.domain.Timer
 import pl.elpassion.cloudtimer.login.authtoken.AuthTokenSharedPreferences
 import pl.elpassion.cloudtimer.rule
-import pl.elpassion.cloudtimer.timerslist.ListOfTimersActivity
 import rx.Observable
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityWindowTest {
+class SigninActivityWindowTest {
 
     @Rule @JvmField
-    val rule = rule<ListOfTimersActivity>() {
-        val alarmDao = TimerDAO.getInstance()
+    val rule = rule<SignInActivity>() {
+        val alarmDao = TimerDaoProvider.getInstance()
         alarmDao.deleteAll()
         alarmDao.save(Timer("timer", 10000))
         AuthTokenSharedPreferences.sharedPreferences.edit().clear().commit()
@@ -31,7 +32,6 @@ class LoginActivityWindowTest {
 
     @Test
     fun initTest() {
-        pressButton(R.id.timer_share_button)
         isComponentNotDisplayed(R.id.error_message)
     }
 
@@ -51,13 +51,30 @@ class LoginActivityWindowTest {
             }
         }
         sentActivationEmail("potato@gmail.com")
-        Assert.assertTrue(isCorrectMail)
+        assertTrue(isCorrectMail)
+    }
+
+
+    @Test
+    fun whenEmailWasSentButtonSendShouldBeDisabled() {
+        signInViaEmailService = object : SignInViaEmailService {
+            override fun singIn(email: SignInViaEmail): Observable<Any> {
+                return Observable.never()
+            }
+        }
+        sentActivationEmail("potato@gmail.com")
+        isComponentDisabled(R.id.send_activation_email)
+    }
+
+    @Test
+    fun whenIncorrectEmailWasInsertedSendButtonShouldBeEnabled() {
+        sentActivationEmail("potato")
+        isComponentEnabled(R.id.send_activation_email)
     }
 
     private fun sentActivationEmail(email: String) {
-        pressButton(R.id.timer_share_button)
         typeText(R.id.email_input, email)
         closeSoftKeyboard()
-        pressButton(R.id.login_via_email_button)
+        pressButton(R.id.send_activation_email)
     }
 }

@@ -16,7 +16,13 @@
         android:layout_height="wrap_content"
         android:text="@string/logging_in_message" />
 
-    <include layout="@layout/logging_in_progressbar"/>
+    <include layout="@layout/logging_in_progressbar" />
 
+    <Button
+        android:id="@+id/retry_logging_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/retry_logging_in"
+        android:visibility="gone" />
 
 </LinearLayout>

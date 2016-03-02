@@ -11,7 +11,6 @@ class DateFormatterTests {
     val ninePM: Long = 1454961600000
     val twoHoursTwentyMinutesAndTwoSeconds: Long = 8402000
 
-
     @Before
     fun setUpTimeZone() = TimeZone.setDefault(TimeZone.getTimeZone("Europe/Warsaw"))
 
